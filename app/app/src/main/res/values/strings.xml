@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Loanppi</string>
+    <string name="landing_text">Invierte. Espera. Cobra.</string>
+    <string name="btn_works">¿Cómo funciona?</string>
+    <string name="btn_signUp">Regístrate</string>
+    <string name="btn_login">Inicia sesión</string>
+    <string name="Loanppi_logo">Loanppi Logo</string>
 </resources>
