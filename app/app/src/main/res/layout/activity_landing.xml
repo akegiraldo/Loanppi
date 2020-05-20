@@ -6,84 +6,76 @@
     android:layout_height="match_parent"
     tools:context=".landing">
 
-    <ImageView
-        android:id="@+id/img_landingLogo"
-        android:layout_width="321dp"
-        android:layout_height="146dp"
-        android:layout_marginStart="45dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="45dp"
-        android:contentDescription="@string/Loanppi_logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_full_xhdpi" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp">
 
-    <TextView
-        android:id="@+id/txt_landing"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="32dp"
-        android:ellipsize="end"
-        android:text="@string/landing_text"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_landingLogo" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_works"
-        android:layout_width="175dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="118dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="118dp"
-        android:text="@string/btn_works"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_landing" />
+            <ImageView
+                android:id="@+id/img_landingLogo"
+                android:layout_width="290dp"
+                android:layout_height="146dp"
+                android:layout_marginTop="45dp"
+                android:contentDescription="@string/Loanppi_logo"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/ic_full_xhdpi" />
 
-    <Button
-        android:id="@+id/btn_signUp"
-        android:layout_width="210dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="116dp"
-        android:layout_marginEnd="101dp"
-        android:text="@string/btn_signUp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_works" />
+            <TextView
+                android:id="@+id/txt_landing"
+                android:layout_width="280dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="40sp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="40sp"
+                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeMinTextSize="22sp"
+                android:autoSizeStepGranularity="2sp"
+                android:autoSizeTextType="uniform"
+                android:text="@string/landing_text"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="#000000"
+                android:textSize="22sp" />
 
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="210dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="101dp"
-        android:text="@string/btn_login"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dvd_landing" />
+            <Button
+                android:id="@+id/btn_works"
+                android:layout_width="175dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/btn_works"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textSize="18sp" />
 
-    <View
-        android:id="@+id/dvd_landing"
-        android:layout_width="409dp"
-        android:layout_height="2dp"
-        android:layout_marginTop="24dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toBottomOf="@+id/btn_signUp"
-        tools:layout_editor_absoluteX="1dp" />
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="210dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="100sp"
+                android:text="@string/btn_login"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btn_signUp"
+                android:layout_width="210dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/btn_signUp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
