@@ -5,4 +5,7 @@
     <string name="btn_signUp">Regístrate</string>
     <string name="btn_login">Inicia sesión</string>
     <string name="Loanppi_logo">Loanppi Logo</string>
+
+    // Signup view
+    <string name="signup_title">Registro</string>
 </resources>
