@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    // Theme
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
-    <color name="background">#5CFF7979</color>
+
+    // General
+    <color name="loanppi">#FFFF441F</color>
+    <color name="background">#5CFFA4A4</color>
     <color name="textPrimary">#1E0400</color>
 
+    // Buttons
     <color name="btn_white">#BCFFFFFF</color>
     <color name="btn_orange">#FFFF441F</color>
+    <color name="btn_facebook">#3B5998</color>
+    <color name="btn_google">#DB4437</color>
 </resources>

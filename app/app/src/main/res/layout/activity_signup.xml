@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/cartoon_background"
+    tools:layout_editor_absoluteX="1dp"
+    tools:layout_editor_absoluteY="1dp"
+    tools:context=".signup">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background"
+            android:paddingBottom="16dp"
+            tools:context=".signup">
+
+            <Button
+                android:id="@+id/btn_back"
+                style="@android:style/Widget.DeviceDefault.Button.Small"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/loanppi"
+                android:foreground="?attr/homeAsUpIndicator"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:onClick="onBack"/>
+
+            <ImageView
+                android:id="@+id/img_logo_s"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="@string/Loanppi_logo"
+                app:layout_constrainedWidth="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="spread"
+                app:layout_constraintWidth_max="120dp"
+                app:srcCompat="@mipmap/ic_launcher" />
+
+            <ImageView
+                android:id="@+id/img_investor"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="50dp"
+                app:layout_constraintEnd_toEndOf="@+id/btn_investor"
+                app:layout_constraintStart_toStartOf="@+id/btn_investor"
+                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:srcCompat="@drawable/btn_investor" />
+
+            <ImageView
+                android:id="@+id/img_worker"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="50dp"
+                app:layout_constraintEnd_toEndOf="@+id/btn_worker"
+                app:layout_constraintStart_toStartOf="@+id/btn_worker"
+                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:srcCompat="@drawable/btn_worker" />
+
+            <Button
+                android:id="@+id/btn_investor"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:background="@color/loanppi"
+                android:text="@string/btn_investor"
+                android:textColor="@android:color/primary_text_dark"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toStartOf="@+id/btn_worker"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_investor" />
+
+            <Button
+                android:id="@+id/btn_worker"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:background="@color/loanppi"
+                android:text="@string/btn_worker"
+                android:textColor="@android:color/primary_text_dark"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btn_investor"
+                app:layout_constraintTop_toBottomOf="@+id/img_worker" />
+
+            <TextView
+                android:id="@+id/txt_register_with"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="50dp"
+                android:text="@string/signup_subtitle"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/subtitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_investor" />
+
+            <Button
+                android:id="@+id/btn_facebook"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/btn_facebook"
+                android:singleLine="false"
+                android:text="@string/btn_facebook"
+                android:textSize="@dimen/btn_text_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_register_with" />
+
+            <Button
+                android:id="@+id/btn_google"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/btn_google"
+                android:text="@string/btn_google"
+                android:textSize="@dimen/btn_text_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_facebook" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="130dp"
+                android:text="@string/signup_title"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</LinearLayout>

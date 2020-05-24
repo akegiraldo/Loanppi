@@ -27,7 +27,7 @@
             tools:context=".landing">
 
             <ImageView
-                android:id="@+id/img_logo"
+                android:id="@+id/img_logo_s"
                 android:layout_width="0dp"
                 android:layout_height="120dp"
                 android:layout_marginStart="32dp"
@@ -52,10 +52,11 @@
                 android:singleLine="false"
                 android:text="@string/btn_login"
                 android:textColor="@color/textPrimary"
-                android:textSize="@dimen/btnTextSize"
+                android:textSize="@dimen/btn_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.502"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/img_logo" />
+                app:layout_constraintTop_toBottomOf="@+id/img_logo_s" />
 
             <Button
                 android:id="@+id/btn_signup"
@@ -63,8 +64,9 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/btn_background_orange"
+                android:onClick="onSignUp"
                 android:text="@string/btn_signUp"
-                android:textSize="@dimen/btnTextSize"
+                android:textSize="@dimen/btn_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btn_login" />
