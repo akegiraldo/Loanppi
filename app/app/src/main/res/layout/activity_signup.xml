@@ -59,7 +59,7 @@
                 android:layout_marginTop="50dp"
                 app:layout_constraintEnd_toEndOf="@+id/btn_investor"
                 app:layout_constraintStart_toStartOf="@+id/btn_investor"
-                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:layout_constraintTop_toBottomOf="@+id/txt_signup_title"
                 app:srcCompat="@drawable/btn_investor" />
 
             <ImageView
@@ -69,7 +69,7 @@
                 android:layout_marginTop="50dp"
                 app:layout_constraintEnd_toEndOf="@+id/btn_worker"
                 app:layout_constraintStart_toStartOf="@+id/btn_worker"
-                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:layout_constraintTop_toBottomOf="@+id/txt_signup_title"
                 app:srcCompat="@drawable/btn_worker" />
 
             <Button
@@ -136,7 +136,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/btn_facebook" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/txt_signup_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="130dp"

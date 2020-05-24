@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/txt_login_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/login_title"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/title" />
+
+    <Button
+        android:id="@+id/btn_l_facebook"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/btn_facebook"
+        android:singleLine="false"
+        android:text="@string/btn_facebook"
+        android:textSize="@dimen/btn_text_size"
+        android:layout_gravity="center"
+        android:onClick="" />
+
+    <Button
+        android:id="@+id/btn_l_google"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/btn_google"
+        android:text="@string/btn_google"
+        android:textSize="@dimen/btn_text_size"
+        android:layout_gravity="center" />
+
+</LinearLayout>

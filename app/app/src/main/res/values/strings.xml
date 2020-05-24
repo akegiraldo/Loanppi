@@ -14,4 +14,8 @@
     <string name="btn_investor">Soy inversor</string>
     <string name="btn_worker">Soy trabajador</string>
     <string name="signup_subtitle">Regístrate con:</string>
+
+    // Login view
+    <string name="login_title">Inicio de sesión</string>
+    <string name="cancelar">Cancelar</string>
 </resources>
