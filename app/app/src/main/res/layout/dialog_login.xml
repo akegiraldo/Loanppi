@@ -38,7 +38,7 @@
         app:layout_constraintHeight_percent="0.25"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_login_title"
-        app:layout_constraintWidth_percent="0.5" />
+        app:layout_constraintWidth_percent="0.55" />
 
     <Button
         android:id="@+id/btn_l_google"
@@ -54,6 +54,6 @@
         app:layout_constraintHeight_percent="0.25"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_l_facebook"
-        app:layout_constraintWidth_percent="0.5" />
+        app:layout_constraintWidth_percent="0.55" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
