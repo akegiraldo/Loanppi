@@ -29,14 +29,16 @@
                 android:id="@+id/btn_back"
                 style="@android:style/Widget.DeviceDefault.Button.Small"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:background="@color/loanppi"
-                android:foreground="?attr/homeAsUpIndicator"
+                android:background="@color/transparent"
+                android:foreground="@drawable/ic_back_arrow"
                 android:onClick="onBack"
+                app:layout_constraintHeight_percent="0.05"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/img_logo_s"
+                app:layout_constraintWidth_percent="0.1" />
 
             <ImageView
                 android:id="@+id/img_logo_s"
@@ -49,8 +51,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.1"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_default="spread"
-                app:layout_constraintWidth_max="100dp"
                 app:layout_constraintWidth_percent="0.2"
                 app:srcCompat="@drawable/shortsquarexhdpi" />
 
@@ -58,7 +58,7 @@
                 android:id="@+id/img_investor"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="40dp"
                 app:layout_constraintEnd_toEndOf="@+id/btn_investor"
                 app:layout_constraintHeight_percent="0.2"
                 app:layout_constraintStart_toStartOf="@+id/btn_investor"
@@ -70,7 +70,7 @@
                 android:id="@+id/img_worker"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="40dp"
                 app:layout_constraintEnd_toEndOf="@+id/btn_worker"
                 app:layout_constraintHeight_percent="0.2"
                 app:layout_constraintStart_toStartOf="@+id/btn_worker"
@@ -126,34 +126,38 @@
 
             <Button
                 android:id="@+id/btn_facebook"
-                android:layout_width="200dp"
-                android:layout_height="60dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginTop="32dp"
                 android:background="@drawable/btn_facebook"
                 android:singleLine="false"
                 android:text="@string/btn_facebook"
                 android:textSize="@dimen/btn_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.08"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_register_with" />
+                app:layout_constraintTop_toBottomOf="@+id/txt_register_with"
+                app:layout_constraintWidth_percent="0.5" />
 
             <Button
                 android:id="@+id/btn_google"
-                android:layout_width="200dp"
-                android:layout_height="60dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/btn_google"
                 android:text="@string/btn_google"
                 android:textSize="@dimen/btn_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.08"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_facebook" />
+                app:layout_constraintTop_toBottomOf="@+id/btn_facebook"
+                app:layout_constraintWidth_percent="0.5" />
 
             <TextView
                 android:id="@+id/txt_signup_title"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="130dp"
+                android:layout_marginTop="110dp"
                 android:text="@string/signup_title"
                 android:textAlignment="center"
                 android:textColor="@color/textPrimary"
@@ -162,7 +166,7 @@
                 app:layout_constraintHeight_percent="0.1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.5" />
+                app:layout_constraintWidth_percent="0.45" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
