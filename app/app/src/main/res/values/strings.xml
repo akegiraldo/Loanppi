@@ -18,4 +18,10 @@
     // Login view
     <string name="login_title">Inicio de sesión</string>
     <string name="cancelar">Cancelar</string>
+
+    // Dashboard
+    <string name="user_photo">User profile photo</string>
+    <string name="balance">Balance</string>
+    <string name="btn2">Perfil</string>
+    <string name="btn3">Historial</string>
 </resources>

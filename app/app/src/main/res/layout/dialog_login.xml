@@ -23,7 +23,7 @@
         android:text="@string/btn_facebook"
         android:textSize="@dimen/btn_text_size"
         android:layout_gravity="center"
-        android:onClick="" />
+        android:onClick="onFb" />
 
     <Button
         android:id="@+id/btn_l_google"
@@ -33,6 +33,7 @@
         android:background="@drawable/btn_google"
         android:text="@string/btn_google"
         android:textSize="@dimen/btn_text_size"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:onClick="onGo" />
 
 </LinearLayout>

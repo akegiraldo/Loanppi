@@ -28,93 +28,107 @@
             <Button
                 android:id="@+id/btn_back"
                 style="@android:style/Widget.DeviceDefault.Button.Small"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:background="@color/loanppi"
                 android:foreground="?attr/homeAsUpIndicator"
+                android:onClick="onBack"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:onClick="onBack"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/img_logo_s"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="8dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:contentDescription="@string/Loanppi_logo"
                 app:layout_constrainedWidth="false"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.1"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_default="spread"
-                app:layout_constraintWidth_max="120dp"
-                app:srcCompat="@mipmap/ic_launcher" />
+                app:layout_constraintWidth_max="100dp"
+                app:layout_constraintWidth_percent="0.2"
+                app:srcCompat="@drawable/shortsquarexhdpi" />
 
             <ImageView
                 android:id="@+id/img_investor"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginTop="50dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="32dp"
                 app:layout_constraintEnd_toEndOf="@+id/btn_investor"
+                app:layout_constraintHeight_percent="0.2"
                 app:layout_constraintStart_toStartOf="@+id/btn_investor"
                 app:layout_constraintTop_toBottomOf="@+id/txt_signup_title"
+                app:layout_constraintWidth_percent="0.44"
                 app:srcCompat="@drawable/btn_investor" />
 
             <ImageView
                 android:id="@+id/img_worker"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginTop="50dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="32dp"
                 app:layout_constraintEnd_toEndOf="@+id/btn_worker"
+                app:layout_constraintHeight_percent="0.2"
                 app:layout_constraintStart_toStartOf="@+id/btn_worker"
                 app:layout_constraintTop_toBottomOf="@+id/txt_signup_title"
+                app:layout_constraintWidth_percent="0.44"
                 app:srcCompat="@drawable/btn_worker" />
 
             <Button
                 android:id="@+id/btn_investor"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
                 android:background="@color/loanppi"
                 android:text="@string/btn_investor"
                 android:textColor="@android:color/primary_text_dark"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toStartOf="@+id/btn_worker"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHeight_percent="0.07"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/img_investor" />
+                app:layout_constraintTop_toBottomOf="@+id/img_investor"
+                app:layout_constraintWidth_percent="0.45" />
 
             <Button
                 android:id="@+id/btn_worker"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
                 android:background="@color/loanppi"
                 android:text="@string/btn_worker"
                 android:textColor="@android:color/primary_text_dark"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.07"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/btn_investor"
-                app:layout_constraintTop_toBottomOf="@+id/img_worker" />
+                app:layout_constraintTop_toBottomOf="@+id/img_worker"
+                app:layout_constraintWidth_percent="0.45" />
 
             <TextView
                 android:id="@+id/txt_register_with"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="50dp"
                 android:text="@string/signup_subtitle"
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/subtitle"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintHeight_percent="0.07"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_investor" />
+                app:layout_constraintTop_toBottomOf="@+id/btn_investor"
+                app:layout_constraintWidth_percent="0.5" />
 
             <Button
                 android:id="@+id/btn_facebook"
                 android:layout_width="200dp"
                 android:layout_height="60dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="32dp"
                 android:background="@drawable/btn_facebook"
                 android:singleLine="false"
                 android:text="@string/btn_facebook"
@@ -137,15 +151,18 @@
 
             <TextView
                 android:id="@+id/txt_signup_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginTop="130dp"
                 android:text="@string/signup_title"
+                android:textAlignment="center"
                 android:textColor="@color/textPrimary"
-                android:textSize="@dimen/title"
+                app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.5" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
