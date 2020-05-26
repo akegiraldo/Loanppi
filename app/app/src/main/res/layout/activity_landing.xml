@@ -30,24 +30,22 @@
             <ImageView
                 android:id="@+id/img_logo_s"
                 android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
+                android:layout_height="0dp"
                 android:contentDescription="@string/Loanppi_logo"
                 app:layout_constrainedWidth="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.39"
-                app:layout_constraintWidth_default="spread"
-                app:layout_constraintWidth_max="270dp"
+                app:layout_constraintWidth_percent="0.75"
                 app:srcCompat="@drawable/fullxhdpi" />
 
             <Button
                 android:id="@+id/btn_login"
-                android:layout_width="200dp"
-                android:layout_height="60dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginTop="80dp"
                 android:background="@drawable/btn_background_white"
                 android:onClick="onLogin"
@@ -56,22 +54,25 @@
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/btn_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.502"
+                app:layout_constraintHeight_percent="0.08"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/img_logo_s" />
+                app:layout_constraintTop_toBottomOf="@+id/img_logo_s"
+                app:layout_constraintWidth_percent="0.5" />
 
             <Button
                 android:id="@+id/btn_signup"
-                android:layout_width="200dp"
-                android:layout_height="60dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/btn_background_orange"
                 android:onClick="onSignUp"
                 android:text="@string/btn_signUp"
                 android:textSize="@dimen/btn_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.08"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+                app:layout_constraintTop_toBottomOf="@+id/btn_login"
+                app:layout_constraintWidth_percent="0.5" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

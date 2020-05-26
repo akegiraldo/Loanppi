@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     // General
-    <dimen name="btn_text_size">20sp</dimen>
+    <dimen name="btn_text_size">18sp</dimen>
     <dimen name="title">30sp</dimen>
     <dimen name="subtitle">20sp</dimen>
 
