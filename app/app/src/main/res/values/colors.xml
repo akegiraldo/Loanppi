@@ -10,6 +10,7 @@
     <color name="background">#5CFFBFA1</color>
     <color name="background_inside">#9CFFFFFF</color>
     <color name="textPrimary">#1E0400</color>
+    <color name="white">#FFFFFF</color>
 
     // Buttons
     <color name="btn_white">#BCFFFFFF</color>
