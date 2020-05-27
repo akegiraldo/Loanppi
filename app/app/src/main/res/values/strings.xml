@@ -18,11 +18,18 @@
 
     // Login view
     <string name="login_title">Inicio de sesión</string>
-    <string name="cancelar">Cancelar</string>
+    <string name="cancel">Cancelar</string>
 
     // Dashboard
     <string name="user_photo">User profile photo</string>
     <string name="balance">Balance</string>
     <string name="btn2">Perfil</string>
     <string name="btn3">Historial</string>
+
+    // Menu
+    <string name="profile">Perfil</string>
+    <string name="signout">Cerrar sesión</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
