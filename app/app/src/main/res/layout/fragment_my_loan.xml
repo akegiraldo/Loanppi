@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main">
+    tools:context=".main_worker">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="2dp"
-                android:background="#F6D6A6"
+                android:background="#C8C8C8"
                 android:gravity="center"
                 android:text="Cuotas"
                 android:textSize="18sp"
@@ -41,7 +41,7 @@
                 android:layout_width="421dp"
                 android:layout_height="27dp"
                 android:layout_marginTop="24dp"
-                android:background="#F6D6A6"
+                android:background="#CACACA"
                 android:gravity="center"
                 android:text="Historial"
                 android:textSize="18sp"
@@ -260,8 +260,8 @@
 
             <SeekBar
                 android:id="@+id/bar_prog_moto2"
-                android:layout_width="413dp"
-                android:layout_height="82dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginTop="32dp"
                 android:background="#0D272525"
                 android:progress="30"
@@ -270,7 +270,6 @@
                 android:thumb="@drawable/moto1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.09"
-                app:layout_constraintHorizontal_bias="0.612"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_prestamo"
                 app:layout_constraintWidth_percent="0.8"

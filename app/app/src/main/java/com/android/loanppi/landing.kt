@@ -15,10 +15,6 @@ import androidx.core.view.isVisible
 class landing : AppCompatActivity() {
 
     var type: String = ""
-    var label: String = ""
-    var business: String = ""
-    var porc: Int = 0
-    var meta: Float = 0.0F
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,30 +44,18 @@ class landing : AppCompatActivity() {
     }
 
     fun onFb(view: View) {
-        type = "Inversor"
-        label = "Retorno"
-        business = "Mi inversión"
-        porc = 52000
-        meta = 120000F
+        type = "w"
         onDashboard(view)
     }
 
     fun onGo(view: View) {
-        type = "Trabajador"
-        label = "Meta"
-        business = "Mi préstamo"
-        porc = 350000
-        meta = 800000F
+        type = "i"
         onDashboard(view)
     }
 
     fun onDashboard(view: View) {
         val intent = Intent(this, dashboard::class.java)
-        intent.putExtra("type", "Hola, "+type)
-        intent.putExtra("label", label)
-        intent.putExtra("business", business)
-        intent.putExtra("porc", porc)
-        intent.putExtra("meta", meta)
+        intent.putExtra("type", type)
         startActivity(intent)
     }
 }

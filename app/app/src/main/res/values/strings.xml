@@ -20,13 +20,40 @@
     <string name="login_title">Inicio de sesión</string>
     <string name="cancel">Cancelar</string>
 
-    // Dashboard
+    // Dashboard: main
     <string name="user_photo">User profile photo</string>
     <string name="balance">Balance</string>
-    <string name="btn2">Perfil</string>
-    <string name="btn3">Historial</string>
+    <string name="history">Historial</string>
+    <string name="home">Home</string>
+        // Investor
+        <string name="txt_return">Retorno</string>
+        <string name="invest">Invertir</string>
+        <string name="my_investment">Mi inversión</string>
+        // Worker
+        <string name="txt_goal">Meta</string>
+        <string name="lend">Prestar</string>
+        <string name="my_loan">Mi prestamo</string>
 
     // Menu
     <string name="profile">Perfil</string>
     <string name="signout">Cerrar sesión</string>
+
+    // Profile
+    <string name="personal_info">Información personal</string>
+    <string name="first_name">Primer nombre</string>
+    <string name="second_name">Segundo nombre</string>
+    <string name="first_last_name">Primer apellido</string>
+    <string name="second_last_name">Segundo apellido</string>
+    <string name="document_number">Número</string>
+    <string name="contact_info">Información de contacto</string>
+    <string name="phone_number">Número celular</string>
+    <string name="email">Correo electrónico</string>
+    <string name="home_address">Dirección</string>
+    <string name="save">Guardar</string>
+    <string-array name="documents_type">
+        <item>Tipo de documento</item>
+        <item>Cédula</item>
+        <item>Pasaporte</item>
+        <item>Cédula de extranjería</item>
+    </string-array>
 </resources>

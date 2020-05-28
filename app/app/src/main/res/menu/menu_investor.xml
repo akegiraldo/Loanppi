@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_i_home"
+        android:title="@string/home" />
+    <item android:id="@+id/menu_i_profile"
+        android:title="@string/profile" />
+    <item android:id="@+id/menu_i_invest"
+        android:title="@string/invest" />
+    <item android:id="@+id/menu_i_my_investment"
+        android:title="@string/my_investment" />
+    <item android:id="@+id/menu_i_history"
+        android:title="@string/history" />
+    <item android:id="@+id/menu_i_signout"
+        android:title="@string/signout" />
+</menu>
