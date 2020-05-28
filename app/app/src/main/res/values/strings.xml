@@ -29,6 +29,4 @@
     // Menu
     <string name="profile">Perfil</string>
     <string name="signout">Cerrar sesión</string>
-
-
 </resources>
