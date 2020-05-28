@@ -30,10 +30,10 @@
                 android:textSize="@dimen/subtitle"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="@+id/img_user_photo"
-                app:layout_constraintHeight_percent="0.06"
+                app:layout_constraintHeight_percent="0.05"
                 app:layout_constraintStart_toEndOf="@+id/img_user_photo"
                 app:layout_constraintTop_toTopOf="@+id/img_user_photo"
-                app:layout_constraintWidth_percent="0.32" />
+                app:layout_constraintWidth_percent="0.6" />
 
             <ImageView
                 android:id="@+id/img_user_photo"
@@ -52,14 +52,13 @@
                 android:id="@+id/txt_balance"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
                 android:fontFamily="sans-serif"
                 android:text="@string/balance"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintHeight_percent="0.1"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHeight_percent="0.06"
+                app:layout_constraintStart_toStartOf="@+id/bar_prog_moto"
                 app:layout_constraintTop_toBottomOf="@+id/img_user_photo"
                 app:layout_constraintWidth_percent="0.5" />
 
@@ -88,6 +87,7 @@
                 android:text="@string/txt_return"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/textPrimary"
+                android:textStyle="bold"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toTopOf="@+id/val_meta"
                 app:layout_constraintEnd_toEndOf="@+id/val_meta"
@@ -142,10 +142,10 @@
                 android:layout_marginTop="60dp"
                 android:background="@drawable/btn_dashboard"
                 android:text="@string/invest"
+                android:onClick="onInvest"
                 android:textColor="@color/textPrimary"
                 app:layout_constraintEnd_toStartOf="@+id/btn_my_investment"
                 app:layout_constraintHeight_percent="0.15"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cons_bar"
                 app:layout_constraintWidth_percent="0.4" />
@@ -157,10 +157,10 @@
                 android:layout_marginTop="60dp"
                 android:background="@drawable/btn_dashboard"
                 android:text="@string/my_investment"
+                android:onClick="onMyInvestment"
                 android:textColor="@color/textPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.15"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/btn_invest"
                 app:layout_constraintTop_toBottomOf="@+id/cons_bar"
                 app:layout_constraintWidth_percent="0.4" />

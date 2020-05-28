@@ -25,14 +25,14 @@
     <string name="balance">Balance</string>
     <string name="history">Historial</string>
     <string name="home">Home</string>
-        // Investor
-        <string name="txt_return">Retorno</string>
-        <string name="invest">Invertir</string>
-        <string name="my_investment">Mi inversión</string>
-        // Worker
-        <string name="txt_goal">Meta</string>
-        <string name="lend">Prestar</string>
-        <string name="my_loan">Mi prestamo</string>
+    // Investor
+    <string name="txt_return">Retorno</string>
+    <string name="invest">Invertir</string>
+    <string name="my_investment">Mi inversión</string>
+    // Worker
+    <string name="txt_goal">Meta</string>
+    <string name="lend">Solicitar préstamo</string>
+    <string name="my_loan">Mi prestamo</string>
 
     // Menu
     <string name="profile">Perfil</string>
@@ -56,4 +56,15 @@
         <item>Pasaporte</item>
         <item>Cédula de extranjería</item>
     </string-array>
+
+    // Lend
+    <string-array name="lend_reason">
+        <item>¿En qué lo va a utilizar?</item>
+        <item>Comprar moto</item>
+        <item>Comprar SOAT</item>
+        <item>Renovar licencia</item>
+        <item>Renovar tecnomecánica</item>
+        <item>Reparación de vehículo</item>
+    </string-array>
+
 </resources>

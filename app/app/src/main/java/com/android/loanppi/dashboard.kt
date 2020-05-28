@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 
@@ -43,13 +44,13 @@ class dashboard : AppCompatActivity() {
             R.id.menu_i_home -> { replaceFragment(main_investor()) ; true }
             R.id.menu_i_profile -> { replaceFragment(profile()) ; true }
             R.id.menu_i_invest -> {  true }
-            R.id.menu_i_my_investment -> { true }
+            R.id.menu_i_my_investment -> { replaceFragment(my_investment()) ; true }
             R.id.menu_i_history -> { true }
             R.id.menu_i_signout -> { finish() ; true }
 
             R.id.menu_w_home -> { replaceFragment(main_worker()) ; true }
             R.id.menu_w_profile -> { replaceFragment(profile()) ; true }
-            R.id.menu_w_lend -> {  ; true }
+            R.id.menu_w_lend -> { replaceFragment(lend()) ; true }
             R.id.menu_w_my_loan -> { replaceFragment(my_loan()) ; true }
             R.id.menu_w_history -> { true }
             R.id.menu_w_signout -> { finish() ; true }
@@ -69,4 +70,14 @@ class dashboard : AppCompatActivity() {
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
+
+    fun onLend(view: View) { replaceFragment(lend()) }
+
+    fun onMyLoan(view: View) { replaceFragment(my_loan()) }
+
+    fun onInvest(view: View) {
+
+    }
+
+    fun onMyInvestment(view: View) { replaceFragment(my_investment()) }
 }

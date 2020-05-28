@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main_worker">
+    tools:context=".dashboard" >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -25,15 +25,15 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
-                android:text="Hola, Santiago"
+                android:text="Hola, Yazmín"
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/subtitle"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="@+id/img_user_photo"
-                app:layout_constraintHeight_percent="0.06"
+                app:layout_constraintHeight_percent="0.05"
                 app:layout_constraintStart_toEndOf="@+id/img_user_photo"
                 app:layout_constraintTop_toTopOf="@+id/img_user_photo"
-                app:layout_constraintWidth_percent="0.32" />
+                app:layout_constraintWidth_percent="0.6" />
 
             <ImageView
                 android:id="@+id/img_user_photo"
@@ -41,6 +41,7 @@
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:onClick="onLend"
                 android:contentDescription="@string/user_photo"
                 app:layout_constraintHeight_percent="0.1"
                 app:layout_constraintStart_toStartOf="parent"
@@ -48,30 +49,16 @@
                 app:layout_constraintWidth_percent="0.2"
                 app:srcCompat="@drawable/user" />
 
-            <Button
-                android:id="@+id/btn_menu"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="#00FFFFFF"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.08"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.13" />
-
             <TextView
                 android:id="@+id/txt_balance"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
-                android:fontFamily="sans-serif"
                 android:text="@string/balance"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintHeight_percent="0.1"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHeight_percent="0.06"
+                app:layout_constraintStart_toStartOf="@+id/bar_prog_moto"
                 app:layout_constraintTop_toBottomOf="@+id/img_user_photo"
                 app:layout_constraintWidth_percent="0.5" />
 
@@ -100,6 +87,7 @@
                 android:text="@string/txt_goal"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/textPrimary"
+                android:textStyle="bold"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toTopOf="@+id/val_meta"
                 app:layout_constraintEnd_toEndOf="@+id/val_meta"
@@ -154,10 +142,10 @@
                 android:layout_marginTop="60dp"
                 android:background="@drawable/btn_dashboard"
                 android:text="@string/lend"
+                android:onClick="onLend"
                 android:textColor="@color/textPrimary"
                 app:layout_constraintEnd_toStartOf="@+id/btn_my_loan"
                 app:layout_constraintHeight_percent="0.15"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cons_bar"
                 app:layout_constraintWidth_percent="0.4" />
@@ -169,10 +157,10 @@
                 android:layout_marginTop="60dp"
                 android:background="@drawable/btn_dashboard"
                 android:text="@string/my_loan"
+                android:onClick="onMyLoan"
                 android:textColor="@color/textPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.15"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/btn_lend"
                 app:layout_constraintTop_toBottomOf="@+id/cons_bar"
                 app:layout_constraintWidth_percent="0.4" />
