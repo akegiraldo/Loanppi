@@ -1,14 +1,531 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".business">
+    tools:context=".main">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Business" />
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background_inside"
+            android:paddingBottom="16dp"
+            tools:context=".dashboard">
+
+            <TextView
+                android:id="@+id/txt_resumen"
+                android:layout_width="429dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="2dp"
+                android:background="#F6D6A6"
+                android:gravity="center"
+                android:text="Cuotas"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/txt_historial"
+                app:layout_constraintStart_toStartOf="@+id/txt_historial"
+                app:layout_constraintTop_toBottomOf="@+id/textView57" />
+
+            <TextView
+                android:id="@+id/txt_historial"
+                android:layout_width="421dp"
+                android:layout_height="27dp"
+                android:layout_marginTop="24dp"
+                android:background="#F6D6A6"
+                android:gravity="center"
+                android:text="Historial"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_porc" />
+
+            <TextView
+                android:id="@+id/textView57"
+                android:layout_width="76dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="24dp"
+                android:enabled="false"
+                android:text="TextView"
+                app:layout_constraintEnd_toEndOf="@+id/txt_monto"
+                app:layout_constraintStart_toStartOf="@+id/txt_monto"
+                app:layout_constraintTop_toBottomOf="@+id/txt_monto" />
+
+            <TextView
+                android:id="@+id/textView54"
+                android:layout_width="76dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="24dp"
+                android:enabled="false"
+                android:fadeScrollbars="false"
+                android:text="TextView"
+                app:layout_constraintEnd_toEndOf="@+id/txt_cuotas "
+                app:layout_constraintTop_toBottomOf="@+id/txt_cuotas " />
+
+            <TextView
+                android:id="@+id/txt_monto"
+                android:layout_width="76dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="Monto"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/textView54"
+                app:layout_constraintStart_toStartOf="@+id/textView54"
+                app:layout_constraintTop_toBottomOf="@+id/textView54" />
+
+            <TextView
+                android:id="@+id/txt_cuotas "
+                android:layout_width="76dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="Cuotas"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/textView51"
+                app:layout_constraintStart_toStartOf="@+id/textView51"
+                app:layout_constraintTop_toBottomOf="@+id/textView51" />
+
+            <TextView
+                android:id="@+id/textView51"
+                android:layout_width="76dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="24dp"
+                android:enabled="false"
+                android:text="TextView"
+                app:layout_constraintEnd_toEndOf="@+id/txt_rate"
+                app:layout_constraintStart_toStartOf="@+id/txt_rate"
+                app:layout_constraintTop_toBottomOf="@+id/txt_rate" />
+
+            <TextView
+                android:id="@+id/txt_debt"
+                android:layout_width="76dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="Deuda"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/txt_restante_value"
+                app:layout_constraintStart_toStartOf="@+id/txt_restante_value"
+                app:layout_constraintTop_toBottomOf="@+id/txt_restante_value" />
+
+            <TextView
+                android:id="@+id/txt_dueda_value"
+                android:layout_width="76dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="@+id/txt_debt"
+                app:layout_constraintStart_toStartOf="@+id/txt_debt"
+                app:layout_constraintTop_toBottomOf="@+id/txt_debt" />
+
+            <TextView
+                android:id="@+id/txt_restante_value"
+                android:layout_width="76dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintStart_toStartOf="@+id/txt_restante"
+                app:layout_constraintTop_toBottomOf="@+id/txt_restante" />
+
+            <TextView
+                android:id="@+id/txt_total_value"
+                android:layout_width="76dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="@+id/txt_total"
+                app:layout_constraintStart_toStartOf="@+id/txt_total"
+                app:layout_constraintTop_toBottomOf="@+id/txt_total" />
+
+            <TextView
+                android:id="@+id/txt_restante"
+                android:layout_width="76dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="Restante"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/txt_total_value"
+                app:layout_constraintStart_toStartOf="@+id/txt_total_value"
+                app:layout_constraintTop_toBottomOf="@+id/txt_total_value" />
+
+            <TextView
+                android:id="@+id/txt_month_value"
+                android:layout_width="76dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="@+id/txt_month"
+                app:layout_constraintStart_toStartOf="@+id/txt_month"
+                app:layout_constraintTop_toBottomOf="@+id/txt_month" />
+
+            <TextView
+                android:id="@+id/txt_mensual_value"
+                android:layout_width="76dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="@+id/txt_mensual"
+                app:layout_constraintStart_toStartOf="@+id/txt_mensual"
+                app:layout_constraintTop_toBottomOf="@+id/txt_mensual" />
+
+            <TextView
+                android:id="@+id/txt_pagar"
+                android:layout_width="76dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="A Pagar"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/txt_mensual_value"
+                app:layout_constraintStart_toStartOf="@+id/txt_mensual_value"
+                app:layout_constraintTop_toBottomOf="@+id/txt_mensual_value" />
+
+            <TextView
+                android:id="@+id/txt_pagar_value"
+                android:layout_width="76dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="@+id/txt_pagar"
+                app:layout_constraintStart_toStartOf="@+id/txt_pagar"
+                app:layout_constraintTop_toBottomOf="@+id/txt_pagar" />
+
+            <TextView
+                android:id="@+id/txt_mensual"
+                android:layout_width="76dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="Menual"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/txt_month_value"
+                app:layout_constraintStart_toStartOf="@+id/txt_month_value"
+                app:layout_constraintTop_toBottomOf="@+id/txt_month_value" />
+
+            <TextView
+                android:id="@+id/txt_semanal_value"
+                android:layout_width="76dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="@+id/txt_semanal"
+                app:layout_constraintTop_toBottomOf="@+id/txt_semanal" />
+
+            <TextView
+                android:id="@+id/txt_porcentaje_value"
+                android:layout_width="76dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="@+id/txt_porcentaje"
+                app:layout_constraintStart_toStartOf="@+id/txt_porcentaje"
+                app:layout_constraintTop_toBottomOf="@+id/txt_porcentaje" />
+
+            <TextView
+                android:id="@+id/txt_prestado_value"
+                android:layout_width="76dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="@+id/txt_loan"
+                app:layout_constraintStart_toStartOf="@+id/txt_loan"
+                app:layout_constraintTop_toBottomOf="@+id/txt_loan" />
+
+            <TextView
+                android:id="@+id/txt_semanal"
+                android:layout_width="76dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="Semanal"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/txt_porcentaje_value"
+                app:layout_constraintStart_toStartOf="@+id/txt_porcentaje_value"
+                app:layout_constraintTop_toBottomOf="@+id/txt_porcentaje_value" />
+
+            <TextView
+                android:id="@+id/txt_loan"
+                android:layout_width="76dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="Prestado"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/txt_semanal_value"
+                app:layout_constraintStart_toStartOf="@+id/txt_semanal_value"
+                app:layout_constraintTop_toBottomOf="@+id/txt_semanal_value" />
+
+            <SeekBar
+                android:id="@+id/bar_prog_moto2"
+                android:layout_width="413dp"
+                android:layout_height="82dp"
+                android:layout_marginTop="32dp"
+                android:background="#0D272525"
+                android:progress="30"
+                android:progressBackgroundTint="#000000"
+                android:progressTint="@color/loanppi"
+                android:thumb="@drawable/moto1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.09"
+                app:layout_constraintHorizontal_bias="0.612"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_prestamo"
+                app:layout_constraintWidth_percent="0.8"
+                app:tickMarkTint="#000000" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="122dp"
+                android:layout_height="82dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="20dp"
+                android:contentDescription="@string/profile"
+                android:src="@drawable/user"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/greetings"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.031" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="241dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="122dp" />
+
+            <TextView
+                android:id="@+id/greetings"
+                android:layout_width="127dp"
+                android:layout_height="33dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="88dp"
+                android:text="Hola, usuario"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintTop_toTopOf="@+id/imageView2"
+                app:layout_constraintVertical_bias="0.076" />
+
+            <TextView
+                android:id="@+id/txt_prestamo"
+                android:layout_width="149dp"
+                android:layout_height="42dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="36dp"
+                android:text="Mi préstamo"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/guideline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.097"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView2"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/txt_meta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Meta"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/txt_meta_amount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.913"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.911" />
+
+            <TextView
+                android:id="@+id/txt_meta_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                app:layout_constraintBottom_toTopOf="@+id/guideline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.913"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline2"
+                app:layout_constraintVertical_bias="0.78" />
+
+            <TextView
+                android:id="@+id/txt_porc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.318"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bar_prog_moto2" />
+
+            <TextView
+                android:id="@+id/txt_rate"
+                android:layout_width="76dp"
+                android:layout_height="23dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:text="Intereses"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/txt_porcentaje"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_historial" />
+
+            <TextView
+                android:id="@+id/txt_porcentaje"
+                android:layout_width="76dp"
+                android:layout_height="23dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:text="Porcentaje"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/txt_month"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/txt_rate"
+                app:layout_constraintTop_toBottomOf="@+id/txt_historial" />
+
+            <TextView
+                android:id="@+id/txt_month"
+                android:layout_width="76dp"
+                android:layout_height="23dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:text="Mensual"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/txt_total"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/txt_porcentaje"
+                app:layout_constraintTop_toBottomOf="@+id/txt_historial" />
+
+            <TextView
+                android:id="@+id/txt_total"
+                android:layout_width="76dp"
+                android:layout_height="23dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:text="Total"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/txt_month"
+                app:layout_constraintTop_toBottomOf="@+id/txt_historial" />
+
+            <TextView
+                android:id="@+id/txt_number"
+                android:layout_width="80dp"
+                android:layout_height="23dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:text="# Cuota "
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/textView57"
+                app:layout_constraintStart_toStartOf="@+id/textView57"
+                app:layout_constraintTop_toBottomOf="@+id/txt_resumen" />
+
+            <TextView
+                android:id="@+id/txt_number_value"
+                android:layout_width="80dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="@+id/txt_number"
+                app:layout_constraintStart_toStartOf="@+id/txt_number"
+                app:layout_constraintTop_toBottomOf="@+id/txt_number" />
+
+            <TextView
+                android:id="@+id/txt_amount_value"
+                android:layout_width="80dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="@+id/txt_amount"
+                app:layout_constraintStart_toStartOf="@+id/txt_amount"
+                app:layout_constraintTop_toBottomOf="@+id/txt_amount" />
+
+            <TextView
+                android:id="@+id/txt_date_value"
+                android:layout_width="80dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="@+id/txt_date"
+                app:layout_constraintStart_toStartOf="@+id/txt_date"
+                app:layout_constraintTop_toBottomOf="@+id/txt_date" />
+
+            <TextView
+                android:id="@+id/txt_pendiente_value"
+                android:layout_width="80dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="@+id/txt_pendiente"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/txt_pendiente"
+                app:layout_constraintTop_toBottomOf="@+id/txt_pendiente" />
+
+            <TextView
+                android:id="@+id/txt_amount"
+                android:layout_width="80dp"
+                android:layout_height="23dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:text="Monto"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/txt_prestado_value"
+                app:layout_constraintStart_toStartOf="@+id/txt_prestado_value"
+                app:layout_constraintTop_toBottomOf="@+id/txt_resumen" />
+
+            <TextView
+                android:id="@+id/txt_date"
+                android:layout_width="80dp"
+                android:layout_height="23dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:text="Fecha"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/txt_pagar_value"
+                app:layout_constraintStart_toStartOf="@+id/txt_pagar_value"
+                app:layout_constraintTop_toBottomOf="@+id/txt_resumen" />
+
+            <TextView
+                android:id="@+id/txt_pendiente"
+                android:layout_width="80dp"
+                android:layout_height="23dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:text="Pendiente"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/txt_dueda_value"
+                app:layout_constraintStart_toStartOf="@+id/txt_dueda_value"
+                app:layout_constraintTop_toBottomOf="@+id/txt_resumen" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </FrameLayout>
