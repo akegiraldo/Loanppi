@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".lend">
+    tools:context=".invest">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -21,11 +21,11 @@
             tools:context=".dashboard">
 
             <TextView
-                android:id="@+id/txt_title_lend"
+                android:id="@+id/txt_title_invest"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="16dp"
-                android:text="Nuevo préstamo"
+                android:text="Nueva inversión"
                 android:textAlignment="center"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
@@ -35,23 +35,54 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.8" />
 
-            <EditText
-                android:id="@+id/edit_lend_amount"
+            <TextView
+                android:id="@+id/txt_money_available"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="32dp"
+                android:text="Cantidad disponible:"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/textPrimary"
+                android:textStyle="bold"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toStartOf="@+id/txt_value_money_available"
+                app:layout_constraintHeight_percent="0.06"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_title_invest"
+                app:layout_constraintWidth_percent="0.4" />
+
+            <TextView
+                android:id="@+id/txt_value_money_available"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="32dp"
+                android:text="0'000.000 $"
+                android:textColor="@color/textPrimary"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.06"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/txt_money_available"
+                app:layout_constraintTop_toBottomOf="@+id/txt_title_invest"
+                app:layout_constraintWidth_percent="0.4" />
+
+            <EditText
+                android:id="@+id/edit_invest_amount"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="30dp"
                 android:ems="10"
-                android:hint="¿Cuánto necesita?"
+                android:hint="¿Cuánto quiere invertir?"
                 android:inputType="number"
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.08"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_title_lend"
+                app:layout_constraintTop_toBottomOf="@+id/txt_money_available"
                 app:layout_constraintWidth_percent="0.6" />
 
             <Spinner
-                android:id="@+id/spin_lend_reason"
+                android:id="@+id/spin_time_to_return"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="24dp"
@@ -60,11 +91,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.08"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_lend_amount"
+                app:layout_constraintTop_toBottomOf="@+id/edit_invest_amount"
                 app:layout_constraintWidth_percent="0.6" />
 
             <TextView
-                android:id="@+id/txt_lend_details"
+                android:id="@+id/txt_invest_details"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="32dp"
@@ -75,11 +106,11 @@
                 app:autoSizeTextType="uniform"
                 app:layout_constraintHeight_percent="0.06"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spin_lend_reason"
+                app:layout_constraintTop_toBottomOf="@+id/spin_time_to_return"
                 app:layout_constraintWidth_percent="0.6" />
 
             <TextView
-                android:id="@+id/txt_time_to_pay"
+                android:id="@+id/txt_time_to_return"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="24dp"
@@ -87,15 +118,15 @@
                 android:textAlignment="viewEnd"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintEnd_toStartOf="@+id/txt_value_time_to_pay"
+                app:layout_constraintEnd_toStartOf="@+id/txt_value_time_to_return"
                 app:layout_constraintHeight_percent="0.035"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_lend_details"
+                app:layout_constraintTop_toBottomOf="@+id/txt_invest_details"
                 app:layout_constraintWidth_percent="0.4" />
 
             <TextView
-                android:id="@+id/txt_value_time_to_pay"
+                android:id="@+id/txt_value_time_to_return"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="24dp"
@@ -106,26 +137,26 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.035"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/txt_time_to_pay"
-                app:layout_constraintTop_toBottomOf="@+id/txt_lend_details"
+                app:layout_constraintStart_toEndOf="@+id/txt_time_to_return"
+                app:layout_constraintTop_toBottomOf="@+id/txt_invest_details"
                 app:layout_constraintWidth_percent="0.4" />
 
             <TextView
-                android:id="@+id/txt_to_pay_weekly"
+                android:id="@+id/txt_return_weekly"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="24dp"
-                android:text="Pago semanal:"
+                android:text="Retorno semanal:"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintEnd_toEndOf="@+id/txt_time_to_pay"
+                app:layout_constraintEnd_toEndOf="@+id/txt_time_to_return"
                 app:layout_constraintHeight_percent="0.035"
-                app:layout_constraintTop_toBottomOf="@+id/txt_time_to_pay"
+                app:layout_constraintTop_toBottomOf="@+id/txt_time_to_return"
                 app:layout_constraintWidth_percent="0.4" />
 
             <TextView
-                android:id="@+id/txt_value_to_pay_weekly"
+                android:id="@+id/txt_value_return_weekly"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="24dp"
@@ -134,26 +165,26 @@
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintHeight_percent="0.035"
-                app:layout_constraintStart_toStartOf="@+id/txt_value_time_to_pay"
-                app:layout_constraintTop_toBottomOf="@+id/txt_value_time_to_pay"
+                app:layout_constraintStart_toStartOf="@+id/txt_value_time_to_return"
+                app:layout_constraintTop_toBottomOf="@+id/txt_value_time_to_return"
                 app:layout_constraintWidth_percent="0.4" />
 
             <TextView
-                android:id="@+id/txt_to_pay_monthly"
+                android:id="@+id/txt_return_monthly"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="24dp"
-                android:text="Pago mensual:"
+                android:text="Retorno mensual:"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintEnd_toEndOf="@+id/txt_to_pay_weekly"
+                app:layout_constraintEnd_toEndOf="@+id/txt_return_weekly"
                 app:layout_constraintHeight_percent="0.035"
-                app:layout_constraintTop_toBottomOf="@+id/txt_to_pay_weekly"
+                app:layout_constraintTop_toBottomOf="@+id/txt_return_weekly"
                 app:layout_constraintWidth_percent="0.4" />
 
             <TextView
-                android:id="@+id/txt_value_to_pay_monthly"
+                android:id="@+id/txt_value_return_monthly"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="24dp"
@@ -162,12 +193,12 @@
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintHeight_percent="0.035"
-                app:layout_constraintStart_toStartOf="@+id/txt_value_to_pay_weekly"
-                app:layout_constraintTop_toBottomOf="@+id/txt_value_to_pay_weekly"
+                app:layout_constraintStart_toStartOf="@+id/txt_value_return_weekly"
+                app:layout_constraintTop_toBottomOf="@+id/txt_value_return_weekly"
                 app:layout_constraintWidth_percent="0.4" />
 
             <TextView
-                android:id="@+id/txt_interests"
+                android:id="@+id/txt_interests_wins"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="24dp"
@@ -175,13 +206,13 @@
                 android:textAlignment="viewEnd"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintEnd_toEndOf="@+id/txt_to_pay_monthly"
+                app:layout_constraintEnd_toEndOf="@+id/txt_return_monthly"
                 app:layout_constraintHeight_percent="0.035"
-                app:layout_constraintTop_toBottomOf="@+id/txt_to_pay_monthly"
+                app:layout_constraintTop_toBottomOf="@+id/txt_return_monthly"
                 app:layout_constraintWidth_percent="0.4" />
 
             <TextView
-                android:id="@+id/txt_value_interests"
+                android:id="@+id/txt_value_interests_wins"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="24dp"
@@ -190,26 +221,26 @@
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintHeight_percent="0.035"
-                app:layout_constraintStart_toStartOf="@+id/txt_value_to_pay_monthly"
-                app:layout_constraintTop_toBottomOf="@+id/txt_value_to_pay_monthly"
+                app:layout_constraintStart_toStartOf="@+id/txt_value_return_monthly"
+                app:layout_constraintTop_toBottomOf="@+id/txt_value_return_monthly"
                 app:layout_constraintWidth_percent="0.4" />
 
             <TextView
-                android:id="@+id/txt_total_to_pay"
+                android:id="@+id/txt_return_total"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="24dp"
-                android:text="Total a pagar:"
+                android:text="Total a recibir:"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintEnd_toEndOf="@+id/txt_interests"
+                app:layout_constraintEnd_toEndOf="@+id/txt_interests_wins"
                 app:layout_constraintHeight_percent="0.035"
-                app:layout_constraintTop_toBottomOf="@+id/txt_interests"
+                app:layout_constraintTop_toBottomOf="@+id/txt_interests_wins"
                 app:layout_constraintWidth_percent="0.4" />
 
             <TextView
-                android:id="@+id/txt_value_total_to_pay"
+                android:id="@+id/txt_value_return_total"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="24dp"
@@ -218,25 +249,24 @@
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintHeight_percent="0.035"
-                app:layout_constraintStart_toStartOf="@+id/txt_value_interests"
-                app:layout_constraintTop_toBottomOf="@+id/txt_value_interests"
+                app:layout_constraintStart_toStartOf="@+id/txt_value_interests_wins"
+                app:layout_constraintTop_toBottomOf="@+id/txt_value_interests_wins"
                 app:layout_constraintWidth_percent="0.4" />
 
             <Button
-                android:id="@+id/btn_let_lend"
+                android:id="@+id/btn_let_invest"
                 android:layout_width="206dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="60dp"
                 android:background="@drawable/btn_background_white"
-                android:text="Prestar"
+                android:text="Invertir"
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/btn_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.06"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_total_to_pay"
+                app:layout_constraintTop_toBottomOf="@+id/txt_return_total"
                 app:layout_constraintWidth_percent="0.5" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </FrameLayout>

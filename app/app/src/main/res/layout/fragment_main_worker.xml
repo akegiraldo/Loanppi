@@ -29,7 +29,6 @@
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/subtitle"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toBottomOf="@+id/img_user_photo"
                 app:layout_constraintHeight_percent="0.05"
                 app:layout_constraintStart_toEndOf="@+id/img_user_photo"
                 app:layout_constraintTop_toTopOf="@+id/img_user_photo"
