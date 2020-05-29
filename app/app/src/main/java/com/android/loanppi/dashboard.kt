@@ -43,7 +43,7 @@ class dashboard : AppCompatActivity() {
         return when (item.itemId) {
             R.id.menu_i_home -> { replaceFragment(main_investor()) ; true }
             R.id.menu_i_profile -> { replaceFragment(profile()) ; true }
-            R.id.menu_i_invest -> {  true }
+            R.id.menu_i_invest -> { replaceFragment(invest()) ; true }
             R.id.menu_i_my_investment -> { replaceFragment(my_investment()) ; true }
             R.id.menu_i_history -> { true }
             R.id.menu_i_signout -> { finish() ; true }
@@ -75,9 +75,7 @@ class dashboard : AppCompatActivity() {
 
     fun onMyLoan(view: View) { replaceFragment(my_loan()) }
 
-    fun onInvest(view: View) {
-
-    }
+    fun onInvest(view: View) { replaceFragment(invest()) }
 
     fun onMyInvestment(view: View) { replaceFragment(my_investment()) }
 }

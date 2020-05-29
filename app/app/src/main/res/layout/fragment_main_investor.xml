@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main_investor">
+    tools:context=".dashboard">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             tools:context=".dashboard">
 
             <TextView
-                android:id="@+id/txt_saludo"
+                android:id="@+id/txt_grettings"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
@@ -49,90 +49,90 @@
                 app:srcCompat="@drawable/user" />
 
             <TextView
-                android:id="@+id/txt_balance"
+                android:id="@+id/txt_my_invest_balance"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="24dp"
-                android:fontFamily="sans-serif"
+                android:layout_marginTop="32dp"
                 android:text="@string/balance"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintHeight_percent="0.06"
-                app:layout_constraintStart_toStartOf="@+id/bar_prog_moto"
+                app:layout_constraintStart_toStartOf="@+id/bar_progress_moto_bar"
                 app:layout_constraintTop_toBottomOf="@+id/img_user_photo"
                 app:layout_constraintWidth_percent="0.5" />
 
+            <TextView
+                android:id="@+id/txt_return_amount"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
+                android:text="Retorno"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/textPrimary"
+                android:textStyle="bold"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toTopOf="@+id/txt_value_return_amount"
+                app:layout_constraintEnd_toEndOf="@+id/txt_value_return_amount"
+                app:layout_constraintHeight_percent="0.04"
+                app:layout_constraintWidth_percent="0.25" />
+
+            <TextView
+                android:id="@+id/txt_value_return_amount"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="0'000.000"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/textPrimary"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toTopOf="@+id/bar_progress_moto_bar"
+                app:layout_constraintEnd_toEndOf="@+id/bar_progress_moto_bar"
+                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintWidth_percent="0.2" />
+
             <SeekBar
-                android:id="@+id/bar_prog_moto"
+                android:id="@+id/bar_progress_moto_bar"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="60dp"
                 android:background="#0D272525"
-                android:progress="30"
+                android:progress="0"
                 android:progressBackgroundTint="#000000"
                 android:progressTint="@color/loanppi"
                 android:thumb="@drawable/moto1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.09"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_balance"
+                app:layout_constraintTop_toBottomOf="@+id/txt_my_invest_balance"
                 app:layout_constraintWidth_percent="0.8"
                 app:tickMarkTint="#000000" />
 
-            <TextView
-                android:id="@+id/txt_meta"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginBottom="8dp"
-                android:text="@string/txt_return"
-                android:textAlignment="viewEnd"
-                android:textColor="@color/textPrimary"
-                android:textStyle="bold"
-                app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toTopOf="@+id/val_meta"
-                app:layout_constraintEnd_toEndOf="@+id/val_meta"
-                app:layout_constraintHeight_percent="0.04"
-                app:layout_constraintWidth_percent="0.25" />
-
-            <TextView
-                android:id="@+id/val_meta"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:text="830.000"
-                android:textAlignment="viewEnd"
-                android:textColor="@color/textPrimary"
-                app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toTopOf="@+id/bar_prog_moto"
-                app:layout_constraintEnd_toEndOf="@+id/bar_prog_moto"
-                app:layout_constraintHeight_percent="0.03"
-                app:layout_constraintWidth_percent="0.2" />
-
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cons_bar"
+                android:id="@+id/container_amount_returned"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginEnd="10dp"
-                app:layout_constraintEnd_toEndOf="@+id/bar_prog_moto"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toEndOf="@+id/bar_progress_moto_bar"
                 app:layout_constraintHeight_percent="0.03"
-                app:layout_constraintStart_toStartOf="@+id/bar_prog_moto"
-                app:layout_constraintTop_toBottomOf="@+id/bar_prog_moto"
+                app:layout_constraintStart_toStartOf="@+id/bar_progress_moto_bar"
+                app:layout_constraintTop_toBottomOf="@+id/bar_progress_moto_bar"
                 app:layout_constraintWidth_percent="0.8">
 
                 <TextView
-                    android:id="@+id/bar_prog_value"
+                    android:id="@+id/txt_value_amount_returned"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:text="249.000"
-                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:text="0'000.000"
                     android:textColor="@color/textPrimary"
                     app:autoSizeTextType="uniform"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHeight_percent="1"
-                    app:layout_constraintHorizontal_bias="0.31"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.2" />
+                    app:layout_constraintWidth_percent="0.25" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
@@ -147,7 +147,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/btn_my_investment"
                 app:layout_constraintHeight_percent="0.15"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cons_bar"
+                app:layout_constraintTop_toBottomOf="@+id/container_amount_returned"
                 app:layout_constraintWidth_percent="0.4" />
 
             <Button
@@ -162,7 +162,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.15"
                 app:layout_constraintStart_toEndOf="@+id/btn_invest"
-                app:layout_constraintTop_toBottomOf="@+id/cons_bar"
+                app:layout_constraintTop_toBottomOf="@+id/container_amount_returned"
                 app:layout_constraintWidth_percent="0.4" />
 
             <Button
