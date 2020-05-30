@@ -43,16 +43,6 @@ class landing : AppCompatActivity() {
         builder.show()
     }
 
-    fun onFb(view: View) {
-        type = "w"
-        onDashboard(view)
-    }
-
-    fun onGo(view: View) {
-        type = "i"
-        onDashboard(view)
-    }
-
     fun onDashboard(view: View) {
         val intent = Intent(this, dashboard::class.java)
         intent.putExtra("type", type)

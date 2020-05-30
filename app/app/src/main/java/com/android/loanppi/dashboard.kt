@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -19,7 +20,6 @@ class dashboard : AppCompatActivity() {
     lateinit var mGoogleSignInClient: GoogleSignInClient
     lateinit var gso: GoogleSignInOptions
     var type: String? = ""
-    var name: String? = ""
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,21 +30,20 @@ class dashboard : AppCompatActivity() {
 
         if (bundle != null) {
             type = bundle.getString("type")
-            name = bundle.getString("name")
             gso = bundle.get("gso") as GoogleSignInOptions
             mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         }
 
-        //loadFragment(profile())
+        loadFragment(profile(bundle))
 
-        val args = Bundle()
+        /*val args = Bundle()
         args.putString("name", name)
 
         if (type == "worker") {
             loadFragment(main_worker())
         } else {
             loadFragment(main_investor(args))
-        }
+        }*/
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -60,15 +59,15 @@ class dashboard : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle item selection
         return when (item.itemId) {
-            R.id.menu_i_home -> { true }
-            R.id.menu_i_profile -> { replaceFragment(profile()) ; true }
+            R.id.menu_i_home -> { replaceFragment(main_investor(null)) ; true }
+            R.id.menu_i_profile -> { replaceFragment(profile(null)) ; true }
             R.id.menu_i_invest -> { replaceFragment(invest()) ; true }
             R.id.menu_i_my_investment -> { replaceFragment(my_investment()) ; true }
             R.id.menu_i_history -> { true }
             R.id.menu_i_signout -> { signOut() ; true }
 
             R.id.menu_w_home -> { replaceFragment(main_worker()) ; true }
-            R.id.menu_w_profile -> { replaceFragment(profile()) ; true }
+            R.id.menu_w_profile -> { replaceFragment(profile(null)) ; true }
             R.id.menu_w_lend -> { replaceFragment(lend()) ; true }
             R.id.menu_w_my_loan -> { replaceFragment(my_loan()) ; true }
             R.id.menu_w_history -> { true }
