@@ -83,10 +83,10 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
-                android:background="@color/loanppi"
+                android:background="@drawable/btn_background_white"
                 android:text="@string/btn_investor"
-                android:textColor="@android:color/primary_text_dark"
-                android:textSize="15sp"
+                android:textColor="@color/textPrimary"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@+id/btn_worker"
                 app:layout_constraintHeight_percent="0.07"
                 app:layout_constraintStart_toStartOf="parent"
@@ -98,10 +98,10 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginEnd="8dp"
-                android:background="@color/loanppi"
+                android:background="@drawable/btn_background_white"
                 android:text="@string/btn_worker"
-                android:textColor="@android:color/primary_text_dark"
-                android:textSize="15sp"
+                android:textColor="@color/textPrimary"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.07"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -125,7 +125,7 @@
                 app:layout_constraintWidth_percent="0.5" />
 
             <Button
-                android:id="@+id/btn_facebook"
+                android:id="@+id/btn_s_facebook"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="32dp"
@@ -139,7 +139,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/txt_register_with"
                 app:layout_constraintWidth_percent="0.5" />
 
-            <Button
+            <!--<Button
                 android:id="@+id/btn_google"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -151,7 +151,18 @@
                 app:layout_constraintHeight_percent="0.08"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btn_facebook"
-                app:layout_constraintWidth_percent="0.5" />
+                app:layout_constraintWidth_percent="0.5" />-->
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/btn_s_google"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.08"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_s_facebook"
+                app:layout_constraintWidth_percent="0.5"></com.google.android.gms.common.SignInButton>
 
             <TextView
                 android:id="@+id/txt_signup_title"
