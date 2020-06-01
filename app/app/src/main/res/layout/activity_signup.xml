@@ -164,7 +164,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintWidth_percent="0.8" />
 
-                <!--<Button
+                <Button
                     android:id="@+id/btn_s_facebook"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -178,9 +178,9 @@
                     app:layout_constraintHeight_percent="0.25"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_register_with"
-                    app:layout_constraintWidth_percent="0.5" />-->
+                    app:layout_constraintWidth_percent="0.5" />
 
-                <com.facebook.login.widget.LoginButton
+                <!--<com.facebook.login.widget.LoginButton
                     android:id="@+id/btn_s_facebook"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -188,15 +188,14 @@
                     android:visibility="invisible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_register_with" />
+                    app:layout_constraintTop_toBottomOf="@+id/txt_register_with" />-->
 
                 <Button
                     android:id="@+id/btn_s_rappi"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginTop="24dp"
-                    android:background="@drawable/btn_dashboard"
-                    android:singleLine="false"
+                    android:background="@drawable/btn_background_orange"
                     android:text="@string/btn_rappi"
                     android:textSize="@dimen/btn_text_size"
                     android:visibility="invisible"
@@ -206,7 +205,22 @@
                     app:layout_constraintTop_toBottomOf="@+id/txt_register_with"
                     app:layout_constraintWidth_percent="0.5" />
 
-                <com.google.android.gms.common.SignInButton
+                <Button
+                    android:id="@+id/btn_s_google"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/btn_google"
+                    android:text="@string/btn_google"
+                    android:textSize="@dimen/btn_text_size"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_percent="0.25"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_s_facebook"
+                    app:layout_constraintWidth_percent="0.5" />
+
+                <!--<com.google.android.gms.common.SignInButton
                     android:id="@+id/btn_s_google"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -217,8 +231,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/btn_s_facebook"
                     app:layout_constraintWidth_percent="0.5">
-
-                </com.google.android.gms.common.SignInButton>
+                </com.google.android.gms.common.SignInButton>-->
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

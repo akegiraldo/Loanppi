@@ -37,7 +37,7 @@ class signup : AppCompatActivity() {
     var userType: String = ""
     private lateinit var btn_worker: Button
     private lateinit var btn_investor: Button
-    private lateinit var btn_google: SignInButton
+    private lateinit var btn_google: Button
     private lateinit var btn_facebook: Button
     private lateinit var btn_rappi: Button
     var loginMethod = ""
@@ -46,7 +46,7 @@ class signup : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
-        btn_google = findViewById<View>(R.id.btn_s_google) as SignInButton
+        btn_google = findViewById(R.id.btn_s_google)
         btn_facebook = findViewById<LoginButton>(R.id.btn_s_facebook)
         btn_rappi = findViewById<View>(R.id.btn_s_rappi) as Button
         btn_worker = findViewById<View>(R.id.btn_worker) as Button
@@ -76,6 +76,8 @@ class signup : AppCompatActivity() {
 
             callbackManager = CallbackManager.Factory.create()
 
+            LoginManager.getInstance()
+                .logInWithReadPermissions(this, Arrays.asList("email, public_profile"))
             LoginManager.getInstance().registerCallback(callbackManager,
                 object : FacebookCallback<LoginResult> {
                     override fun onSuccess(result: LoginResult?) {

@@ -52,16 +52,5 @@ class landing : AppCompatActivity() {
         intent.putExtra("type", type)
         startActivity(intent)
     }
-
-    override fun onDestroy() {
-        if (AccessToken.getCurrentAccessToken() != null) {
-            GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/",
-                null, HttpMethod.DELETE, GraphRequest.Callback {
-                    AccessToken.setCurrentAccessToken(null)
-                    LoginManager.getInstance().logOut()
-                }).executeAsync()
-        }
-        super.onDestroy()
-    }
 }
 

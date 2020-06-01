@@ -1,5 +1,6 @@
 package com.android.loanppi
 
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -8,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.facebook.AccessToken
 import com.facebook.GraphRequest
 import com.facebook.GraphResponse
@@ -38,6 +41,7 @@ class profile(bundle: Bundle?) : Fragment() {
     private lateinit var editFirstLastName: EditText
     private lateinit var editSecondLastName: EditText
     private lateinit var editEmailAdress: EditText
+    private lateinit var imgUserPhoto: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +59,7 @@ class profile(bundle: Bundle?) : Fragment() {
         editFirstLastName = view.findViewById(R.id.edit_first_last_name)
         editSecondLastName = view.findViewById(R.id.edit_second_last_name)
         editEmailAdress = view.findViewById(R.id.edit_email_adress)
+        imgUserPhoto = view.findViewById(R.id.img_user_photo)
 
 
         if (loginInfo?.get("loginMethod") == "google") {
@@ -91,13 +96,20 @@ class profile(bundle: Bundle?) : Fragment() {
         if (AccessToken.getCurrentAccessToken() != null) {
             val request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken()) { `object`, response ->
                 try {
-                    //here is the data that you want
-                    editFirstName.setText(`object`.getString("name"))
+                    val email = `object`.getString("email")
+                    val fullName = `object`.getString("name").split(" ")
+                    val id = `object`.getString("id")
+                    val urlUserPhoto = "https://graph.facebook.com/" + id + "/picture?type=normal"
 
-                    if (`object`.has("id")) {
-                        //handleSignInResultFacebook(`object`)
-                    } else {
-                        Log.d("FBLOGIN_FAILD", `object`.toString())
+                    editFirstName.setText(fullName[0])
+                    editFirstLastName.setText(fullName[1])
+                    editEmailAdress.setText(email)
+                    //imgUserPhoto.setImageResource()
+
+                    Glide.with(this).load(urlUserPhoto).into(imgUserPhoto)
+
+                    if (!`object`.has("id")) {
+                        Log.d("FBLOGIN_FAILED", `object`.toString())
                     }
 
                 } catch (e: Exception) {
@@ -106,7 +118,7 @@ class profile(bundle: Bundle?) : Fragment() {
             }
 
             val parameters = Bundle()
-            parameters.putString("fields", "name,email,id,picture.type(large)")
+            parameters.putString("fields", "name,email,id")
             request.parameters = parameters
             request.executeAsync()
         }

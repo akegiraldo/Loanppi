@@ -41,10 +41,6 @@ class dashboard : AppCompatActivity() {
         }
 
         loadFragment(profile(loginInfo))
-        /*if (AccessToken.getCurrentAccessToken() != null) {
-            LoginManager.getInstance()
-                .logInWithReadPermissions(this, Arrays.asList("email"))
-        }*/
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
