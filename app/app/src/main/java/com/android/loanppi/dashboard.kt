@@ -9,46 +9,47 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.facebook.AccessToken
+import com.facebook.GraphRequest
+import com.facebook.HttpMethod
+import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
+import java.util.*
 
 class dashboard : AppCompatActivity() {
 
-    lateinit var mGoogleSignInClient: GoogleSignInClient
-    lateinit var gso: GoogleSignInOptions
-    var type: String? = ""
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var gso: GoogleSignInOptions
+    private lateinit var userType: String
+    private lateinit var loginMethod: String
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
-        val bundle = intent.extras
+        val loginInfo: Bundle? = intent.extras
 
-        if (bundle != null) {
-            type = bundle.getString("type")
-            gso = bundle.get("gso") as GoogleSignInOptions
-            mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        userType = loginInfo?.get("userType") as String
+        loginMethod = loginInfo.get("loginMethod") as String
+
+        if (loginMethod == "google") {
+            gso = loginInfo.get("gso") as GoogleSignInOptions
+            mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         }
 
-        loadFragment(profile(bundle))
-
-        /*val args = Bundle()
-        args.putString("name", name)
-
-        if (type == "worker") {
-            loadFragment(main_worker())
-        } else {
-            loadFragment(main_investor(args))
+        loadFragment(profile(loginInfo))
+        /*if (AccessToken.getCurrentAccessToken() != null) {
+            LoginManager.getInstance()
+                .logInWithReadPermissions(this, Arrays.asList("email"))
         }*/
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
-        if (type == "worker") {
+        if (userType == "worker") {
             inflater.inflate(R.menu.menu_worker, menu)
         } else {
             inflater.inflate(R.menu.menu_investor, menu)
@@ -98,7 +99,16 @@ class dashboard : AppCompatActivity() {
     fun onMyInvestment(view: View) { replaceFragment(my_investment()) }
 
     private fun signOut() {
-        mGoogleSignInClient.signOut()
+        if (loginMethod == "google")
+            mGoogleSignInClient.signOut()
+        if (AccessToken.getCurrentAccessToken() != null) {
+            GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/",
+                null, HttpMethod.DELETE, GraphRequest.Callback {
+                    AccessToken.setCurrentAccessToken(null)
+                    LoginManager.getInstance().logOut()
+                }).executeAsync()
+        }
+
         finish()
     }
 }

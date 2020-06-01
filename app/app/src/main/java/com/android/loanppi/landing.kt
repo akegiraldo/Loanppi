@@ -11,6 +11,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
+import com.facebook.AccessToken
+import com.facebook.GraphRequest
+import com.facebook.HttpMethod
+import com.facebook.login.LoginManager
 
 class landing : AppCompatActivity() {
 
@@ -47,6 +51,17 @@ class landing : AppCompatActivity() {
         val intent = Intent(this, dashboard::class.java)
         intent.putExtra("type", type)
         startActivity(intent)
+    }
+
+    override fun onDestroy() {
+        if (AccessToken.getCurrentAccessToken() != null) {
+            GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/",
+                null, HttpMethod.DELETE, GraphRequest.Callback {
+                    AccessToken.setCurrentAccessToken(null)
+                    LoginManager.getInstance().logOut()
+                }).executeAsync()
+        }
+        super.onDestroy()
     }
 }
 

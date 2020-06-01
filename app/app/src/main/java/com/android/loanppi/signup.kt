@@ -1,8 +1,8 @@
 package com.android.loanppi
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -16,7 +16,11 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import android.widget.Toast
 import androidx.core.view.isVisible
-import java.security.KeyStore
+import com.facebook.*
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
+import com.facebook.login.widget.LoginButton
+import java.util.*
 
 
 class signup : AppCompatActivity() {
@@ -26,21 +30,24 @@ class signup : AppCompatActivity() {
     lateinit var mGoogleSignInClient: GoogleSignInClient
     var RC_SIGN_IN: Int = 1
 
-    // Variables that handles type of user
-    var type: String = ""
-    lateinit var btn_worker: Button
-    lateinit var btn_investor: Button
-    lateinit var btn_google: SignInButton
-    lateinit var btn_facebook: Button
-    lateinit var btn_rappi: Button
+    // Variables for login with Facebook
+    private lateinit var callbackManager: CallbackManager
 
+    // Variables that handles type of user
+    var userType: String = ""
+    private lateinit var btn_worker: Button
+    private lateinit var btn_investor: Button
+    private lateinit var btn_google: SignInButton
+    private lateinit var btn_facebook: Button
+    private lateinit var btn_rappi: Button
+    var loginMethod = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
         btn_google = findViewById<View>(R.id.btn_s_google) as SignInButton
-        btn_facebook = findViewById<View>(R.id.btn_s_facebook) as Button
+        btn_facebook = findViewById<LoginButton>(R.id.btn_s_facebook)
         btn_rappi = findViewById<View>(R.id.btn_s_rappi) as Button
         btn_worker = findViewById<View>(R.id.btn_worker) as Button
         btn_investor = findViewById<View>(R.id.btn_investor) as Button
@@ -49,22 +56,40 @@ class signup : AppCompatActivity() {
         btn_investor.setOnClickListener { toggle_btns_type(btn_investor) }
 
         // Login with Google
-        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
         btn_google.setOnClickListener {
-            if (type == "") {
-                Toast.makeText(this, "Por favor seleccione un tipo de usuario", Toast.LENGTH_LONG).show()
-            } else {
-                signup_goo()
-            }
+            loginMethod = "google"
+
+            gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build()
+
+            mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+            val signInIntent: Intent = mGoogleSignInClient.signInIntent
+            startActivityForResult(signInIntent, RC_SIGN_IN)
         }
 
         // Login with Facebook
+        btn_facebook.setOnClickListener(View.OnClickListener {
+            loginMethod = "facebook"
 
+            callbackManager = CallbackManager.Factory.create()
+
+            LoginManager.getInstance().registerCallback(callbackManager,
+                object : FacebookCallback<LoginResult> {
+                    override fun onSuccess(result: LoginResult?) {
+                        updateUI_F(AccessToken.getCurrentAccessToken())
+                    }
+                    override fun onCancel() {
+                        Log.d("Acción cancelada", "Login")
+                    }
+                    override fun onError(error: FacebookException?) {
+                        Log.d("Acción abortada", "Login")
+                    }
+                }
+            )
+        })
     }
 
     // Toggle buttons type
@@ -74,13 +99,13 @@ class signup : AppCompatActivity() {
         findViewById<TextView>(R.id.txt_register_with).isVisible = true
         if (btn_clicked == btn_worker) {
             btn_to_deselect = btn_investor
-            type = "worker"
+            userType = "worker"
             btn_facebook.isVisible = false
             btn_google.isVisible = false
             btn_rappi.isVisible = true
         } else {
             btn_to_deselect = btn_worker
-            type = "investor"
+            userType = "investor"
             btn_facebook.isVisible = true
             btn_google.isVisible = true
             btn_rappi.isVisible = false
@@ -92,44 +117,49 @@ class signup : AppCompatActivity() {
         btn_clicked.setTextColor(getColor(R.color.white))
     }
 
-    // Login with Google
-    private fun signup_goo() {
-        val signInIntent: Intent = mGoogleSignInClient.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RC_SIGN_IN) {
+        if (loginMethod == "google" && requestCode == RC_SIGN_IN) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleResult(task)
+        } else if (loginMethod == "facebook") {
+            callbackManager.onActivityResult(requestCode, resultCode, data)
         } else {
             Toast.makeText(this, "Error al ejecutar la orden :(", Toast.LENGTH_LONG).show()
         }
     }
 
+    // Login with Google
     private fun handleResult (completedTask: Task<GoogleSignInAccount>) {
         try {
             val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
             if (account != null) {
-                updateUI(account)
+                updateUI_G(account)
             }
         } catch (e: ApiException) {
             Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show()
         }
     }
 
-    private fun updateUI (account: GoogleSignInAccount) {
+    private fun updateUI_G (account: GoogleSignInAccount) {
         val intent = Intent(this, dashboard::class.java)
-        intent.putExtra("type", type)
+        intent.putExtra("userType", userType)
+        intent.putExtra("loginMethod", loginMethod)
         intent.putExtra("account", account)
         intent.putExtra("gso", gso)
         startActivity(intent)
     }
 
     // Login with Facebook
+    private fun updateUI_F (token: AccessToken) {
+        val intent = Intent(this, dashboard::class.java)
+        intent.putExtra("userType", userType)
+        intent.putExtra("loginMethod", loginMethod)
+        intent.putExtra("token", token)
+        startActivity(intent)
+    }
 
-
+    // Back to landing
     fun onBack(view: View) {
         finish()
     }

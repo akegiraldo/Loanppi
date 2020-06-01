@@ -1,12 +1,22 @@
 package com.android.loanppi
 
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.TextView
+import com.facebook.AccessToken
+import com.facebook.GraphRequest
+import com.facebook.GraphResponse
+import com.facebook.HttpMethod
+import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import org.json.JSONException
+import org.json.JSONObject
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -19,17 +29,18 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class profile(bundle: Bundle?) : Fragment() {
-    private var param1: String? = null
-    private var param2: String? = null
-    private val bundle_ : Bundle? = bundle
+    private val loginInfo : Bundle? = bundle
     private lateinit var account: GoogleSignInAccount
+
+    // Profile fields
+    private lateinit var editFirstName: EditText
+    private lateinit var editSecondName: EditText
+    private lateinit var editFirstLastName: EditText
+    private lateinit var editSecondLastName: EditText
+    private lateinit var editEmailAdress: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -39,8 +50,24 @@ class profile(bundle: Bundle?) : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
-        account = bundle_?.get("account") as GoogleSignInAccount
+        editFirstName = view.findViewById(R.id.edit_first_name)
+        editSecondName = view.findViewById(R.id.edit_second_name)
+        editFirstLastName = view.findViewById(R.id.edit_first_last_name)
+        editSecondLastName = view.findViewById(R.id.edit_second_last_name)
+        editEmailAdress = view.findViewById(R.id.edit_email_adress)
 
+
+        if (loginInfo?.get("loginMethod") == "google") {
+            loadGoogleInfo()
+        } else {
+            loadFacebookInfo()
+        }
+
+        return view
+    }
+
+    fun loadGoogleInfo() {
+        account = loginInfo?.get("account") as GoogleSignInAccount
         val email = account.email
         val names = account.givenName?.split(" ")
         val surnames = account.familyName?.split(" ")
@@ -53,12 +80,37 @@ class profile(bundle: Bundle?) : Fragment() {
         var secondLastName = ""
         if (surnames?.size == 2) { secondLastName = surnames.get(1) }
 
-        view.findViewById<TextView>(R.id.edit_first_name).setText(firstName)
-        view.findViewById<TextView>(R.id.edit_second_name).setText(secondName)
-        view.findViewById<TextView>(R.id.edit_first_last_name).setText(firstLastName)
-        view.findViewById<TextView>(R.id.edit_second_last_name).setText(secondLastName)
-        view.findViewById<TextView>(R.id.edit_email_adress).setText(email)
-
-        return view
+        editFirstName.setText(firstName)
+        editSecondName.setText(secondName)
+        editFirstLastName.setText(firstLastName)
+        editSecondLastName.setText(secondLastName)
+        editEmailAdress.setText(email)
     }
+
+    fun loadFacebookInfo(){
+        if (AccessToken.getCurrentAccessToken() != null) {
+            val request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken()) { `object`, response ->
+                try {
+                    //here is the data that you want
+                    editFirstName.setText(`object`.getString("name"))
+
+                    if (`object`.has("id")) {
+                        //handleSignInResultFacebook(`object`)
+                    } else {
+                        Log.d("FBLOGIN_FAILD", `object`.toString())
+                    }
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            val parameters = Bundle()
+            parameters.putString("fields", "name,email,id,picture.type(large)")
+            request.parameters = parameters
+            request.executeAsync()
+        }
+    }
+
+
 }
