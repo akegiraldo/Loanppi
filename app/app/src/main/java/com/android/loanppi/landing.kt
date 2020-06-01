@@ -52,5 +52,11 @@ class landing : AppCompatActivity() {
         intent.putExtra("type", type)
         startActivity(intent)
     }
+
+    fun checkFacebookLogin() {
+        if (AccessToken.getCurrentAccessToken() != null) {
+
+        }
+    }
 }
 

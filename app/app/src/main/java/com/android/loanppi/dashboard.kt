@@ -19,7 +19,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import java.util.*
 
 class dashboard : AppCompatActivity() {
-
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var gso: GoogleSignInOptions
     private lateinit var userType: String

@@ -1,30 +1,22 @@
 package com.android.loanppi
 
-import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
 import com.facebook.AccessToken
 import com.facebook.GraphRequest
-import com.facebook.GraphResponse
-import com.facebook.HttpMethod
-import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import org.json.JSONException
 import org.json.JSONObject
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -43,6 +35,8 @@ class profile(bundle: Bundle?) : Fragment() {
     private lateinit var editEmailAdress: EditText
     private lateinit var imgUserPhoto: ImageView
 
+    private lateinit var btnSave: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -60,7 +54,7 @@ class profile(bundle: Bundle?) : Fragment() {
         editSecondLastName = view.findViewById(R.id.edit_second_last_name)
         editEmailAdress = view.findViewById(R.id.edit_email_adress)
         imgUserPhoto = view.findViewById(R.id.img_user_photo)
-
+        btnSave = view.findViewById(R.id.btn_save)
 
         if (loginInfo?.get("loginMethod") == "google") {
             loadGoogleInfo()
@@ -68,7 +62,51 @@ class profile(bundle: Bundle?) : Fragment() {
             loadFacebookInfo()
         }
 
+        btnSave.setOnClickListener(View.OnClickListener {
+            if (editFirstName.text.toString() == "") {
+                Toast.makeText(context, "El campo nombre no puede estar vacío.", Toast.LENGTH_LONG)
+                    .show()
+                editFirstName.requestFocus()
+            }
+
+            sendPost()
+        })
+
         return view
+    }
+
+    fun sendPost() {
+        val url = "http://loanppi.kevingiraldo.tech/app/api/v1/prueba/"
+        val user = JSONObject()
+
+        user.put("firstName", editFirstName.text.toString())
+        user.put("secondName", editSecondName.text.toString())
+        user.put("firstLastName", editFirstLastName.text.toString())
+        user.put("secondLastName", editSecondLastName.text.toString())
+
+        val queue = Volley.newRequestQueue(context)
+        val request = JsonObjectRequest(Request.Method.POST,url,user,
+            Response.Listener {
+                    response ->
+                println("Request succesfull")
+            }, Response.ErrorListener { error: VolleyError ->
+                println("Error $error.message")
+            }
+        )
+        queue.add(request)
+
+        /*val queue = Volley.newRequestQueue(context)
+
+        // Request a string response from the provided URL.
+        val stringRequest = StringRequest(Request.Method.GET, url_,
+            Response.Listener<String> { response ->
+                // Display the first 500 characters of the response string.
+                editSecondLastName.setText("Response is: ${response.substring(0, 10)}")
+            },
+            Response.ErrorListener { editSecondLastName.setText("That didn't work!") })
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest)*/
     }
 
     fun loadGoogleInfo() {
@@ -104,7 +142,6 @@ class profile(bundle: Bundle?) : Fragment() {
                     editFirstName.setText(fullName[0])
                     editFirstLastName.setText(fullName[1])
                     editEmailAdress.setText(email)
-                    //imgUserPhoto.setImageResource()
 
                     Glide.with(this).load(urlUserPhoto).into(imgUserPhoto)
 
