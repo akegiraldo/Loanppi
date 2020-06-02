@@ -133,20 +133,20 @@
                 app:layout_constraintWidth_percent="0.4" />
 
             <Spinner
-                android:id="@+id/spin_tipo_documento"
+                android:id="@+id/spin_id_type"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="32dp"
                 android:entries="@array/documents_type"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintEnd_toStartOf="@+id/edit_cedula"
+                app:layout_constraintEnd_toStartOf="@+id/edit_id_document"
                 app:layout_constraintHeight_percent="0.06"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_first_last_name"
                 app:layout_constraintWidth_percent="0.4" />
 
             <EditText
-                android:id="@+id/edit_cedula"
+                android:id="@+id/edit_id_document"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="32dp"
@@ -156,7 +156,7 @@
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.06"
-                app:layout_constraintStart_toEndOf="@+id/spin_tipo_documento"
+                app:layout_constraintStart_toEndOf="@+id/spin_id_type"
                 app:layout_constraintTop_toBottomOf="@+id/edit_second_last_name"
                 app:layout_constraintWidth_percent="0.4" />
 
@@ -171,11 +171,11 @@
                 app:autoSizeTextType="uniform"
                 app:layout_constraintHeight_percent="0.03"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spin_tipo_documento"
+                app:layout_constraintTop_toBottomOf="@+id/spin_id_type"
                 app:layout_constraintWidth_percent="0.7" />
 
             <EditText
-                android:id="@+id/edit_phone"
+                android:id="@+id/edit_phone_number"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="32dp"
@@ -200,7 +200,7 @@
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.06"
-                app:layout_constraintStart_toEndOf="@+id/edit_phone"
+                app:layout_constraintStart_toEndOf="@+id/edit_phone_number"
                 app:layout_constraintTop_toBottomOf="@+id/txt_contact_info"
                 app:layout_constraintWidth_percent="0.4" />
 
@@ -215,8 +215,8 @@
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="@+id/edit_email_adress"
                 app:layout_constraintHeight_percent="0.06"
-                app:layout_constraintStart_toStartOf="@+id/edit_phone"
-                app:layout_constraintTop_toBottomOf="@+id/edit_phone"
+                app:layout_constraintStart_toStartOf="@+id/edit_phone_number"
+                app:layout_constraintTop_toBottomOf="@+id/edit_phone_number"
                 app:layout_constraintWidth_percent="0.4" />
 
             <Button

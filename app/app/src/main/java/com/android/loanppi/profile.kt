@@ -24,7 +24,7 @@ import org.json.JSONObject
  * create an instance of this fragment.
  */
 class profile(bundle: Bundle?) : Fragment() {
-    private val loginInfo : Bundle? = bundle
+    private val accessInfo : Bundle? = bundle
     private lateinit var account: GoogleSignInAccount
 
     // Profile fields
@@ -34,6 +34,9 @@ class profile(bundle: Bundle?) : Fragment() {
     private lateinit var editSecondLastName: EditText
     private lateinit var editEmailAdress: EditText
     private lateinit var imgUserPhoto: ImageView
+    private lateinit var editIdDocument: EditText
+    private lateinit var editHomeAdress: EditText
+    private lateinit var editPhoneNumber: EditText
 
     private lateinit var btnSave: Button
 
@@ -54,11 +57,15 @@ class profile(bundle: Bundle?) : Fragment() {
         editSecondLastName = view.findViewById(R.id.edit_second_last_name)
         editEmailAdress = view.findViewById(R.id.edit_email_adress)
         imgUserPhoto = view.findViewById(R.id.img_user_photo)
+        editIdDocument = view.findViewById(R.id.edit_id_document)
+        editHomeAdress = view.findViewById(R.id.edit_home_adress)
+        editPhoneNumber = view.findViewById(R.id.edit_phone_number)
+        
         btnSave = view.findViewById(R.id.btn_save)
 
-        if (loginInfo?.get("loginMethod") == "google") {
+        if (accessInfo?.get("signupMethod") == "google" || accessInfo?.get("loginMethod") == "google") {
             loadGoogleInfo()
-        } else {
+        } else if (accessInfo?.get("signupMethod") == "facebook" || accessInfo?.get("loginMethod") == "facebook") {
             loadFacebookInfo()
         }
 
@@ -83,14 +90,27 @@ class profile(bundle: Bundle?) : Fragment() {
         user.put("secondName", editSecondName.text.toString())
         user.put("firstLastName", editFirstLastName.text.toString())
         user.put("secondLastName", editSecondLastName.text.toString())
+        user.put("emailAdress", editEmailAdress.text.toString())
+        user.put("idDocument", editIdDocument.text.toString())
+        user.put("homeAdress", editHomeAdress.text.toString())
+        user.put("phoneNumber", editPhoneNumber.text.toString())
+        user.put("userType", accessInfo?.get("userType"))
+
 
         val queue = Volley.newRequestQueue(context)
         val request = JsonObjectRequest(Request.Method.POST,url,user,
             Response.Listener {
                     response ->
                 println("Request succesfull")
+                println("Response:" + response.toString())
+                if (response.get("STATUS") == "OK"){
+                    Toast.makeText(context, "Usuario registrado con éxito", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(context, "Error, el usuario no pudo ser registrado", Toast.LENGTH_LONG).show()
+                }
             }, Response.ErrorListener { error: VolleyError ->
-                println("Error $error.message")
+                Toast.makeText(context, "Error, el usuario no pudo ser registrado", Toast.LENGTH_LONG).show()
+                println("Error al guardar el usuario $error.message")
             }
         )
         queue.add(request)
@@ -110,7 +130,7 @@ class profile(bundle: Bundle?) : Fragment() {
     }
 
     fun loadGoogleInfo() {
-        account = loginInfo?.get("account") as GoogleSignInAccount
+        account = accessInfo?.get("account") as GoogleSignInAccount
         val email = account.email
         val names = account.givenName?.split(" ")
         val surnames = account.familyName?.split(" ")

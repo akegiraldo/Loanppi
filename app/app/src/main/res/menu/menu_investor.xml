@@ -11,6 +11,6 @@
         android:title="@string/my_investment" />
     <item android:id="@+id/menu_i_history"
         android:title="@string/history" />
-    <item android:id="@+id/menu_i_signout"
+    <item android:id="@+id/menu_signout"
         android:title="@string/signout" />
 </menu>

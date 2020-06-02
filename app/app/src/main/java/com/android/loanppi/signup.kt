@@ -34,13 +34,13 @@ class signup : AppCompatActivity() {
     private lateinit var callbackManager: CallbackManager
 
     // Variables that handles type of user
-    var userType: String = ""
     private lateinit var btn_worker: Button
     private lateinit var btn_investor: Button
     private lateinit var btn_google: Button
     private lateinit var btn_facebook: Button
     private lateinit var btn_rappi: Button
-    var loginMethod = ""
+    var signupMethod = ""
+    var userType: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,12 +52,12 @@ class signup : AppCompatActivity() {
         btn_worker = findViewById<View>(R.id.btn_worker) as Button
         btn_investor = findViewById<View>(R.id.btn_investor) as Button
 
-        btn_worker.setOnClickListener { toggle_btns_type(btn_worker) }
-        btn_investor.setOnClickListener { toggle_btns_type(btn_investor) }
+        btn_worker.setOnClickListener { toggleUserTypeButtons(btn_worker) }
+        btn_investor.setOnClickListener { toggleUserTypeButtons(btn_investor) }
 
         // Login with Google
         btn_google.setOnClickListener {
-            loginMethod = "google"
+            signupMethod = "google"
 
             gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -72,7 +72,7 @@ class signup : AppCompatActivity() {
 
         // Login with Facebook
         btn_facebook.setOnClickListener(View.OnClickListener {
-            loginMethod = "facebook"
+            signupMethod = "facebook"
 
             callbackManager = CallbackManager.Factory.create()
 
@@ -81,7 +81,7 @@ class signup : AppCompatActivity() {
             LoginManager.getInstance().registerCallback(callbackManager,
                 object : FacebookCallback<LoginResult> {
                     override fun onSuccess(result: LoginResult?) {
-                        updateUI_F(AccessToken.getCurrentAccessToken())
+                        updateUIF(AccessToken.getCurrentAccessToken())
                     }
                     override fun onCancel() {
                         Log.d("Acción cancelada", "Login")
@@ -95,7 +95,7 @@ class signup : AppCompatActivity() {
     }
 
     // Toggle buttons type
-    private fun toggle_btns_type(btn_clicked: Button) {
+    private fun toggleUserTypeButtons(btn_clicked: Button) {
         val btn_to_deselect: Button
 
         findViewById<TextView>(R.id.txt_register_with).isVisible = true
@@ -121,10 +121,10 @@ class signup : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (loginMethod == "google" && requestCode == RC_SIGN_IN) {
+        if (signupMethod == "google" && requestCode == RC_SIGN_IN) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleResult(task)
-        } else if (loginMethod == "facebook") {
+        } else if (signupMethod == "facebook") {
             callbackManager.onActivityResult(requestCode, resultCode, data)
         } else {
             Toast.makeText(this, "Error al ejecutar la orden :(", Toast.LENGTH_LONG).show()
@@ -136,27 +136,29 @@ class signup : AppCompatActivity() {
         try {
             val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
             if (account != null) {
-                updateUI_G(account)
+                updateUIG(account)
             }
         } catch (e: ApiException) {
             Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show()
         }
     }
 
-    private fun updateUI_G (account: GoogleSignInAccount) {
+    private fun updateUIG (account: GoogleSignInAccount) {
         val intent = Intent(this, dashboard::class.java)
         intent.putExtra("userType", userType)
-        intent.putExtra("loginMethod", loginMethod)
+        intent.putExtra("signupMethod", signupMethod)
+        intent.putExtra("loginMethod", "")
         intent.putExtra("account", account)
         intent.putExtra("gso", gso)
         startActivity(intent)
     }
 
     // Login with Facebook
-    private fun updateUI_F (token: AccessToken) {
+    private fun updateUIF (token: AccessToken) {
         val intent = Intent(this, dashboard::class.java)
         intent.putExtra("userType", userType)
-        intent.putExtra("loginMethod", loginMethod)
+        intent.putExtra("signupMethod", signupMethod)
+        intent.putExtra("loginMethod", "")
         intent.putExtra("token", token)
         startActivity(intent)
     }

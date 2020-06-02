@@ -16,38 +16,43 @@ import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import java.util.*
 
 class dashboard : AppCompatActivity() {
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var gso: GoogleSignInOptions
     private lateinit var userType: String
     private lateinit var loginMethod: String
+    private lateinit var signupMethod: String
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
-        val loginInfo: Bundle? = intent.extras
+        val accessInfo: Bundle? = intent.extras
 
-        userType = loginInfo?.get("userType") as String
-        loginMethod = loginInfo.get("loginMethod") as String
+        userType = accessInfo?.get("userType") as String
+        loginMethod = accessInfo.get("loginMethod") as String
+        signupMethod = accessInfo.get("signupMethod") as String
 
-        if (loginMethod == "google") {
-            gso = loginInfo.get("gso") as GoogleSignInOptions
+        if (signupMethod == "google" || loginMethod == "google") {
+            gso = accessInfo.get("gso") as GoogleSignInOptions
             mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         }
 
-        loadFragment(profile(loginInfo))
+        loadFragment(profile(accessInfo))
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
-        if (userType == "worker") {
-            inflater.inflate(R.menu.menu_worker, menu)
+        if (signupMethod != "") {
+            inflater.inflate(R.menu.menu_non_registered, menu)
         } else {
-            inflater.inflate(R.menu.menu_investor, menu)
+            if (userType == "worker") {
+                inflater.inflate(R.menu.menu_worker, menu)
+            } else {
+                inflater.inflate(R.menu.menu_investor, menu)
+            }
         }
         return true
     }
@@ -60,14 +65,14 @@ class dashboard : AppCompatActivity() {
             R.id.menu_i_invest -> { replaceFragment(invest()) ; true }
             R.id.menu_i_my_investment -> { replaceFragment(my_investment()) ; true }
             R.id.menu_i_history -> { true }
-            R.id.menu_i_signout -> { signOut() ; true }
 
             R.id.menu_w_home -> { replaceFragment(main_worker()) ; true }
             R.id.menu_w_profile -> { replaceFragment(profile(null)) ; true }
             R.id.menu_w_lend -> { replaceFragment(lend()) ; true }
             R.id.menu_w_my_loan -> { replaceFragment(my_loan()) ; true }
             R.id.menu_w_history -> { true }
-            R.id.menu_w_signout -> { signOut() ; true }
+
+            R.id.menu_signout -> { signOut() ; true }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -94,7 +99,7 @@ class dashboard : AppCompatActivity() {
     fun onMyInvestment(view: View) { replaceFragment(my_investment()) }
 
     private fun signOut() {
-        if (loginMethod == "google")
+        if (signupMethod == "google" || loginMethod == "google")
             mGoogleSignInClient.signOut()
         if (AccessToken.getCurrentAccessToken() != null) {
             GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/",
