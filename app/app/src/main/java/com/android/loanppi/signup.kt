@@ -25,20 +25,22 @@ import java.util.*
 
 class signup : AppCompatActivity() {
 
-    // Variables for login with google
-    lateinit var gso: GoogleSignInOptions
+    // Variables for signup with google
     lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var btn_google: Button
+    lateinit var gso: GoogleSignInOptions
     var RC_SIGN_IN: Int = 1
 
-    // Variables for login with Facebook
+    // Variables for signup with Facebook
     private lateinit var callbackManager: CallbackManager
+    private lateinit var btn_facebook: Button
 
-    // Variables that handles type of user
+    // Variables for signup with SoyRappi
+    private lateinit var btn_rappi: Button
+
+    // Variables that handles type of signup method and user type
     private lateinit var btn_worker: Button
     private lateinit var btn_investor: Button
-    private lateinit var btn_google: Button
-    private lateinit var btn_facebook: Button
-    private lateinit var btn_rappi: Button
     var signupMethod = ""
     var userType: String = ""
 
@@ -55,7 +57,7 @@ class signup : AppCompatActivity() {
         btn_worker.setOnClickListener { toggleUserTypeButtons(btn_worker) }
         btn_investor.setOnClickListener { toggleUserTypeButtons(btn_investor) }
 
-        // Login with Google
+        // Signup with Google
         btn_google.setOnClickListener {
             signupMethod = "google"
 
@@ -70,7 +72,7 @@ class signup : AppCompatActivity() {
             startActivityForResult(signInIntent, RC_SIGN_IN)
         }
 
-        // Login with Facebook
+        // Signup with Facebook
         btn_facebook.setOnClickListener(View.OnClickListener {
             signupMethod = "facebook"
 
@@ -83,11 +85,9 @@ class signup : AppCompatActivity() {
                     override fun onSuccess(result: LoginResult?) {
                         updateUIF(AccessToken.getCurrentAccessToken())
                     }
-                    override fun onCancel() {
-                        Log.d("Acción cancelada", "Login")
-                    }
+                    override fun onCancel() { Log.d("Acción cancelada", "Login") }
                     override fun onError(error: FacebookException?) {
-                        Log.d("Acción abortada", "Login")
+                        Log.d("Error en el login", error.toString())
                     }
                 }
             )
@@ -131,7 +131,7 @@ class signup : AppCompatActivity() {
         }
     }
 
-    // Login with Google
+    // Signup with Google
     private fun handleResult (completedTask: Task<GoogleSignInAccount>) {
         try {
             val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
@@ -153,7 +153,7 @@ class signup : AppCompatActivity() {
         startActivity(intent)
     }
 
-    // Login with Facebook
+    // Signup with Facebook
     private fun updateUIF (token: AccessToken) {
         val intent = Intent(this, dashboard::class.java)
         intent.putExtra("userType", userType)

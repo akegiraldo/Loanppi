@@ -70,12 +70,7 @@ class profile(bundle: Bundle?) : Fragment() {
         }
 
         btnSave.setOnClickListener(View.OnClickListener {
-            if (editFirstName.text.toString() == "") {
-                Toast.makeText(context, "El campo nombre no puede estar vacío.", Toast.LENGTH_LONG)
-                    .show()
-                editFirstName.requestFocus()
-            }
-
+            //validateFields(editFirstLastName, "onlyLetters")
             sendPost()
         })
 
@@ -83,7 +78,7 @@ class profile(bundle: Bundle?) : Fragment() {
     }
 
     fun sendPost() {
-        val url = "http://loanppi.kevingiraldo.tech/app/api/v1/prueba/"
+        val url = "http://loanppi.kevingiraldo.tech/app/api/v1/new_user/"
         val user = JSONObject()
 
         user.put("firstName", editFirstName.text.toString())
@@ -96,7 +91,6 @@ class profile(bundle: Bundle?) : Fragment() {
         user.put("phoneNumber", editPhoneNumber.text.toString())
         user.put("userType", accessInfo?.get("userType"))
 
-
         val queue = Volley.newRequestQueue(context)
         val request = JsonObjectRequest(Request.Method.POST,url,user,
             Response.Listener {
@@ -105,6 +99,8 @@ class profile(bundle: Bundle?) : Fragment() {
                 println("Response:" + response.toString())
                 if (response.get("STATUS") == "OK"){
                     Toast.makeText(context, "Usuario registrado con éxito", Toast.LENGTH_LONG).show()
+                } else if (response.get("STATUS") == "EXISTS") {
+                    Toast.makeText(context,"El usuario ya existe.", Toast.LENGTH_LONG).show()
                 } else {
                     Toast.makeText(context, "Error, el usuario no pudo ser registrado", Toast.LENGTH_LONG).show()
                 }
@@ -114,19 +110,6 @@ class profile(bundle: Bundle?) : Fragment() {
             }
         )
         queue.add(request)
-
-        /*val queue = Volley.newRequestQueue(context)
-
-        // Request a string response from the provided URL.
-        val stringRequest = StringRequest(Request.Method.GET, url_,
-            Response.Listener<String> { response ->
-                // Display the first 500 characters of the response string.
-                editSecondLastName.setText("Response is: ${response.substring(0, 10)}")
-            },
-            Response.ErrorListener { editSecondLastName.setText("That didn't work!") })
-
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest)*/
     }
 
     fun loadGoogleInfo() {
@@ -134,6 +117,7 @@ class profile(bundle: Bundle?) : Fragment() {
         val email = account.email
         val names = account.givenName?.split(" ")
         val surnames = account.familyName?.split(" ")
+        val urlUserPhoto = account.photoUrl.toString()
 
         val firstName = names?.get(0)
         var secondName = ""
@@ -148,6 +132,8 @@ class profile(bundle: Bundle?) : Fragment() {
         editFirstLastName.setText(firstLastName)
         editSecondLastName.setText(secondLastName)
         editEmailAdress.setText(email)
+
+        Glide.with(this).load(urlUserPhoto).into(imgUserPhoto)
     }
 
     fun loadFacebookInfo(){
@@ -156,8 +142,8 @@ class profile(bundle: Bundle?) : Fragment() {
                 try {
                     val email = `object`.getString("email")
                     val fullName = `object`.getString("name").split(" ")
-                    val id = `object`.getString("id")
-                    val urlUserPhoto = "https://graph.facebook.com/" + id + "/picture?type=normal"
+                    val facebookId = `object`.getString("id")
+                    val urlUserPhoto = "https://graph.facebook.com/" + facebookId + "/picture?type=normal"
 
                     editFirstName.setText(fullName[0])
                     editFirstLastName.setText(fullName[1])
@@ -168,7 +154,6 @@ class profile(bundle: Bundle?) : Fragment() {
                     if (!`object`.has("id")) {
                         Log.d("FBLOGIN_FAILED", `object`.toString())
                     }
-
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -181,5 +166,39 @@ class profile(bundle: Bundle?) : Fragment() {
         }
     }
 
+    // Function for validate the length or type of fields
+    fun validateFields(field: EditText, typeValidation: String, length: Int) {
+        val onlyNumbers = Regex("[0-9]+")
+        val onlyLetters = Regex("[a-zA-Z]+")
+        val homeAdress = Regex("")
+        val SQLQuery = Regex("DROP|DELETE|UPDATE|SELECT", RegexOption.IGNORE_CASE)
+        val textToValidate = field.text.toString()
 
+        when (typeValidation) {
+            "onlyNumbers" ->
+                if (!onlyNumbers.matches(textToValidate)) {
+                    Toast.makeText(context, "El campo no puede contener " +
+                            "caractéres diferentes a números.", Toast.LENGTH_LONG).show()
+                    field.requestFocus()
+                }
+            "onlyLetters" ->
+                if (!onlyLetters.matches(textToValidate)) {
+                    Toast.makeText(context, "El campo no puede contener " +
+                            "caractéres diferentes a letras.", Toast.LENGTH_LONG).show()
+                    field.requestFocus()
+                }
+            "homeAdress" ->
+                if (!onlyNumbers.matches(textToValidate)) {
+                    Toast.makeText(context, "El campo no puede contener " +
+                            "caractéres diferentes a números.", Toast.LENGTH_LONG).show()
+                    field.requestFocus()
+                }
+            else -> { return }
+        }
+
+        if (SQLQuery.containsMatchIn(textToValidate)) {
+            Toast.makeText(context, "No puedes incluir querys", Toast.LENGTH_LONG).show()
+            field.requestFocus()
+        }
+    }
 }

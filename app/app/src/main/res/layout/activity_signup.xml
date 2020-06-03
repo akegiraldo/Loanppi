@@ -180,16 +180,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/txt_register_with"
                     app:layout_constraintWidth_percent="0.5" />
 
-                <!--<com.facebook.login.widget.LoginButton
-                    android:id="@+id/btn_s_facebook"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:visibility="invisible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_register_with" />-->
-
                 <Button
                     android:id="@+id/btn_s_rappi"
                     android:layout_width="0dp"
@@ -219,19 +209,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/btn_s_facebook"
                     app:layout_constraintWidth_percent="0.5" />
-
-                <!--<com.google.android.gms.common.SignInButton
-                    android:id="@+id/btn_s_google"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="24dp"
-                    android:visibility="invisible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHeight_percent="0.25"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/btn_s_facebook"
-                    app:layout_constraintWidth_percent="0.5">
-                </com.google.android.gms.common.SignInButton>-->
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
