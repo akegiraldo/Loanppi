@@ -24,8 +24,7 @@ import org.json.JSONObject
  * create an instance of this fragment.
  */
 class profile(bundle: Bundle?) : Fragment() {
-    private val accessInfo : Bundle? = bundle
-    private lateinit var account: GoogleSignInAccount
+    private val accessInfo: Bundle? = bundle
 
     // Profile fields
     private lateinit var editFirstName: EditText
@@ -60,18 +59,20 @@ class profile(bundle: Bundle?) : Fragment() {
         editIdDocument = view.findViewById(R.id.edit_id_document)
         editHomeAdress = view.findViewById(R.id.edit_home_adress)
         editPhoneNumber = view.findViewById(R.id.edit_phone_number)
-        
+
         btnSave = view.findViewById(R.id.btn_save)
 
-        if (accessInfo?.get("signupMethod") == "google" || accessInfo?.get("loginMethod") == "google") {
-            loadGoogleInfo()
-        } else if (accessInfo?.get("signupMethod") == "facebook" || accessInfo?.get("loginMethod") == "facebook") {
-            loadFacebookInfo()
+        if (accessInfo?.get("accessFrom") == "signup") {
+            if (accessInfo?.get("accessWith") == "google") { loadGoogleInfo() }
+            else { loadFacebookInfo() }
+        } else {
+            loadAccountInfo()
         }
 
         btnSave.setOnClickListener(View.OnClickListener {
-            //validateFields(editFirstLastName, "onlyLetters")
-            sendPost()
+            if (validateFields()) {
+                sendPost()
+            }
         })
 
         return view
@@ -87,25 +88,33 @@ class profile(bundle: Bundle?) : Fragment() {
         user.put("secondLastName", editSecondLastName.text.toString())
         user.put("emailAdress", editEmailAdress.text.toString())
         user.put("idDocument", editIdDocument.text.toString())
-        user.put("homeAdress", editHomeAdress.text.toString())
         user.put("phoneNumber", editPhoneNumber.text.toString())
+        user.put("homeAdress", editHomeAdress.text.toString())
         user.put("userType", accessInfo?.get("userType"))
 
         val queue = Volley.newRequestQueue(context)
-        val request = JsonObjectRequest(Request.Method.POST,url,user,
-            Response.Listener {
-                    response ->
-                println("Request succesfull")
+        val request = JsonObjectRequest(Request.Method.POST, url, user,
+            Response.Listener { response ->
                 println("Response:" + response.toString())
-                if (response.get("STATUS") == "OK"){
-                    Toast.makeText(context, "Usuario registrado con éxito", Toast.LENGTH_LONG).show()
-                } else if (response.get("STATUS") == "EXISTS") {
-                    Toast.makeText(context,"El usuario ya existe.", Toast.LENGTH_LONG).show()
+                if (response.get("status") == "ok") {
+                    Toast.makeText(context, "Usuario registrado con éxito", Toast.LENGTH_LONG)
+                        .show()
+                } else if (response.get("status") == "exists") {
+                    Toast.makeText(context, "El usuario ya existe.", Toast.LENGTH_LONG).show()
                 } else {
-                    Toast.makeText(context, "Error, el usuario no pudo ser registrado", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        context,
+                        "Error, el usuario no pudo ser registrado",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
-            }, Response.ErrorListener { error: VolleyError ->
-                Toast.makeText(context, "Error, el usuario no pudo ser registrado", Toast.LENGTH_LONG).show()
+            },
+            Response.ErrorListener { error: VolleyError ->
+                Toast.makeText(
+                    context,
+                    "Error, el usuario no pudo ser registrado",
+                    Toast.LENGTH_LONG
+                ).show()
                 println("Error al guardar el usuario $error.message")
             }
         )
@@ -113,7 +122,7 @@ class profile(bundle: Bundle?) : Fragment() {
     }
 
     fun loadGoogleInfo() {
-        account = accessInfo?.get("account") as GoogleSignInAccount
+        val account = accessInfo?.get("googleAccount") as GoogleSignInAccount
         val email = account.email
         val names = account.givenName?.split(" ")
         val surnames = account.familyName?.split(" ")
@@ -121,11 +130,15 @@ class profile(bundle: Bundle?) : Fragment() {
 
         val firstName = names?.get(0)
         var secondName = ""
-        if (names?.size == 2) { secondName = names.get(1) }
+        if (names?.size == 2) {
+            secondName = names.get(1)
+        }
 
         val firstLastName = surnames?.get(0)
         var secondLastName = ""
-        if (surnames?.size == 2) { secondLastName = surnames.get(1) }
+        if (surnames?.size == 2) {
+            secondLastName = surnames.get(1)
+        }
 
         editFirstName.setText(firstName)
         editSecondName.setText(secondName)
@@ -136,69 +149,92 @@ class profile(bundle: Bundle?) : Fragment() {
         Glide.with(this).load(urlUserPhoto).into(imgUserPhoto)
     }
 
-    fun loadFacebookInfo(){
-        if (AccessToken.getCurrentAccessToken() != null) {
-            val request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken()) { `object`, response ->
-                try {
-                    val email = `object`.getString("email")
-                    val fullName = `object`.getString("name").split(" ")
-                    val facebookId = `object`.getString("id")
-                    val urlUserPhoto = "https://graph.facebook.com/" + facebookId + "/picture?type=normal"
+    fun loadFacebookInfo() {
+        val account = accessInfo?.get("facebookAccount") as Bundle
+        val emailAddress = account.getString("emailAddress")
+        val fullName = account.getString("fullName")?.split(" ")
+        val urlUserPhoto = account.getString("urlUserPhoto")
 
-                    editFirstName.setText(fullName[0])
-                    editFirstLastName.setText(fullName[1])
-                    editEmailAdress.setText(email)
-
-                    Glide.with(this).load(urlUserPhoto).into(imgUserPhoto)
-
-                    if (!`object`.has("id")) {
-                        Log.d("FBLOGIN_FAILED", `object`.toString())
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-
-            val parameters = Bundle()
-            parameters.putString("fields", "name,email,id")
-            request.parameters = parameters
-            request.executeAsync()
-        }
+        editFirstName.setText(fullName?.get(0))
+        editFirstLastName.setText(fullName?.get(1))
+        editEmailAdress.setText(emailAddress)
+        Glide.with(this).load(urlUserPhoto).into(imgUserPhoto)
     }
 
-    // Function for validate the length or type of fields
-    fun validateFields(field: EditText, typeValidation: String, length: Int) {
+    fun loadAccountInfo() {
+        val account = accessInfo?.get("account") as Bundle
+    }
+
+    // Function for validate the fields of profile form
+    fun validateFields(): Boolean {
+        return (fieldsValidator(editFirstName, "onlyLetters", 2, 14) &&
+            fieldsValidator(editSecondName, "onlyLetters", 0, 14) &&
+            fieldsValidator(editFirstLastName, "onlyLetters", 2, 14) &&
+            fieldsValidator(editSecondLastName, "onlyLetters", 2, 14) &&
+            fieldsValidator(editIdDocument, "onlyNumbers", 5, 12) &&
+            fieldsValidator(editPhoneNumber, "onlyNumbers", 7, 10) &&
+            fieldsValidator(editHomeAdress, "homeAddress", 8, 30))
+    }
+
+    // Function for validate the length and type of fields
+    fun fieldsValidator(field: EditText,typeValidation: String,lengthMin: Int,lengthMax: Int): Boolean {
         val onlyNumbers = Regex("[0-9]+")
         val onlyLetters = Regex("[a-zA-Z]+")
+        val emailAdress = Regex("")
         val homeAdress = Regex("")
         val SQLQuery = Regex("DROP|DELETE|UPDATE|SELECT", RegexOption.IGNORE_CASE)
         val textToValidate = field.text.toString()
 
-        when (typeValidation) {
-            "onlyNumbers" ->
-                if (!onlyNumbers.matches(textToValidate)) {
-                    Toast.makeText(context, "El campo no puede contener " +
-                            "caractéres diferentes a números.", Toast.LENGTH_LONG).show()
-                    field.requestFocus()
-                }
-            "onlyLetters" ->
-                if (!onlyLetters.matches(textToValidate)) {
-                    Toast.makeText(context, "El campo no puede contener " +
-                            "caractéres diferentes a letras.", Toast.LENGTH_LONG).show()
-                    field.requestFocus()
-                }
-            "homeAdress" ->
-                if (!onlyNumbers.matches(textToValidate)) {
-                    Toast.makeText(context, "El campo no puede contener " +
-                            "caractéres diferentes a números.", Toast.LENGTH_LONG).show()
-                    field.requestFocus()
-                }
-            else -> { return }
-        }
-
-        if (SQLQuery.containsMatchIn(textToValidate)) {
+        if (textToValidate.length < lengthMin) {
+            Toast.makeText(
+                context, "El campo no puede contener " +
+                        "menos de " + lengthMin.toString() + " caracteres.", Toast.LENGTH_LONG
+            ).show()
+            field.requestFocus()
+            return false
+        } else if (textToValidate.length > lengthMax) {
+            Toast.makeText(
+                context, "El campo no puede contener " +
+                        "más de " + lengthMax.toString() + " caracteres.", Toast.LENGTH_LONG
+            ).show()
+            field.requestFocus()
+            return false
+        } else if (SQLQuery.containsMatchIn(textToValidate)) {
             Toast.makeText(context, "No puedes incluir querys", Toast.LENGTH_LONG).show()
             field.requestFocus()
+        } else {
+            when (typeValidation) {
+                "onlyNumbers" ->
+                    if (!onlyNumbers.matches(textToValidate)) {
+                        Toast.makeText(
+                            context, "El campo no puede contener " +
+                                    "caracteres diferentes a números.", Toast.LENGTH_LONG
+                        ).show()
+                        field.requestFocus()
+                        return false
+                    }
+                "onlyLetters" ->
+                    if (!onlyLetters.matches(textToValidate)) {
+                        Toast.makeText(
+                            context, "El campo no puede contener " +
+                                    "caracteres diferentes a letras.", Toast.LENGTH_LONG
+                        ).show()
+                        field.requestFocus()
+                        return false
+                    }
+                "homeAdress" ->
+                    if (!homeAdress.matches(textToValidate)) {
+                        Toast.makeText(
+                            context, "El campo no puede contener caracteres especiales " +
+                                    "diferentes a '#' y '-'.", Toast.LENGTH_LONG
+                        ).show()
+                        field.requestFocus()
+                        return false
+                    }
+                else -> {
+                }
+            }
         }
+        return true
     }
 }

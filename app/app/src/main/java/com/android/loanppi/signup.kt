@@ -11,7 +11,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import android.widget.Toast
@@ -41,8 +40,9 @@ class signup : AppCompatActivity() {
     // Variables that handles type of signup method and user type
     private lateinit var btn_worker: Button
     private lateinit var btn_investor: Button
-    var signupMethod = ""
-    var userType: String = ""
+    private var accessWith: String = ""
+    private var accessFrom: String = ""
+    private var userType: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +59,7 @@ class signup : AppCompatActivity() {
 
         // Signup with Google
         btn_google.setOnClickListener {
-            signupMethod = "google"
+            accessWith = "google"
 
             gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -74,7 +74,7 @@ class signup : AppCompatActivity() {
 
         // Signup with Facebook
         btn_facebook.setOnClickListener(View.OnClickListener {
-            signupMethod = "facebook"
+            accessWith = "facebook"
 
             callbackManager = CallbackManager.Factory.create()
 
@@ -83,7 +83,7 @@ class signup : AppCompatActivity() {
             LoginManager.getInstance().registerCallback(callbackManager,
                 object : FacebookCallback<LoginResult> {
                     override fun onSuccess(result: LoginResult?) {
-                        updateUIF(AccessToken.getCurrentAccessToken())
+                        getFacebokAccount()
                     }
                     override fun onCancel() { Log.d("Acción cancelada", "Login") }
                     override fun onError(error: FacebookException?) {
@@ -121,10 +121,10 @@ class signup : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (signupMethod == "google" && requestCode == RC_SIGN_IN) {
+        if (accessWith == "google" && requestCode == RC_SIGN_IN) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
-            handleResult(task)
-        } else if (signupMethod == "facebook") {
+            getGoogleAccount(task)
+        } else if (accessWith == "facebook") {
             callbackManager.onActivityResult(requestCode, resultCode, data)
         } else {
             Toast.makeText(this, "Error al ejecutar la orden :(", Toast.LENGTH_LONG).show()
@@ -132,7 +132,7 @@ class signup : AppCompatActivity() {
     }
 
     // Signup with Google
-    private fun handleResult (completedTask: Task<GoogleSignInAccount>) {
+    private fun getGoogleAccount (completedTask: Task<GoogleSignInAccount>) {
         try {
             val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
             if (account != null) {
@@ -143,23 +143,55 @@ class signup : AppCompatActivity() {
         }
     }
 
-    private fun updateUIG (account: GoogleSignInAccount) {
+    private fun updateUIG (googleAccount: GoogleSignInAccount) {
         val intent = Intent(this, dashboard::class.java)
-        intent.putExtra("userType", userType)
-        intent.putExtra("signupMethod", signupMethod)
-        intent.putExtra("loginMethod", "")
-        intent.putExtra("account", account)
-        intent.putExtra("gso", gso)
+        val accessInfo = Bundle()
+        accessInfo.putString("userType", userType)
+        accessInfo.putString("accessWith", "google")
+        accessInfo.putString("accessFrom", "signup")
+        accessInfo.putParcelable("googleAccount", googleAccount)
+        accessInfo.putParcelable("gso", gso)
+        intent.putExtra("accessInfo", accessInfo)
         startActivity(intent)
+
     }
 
     // Signup with Facebook
-    private fun updateUIF (token: AccessToken) {
+    private fun getFacebokAccount () {
+        if (AccessToken.getCurrentAccessToken() != null) {
+            val request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken()) { `object`, response ->
+                try {
+                    val emailAddress = `object`.getString("email")
+                    val fullName = `object`.getString("name")
+                    val facebookId = `object`.getString("id")
+                    val urlUserPhoto = "https://graph.facebook.com/" + facebookId + "/picture?type=normal"
+
+                    val account = Bundle()
+                    account.putString("emailAddress", emailAddress)
+                    account.putString("fullName", fullName)
+                    account.putString("urlUserPhoto", urlUserPhoto)
+
+                    updateUIF(account)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            val parameters = Bundle()
+            parameters.putString("fields", "name,email,id")
+            request.parameters = parameters
+            request.executeAsync()
+        }
+    }
+
+    private fun updateUIF (facebookAccount: Bundle) {
         val intent = Intent(this, dashboard::class.java)
-        intent.putExtra("userType", userType)
-        intent.putExtra("signupMethod", signupMethod)
-        intent.putExtra("loginMethod", "")
-        intent.putExtra("token", token)
+        val accessInfo = Bundle()
+        accessInfo.putString("userType", userType)
+        accessInfo.putString("accessWith", "facebook")
+        accessInfo.putString("accessFrom", "signup")
+        accessInfo.putBundle("facebookAccount", facebookAccount)
+        intent.putExtra("accessInfo", accessInfo)
         startActivity(intent)
     }
 

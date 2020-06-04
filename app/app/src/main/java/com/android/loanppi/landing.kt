@@ -14,8 +14,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import com.android.volley.Request
 import com.android.volley.Response
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.bumptech.glide.Glide
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -25,6 +28,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import org.json.JSONObject
 import java.util.*
 
 class landing : AppCompatActivity() {
@@ -42,7 +46,7 @@ class landing : AppCompatActivity() {
     // Variables for signup with SoyRappi
     private lateinit var btn_rappi: Button
 
-    private var loginMethod: String = ""
+    private var accessWith: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,14 +69,12 @@ class landing : AppCompatActivity() {
         btn_facebook = dialogLayout.findViewById(R.id.btn_l_facebook)
         btn_google = dialogLayout.findViewById(R.id.btn_l_google)
 
-        builder.setView(dialogLayout).setNegativeButton(R.string.cancel) { dialog, which ->
-            Toast.makeText(applicationContext, R.string.cancel, Toast.LENGTH_SHORT).show()
-        }
+        builder.setView(dialogLayout).setNegativeButton(R.string.cancel) { dialog, which -> }
         builder.show()
 
         // Login with Google
         btn_google.setOnClickListener {
-            loginMethod = "google"
+            accessWith = "google"
 
             gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -87,7 +89,7 @@ class landing : AppCompatActivity() {
 
         // Login with Facebook
         btn_facebook.setOnClickListener(View.OnClickListener {
-            loginMethod = "facebook"
+            accessWith = "facebook"
 
             callbackManager = CallbackManager.Factory.create()
 
@@ -96,7 +98,7 @@ class landing : AppCompatActivity() {
             LoginManager.getInstance().registerCallback(callbackManager,
                 object : FacebookCallback<LoginResult> {
                     override fun onSuccess(result: LoginResult?) {
-                        updateUIF(AccessToken.getCurrentAccessToken())
+                        getFacebokAccount()
                     }
                     override fun onCancel() { Log.d("Acción cancelada", "Login") }
                     override fun onError(error: FacebookException?) {
@@ -109,10 +111,10 @@ class landing : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (loginMethod == "google" && requestCode == RC_SIGN_IN) {
+        if (accessWith == "google" && requestCode == RC_SIGN_IN) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
-            handleResult(task)
-        } else if (loginMethod == "facebook") {
+            getGoogleAccount(task)
+        } else if (accessWith == "facebook") {
             callbackManager.onActivityResult(requestCode, resultCode, data)
         } else {
             Toast.makeText(this, "Error al ejecutar la orden :(", Toast.LENGTH_LONG).show()
@@ -120,66 +122,138 @@ class landing : AppCompatActivity() {
     }
 
     // Login with Google
-    private fun handleResult (completedTask: Task<GoogleSignInAccount>) {
+    private fun getGoogleAccount (completedTask: Task<GoogleSignInAccount>) {
         try {
             val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
             if (account != null) {
-                /*val user = getUser(account.email.toString())
-                if (user != null)) {
-
-                }*/
-                updateUIG(account)
+                getUser(account, null)
             }
         } catch (e: ApiException) {
             Toast.makeText(this, "Error: " + e.toString(), Toast.LENGTH_LONG).show()
         }
     }
 
-    private fun getUser(email: String) {
-        val url = "http://loanppi.kevingiraldo.tech/app/api/v1/user?email="
-
-        val queue = Volley.newRequestQueue(this)
-
-        // Request a string response from the provided URL.
-        val stringRequest = StringRequest(Request.Method.GET, url,
-            Response.Listener<String> { response ->
-                // Display the first 500 characters of the response string.
-                Toast.makeText(this, response.toString().substring(0, 20), Toast.LENGTH_LONG).show()
-            },
-            Response.ErrorListener {
-                Toast.makeText(this, "Error al intentar iniciar sesión", Toast.LENGTH_LONG).show()
-            })
-
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest)
-    }
-
-    private fun updateUIG (account: GoogleSignInAccount) {
+    private fun updateUIG (googleAccount: GoogleSignInAccount, account: Bundle) {
         val intent = Intent(this, dashboard::class.java)
-        intent.putExtra("userType", "investor")
-        intent.putExtra("signupMethod", "")
-        intent.putExtra("loginMethod", "google")
+        val accessInfo = Bundle()
+        accessInfo.putString("accessWith", "google")
+        accessInfo.putString("accessFrom", "login")
+        accessInfo.putParcelable("googleAccount", googleAccount)
+        accessInfo.putParcelable("gso", gso)
+        intent.putExtra("accessInfo", accessInfo)
         intent.putExtra("account", account)
-        intent.putExtra("gso", gso)
         startActivity(intent)
     }
 
     // Login with Facebook
-    private fun updateUIF (token: AccessToken) {
+    private fun getFacebokAccount () {
+        if (AccessToken.getCurrentAccessToken() != null) {
+            val request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken()) { `object`, response ->
+                try {
+                    val emailAddress = `object`.getString("email")
+                    val facebookId = `object`.getString("id")
+                    val urlUserPhoto = "https://graph.facebook.com/" + facebookId + "/picture?type=normal"
+
+                    val account = Bundle()
+                    account.putString("emailAddress", emailAddress)
+                    account.putString("urlUserPhoto", urlUserPhoto)
+
+                    getUser(null, account)
+
+                    if (!`object`.has("id")) {
+                        Log.d("FBLOGIN_FAILED", `object`.toString())
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            val parameters = Bundle()
+            parameters.putString("fields", "name,email,id")
+            request.parameters = parameters
+            request.executeAsync()
+        }
+    }
+
+    private fun updateUIF (facebookAccount: Bundle, account: Bundle) {
         val intent = Intent(this, dashboard::class.java)
-        intent.putExtra("userType", "investor")
-        intent.putExtra("signupMethod", "")
-        intent.putExtra("loginMethod", "facebook")
-        intent.putExtra("token", token)
+        val accessInfo = Bundle()
+        accessInfo.putString("accessWith", "facebook")
+        accessInfo.putString("accessFrom", "login")
+        accessInfo.putBundle("facebookAccount", facebookAccount)
+        intent.putExtra("accessInfo", accessInfo)
+        intent.putExtra("account", account)
         startActivity(intent)
     }
 
     fun checkFacebookLogin() {
         if (AccessToken.getCurrentAccessToken() != null) {
-            updateUIF(AccessToken.getCurrentAccessToken())
+
         } else {
             println("El token está nulo")
         }
+    }
+
+    // Get user from database
+    private fun getUser(googleAccount: GoogleSignInAccount?, facebookAccount: Bundle?) {
+        var email = ""
+        if (accessWith == "google") {
+            email = googleAccount?.email.toString()
+        } else {
+            email = facebookAccount?.get("emailAddress").toString()
+        }
+        val url = "http://loanppi.kevingiraldo.tech/app/api/v1/user?email=" + email
+        val queue = Volley.newRequestQueue(this)
+
+        // Request a JSON response from the provided URL.
+        val request = JsonObjectRequest(Request.Method.GET, url, null,
+            Response.Listener { response ->
+                Toast.makeText(this, response.get("status").toString(), Toast.LENGTH_LONG).show()
+                println("RESPONSE: " + response.toString())
+                if (response.get("status") == "exists") {
+                    val account = Bundle()
+                    account.putString("firstName", response.get("firstName").toString())
+                    account.putString("secondName", response.get("secondName").toString())
+                    account.putString("firstLastName", response.get("firstLastName").toString())
+                    account.putString("secondLastName", response.get("secondLastName").toString())
+                    account.putString("idDocument", response.get("idDocument").toString())
+                    account.putString("phoneNumber", response.get("phoneNumber").toString())
+                    account.putString("emailAddress", response.get("emailAddress").toString())
+                    account.putString("homeAddress", response.get("homeAddress").toString())
+                    account.putString("userType", response.get("userType").toString())
+                    if (accessWith == "google")
+                        googleAccount?.let { updateUIG(it, account) }
+                    else
+                        facebookAccount?.let { updateUIF(it, account) }
+                } else {
+                    if (accessWith == "google") {
+                        mGoogleSignInClient.signOut()
+                    } else {
+                        GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/",
+                            null, HttpMethod.DELETE, GraphRequest.Callback {
+                                AccessToken.setCurrentAccessToken(null)
+                                LoginManager.getInstance().logOut()
+                            }).executeAsync()
+                    }
+                    /*Toast.makeText(this, "El usuario no existe. Regístrate por favor.",
+                        Toast.LENGTH_LONG).show()*/
+                }
+            },
+            Response.ErrorListener {
+                if (accessWith == "google") {
+                    mGoogleSignInClient.signOut()
+                } else {
+                    GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/",
+                        null, HttpMethod.DELETE, GraphRequest.Callback {
+                            AccessToken.setCurrentAccessToken(null)
+                            LoginManager.getInstance().logOut()
+                        }).executeAsync()
+                }
+                Toast.makeText(this, "Error al intentar iniciar sesión", Toast.LENGTH_LONG).show()
+            })
+
+        // Add the request to the RequestQueue.
+        queue.add(request)
     }
 }
 
