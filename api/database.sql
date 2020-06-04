@@ -9,9 +9,9 @@ CREATE TABLE  IF NOT EXISTS investors(
   secondName VARCHAR(255) NOT NULL,
   firstLastName VARCHAR(255) NOT NULL,
   secondLastName VARCHAR(255) NOT NULL,
-  emailAdress VARCHAR(255) NOT NULL,
+  emailAddress VARCHAR(255) NOT NULL,
   phoneNumber VARCHAR(255) NOT NULL,
-  homeAdress VARCHAR(255) NOT NULL,
+  homeAddress VARCHAR(255) NOT NULL,
   PRIMARY KEY (id_investor)
 ) ENGINE=InnoDB;
 
@@ -23,9 +23,9 @@ CREATE TABLE IF NOT EXISTS workers(
   secondName VARCHAR(255) NOT NULL,
   firstLastName VARCHAR(255) NOT NULL,
   secondLastName VARCHAR(255) NOT NULL,
-  emailAdress VARCHAR(255) NOT NULL,
+  emailAddress VARCHAR(255) NOT NULL,
   phoneNumber VARCHAR(255) NOT NULL,
-  homeAdress VARCHAR(255) NOT NULL,
+  homeAddress VARCHAR(255) NOT NULL,
   PRIMARY KEY (id_worker)
 ) ENGINE=InnoDB;
 
