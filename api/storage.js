@@ -26,7 +26,7 @@ exports.saveData = function (data) {
         reject(err);
         return;
       } else {
-        resolve("ok");
+        resolve({'status': 'ok'});
       }
     }
     connection.query('INSERT INTO ' + userType + ' SET ?', data , callbackDB);
