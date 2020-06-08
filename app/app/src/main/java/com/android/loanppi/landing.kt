@@ -209,7 +209,6 @@ class landing : AppCompatActivity() {
         val request = JsonObjectRequest(Request.Method.GET, url, null,
             Response.Listener { response ->
                 Toast.makeText(this, response.get("status").toString(), Toast.LENGTH_LONG).show()
-                println("RESPONSE: " + response.toString())
                 if (response.get("status") == "exists") {
                     val account = Bundle()
                     account.putString("firstName", response.get("firstName").toString())
@@ -221,6 +220,11 @@ class landing : AppCompatActivity() {
                     account.putString("emailAddress", response.get("emailAddress").toString())
                     account.putString("homeAddress", response.get("homeAddress").toString())
                     account.putString("userType", response.get("userType").toString())
+                    if (response.get("userType").toString() == "investors") {
+                        account.putString("userId", response.get("idInvestor").toString())
+                    } else {
+                        account.putString("userId", response.get("idWorker").toString())
+                    }
                     if (accessWith == "google")
                         googleAccount?.let { updateUIG(it, account) }
                     else

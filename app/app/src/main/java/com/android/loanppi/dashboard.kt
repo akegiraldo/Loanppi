@@ -22,22 +22,23 @@ class dashboard : AppCompatActivity() {
     private lateinit var accessWith: String
     private lateinit var accessFrom: String
     private var accessInfo: Bundle? = Bundle()
-    private var account = Bundle()
+    private var account: Bundle? = Bundle()
+    private var bundle: Bundle? = Bundle()
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
-        val bundle = intent.extras
+        bundle = intent.extras
         accessInfo = bundle?.getBundle("accessInfo") as Bundle
 
         accessWith = accessInfo?.get("accessWith") as String
         accessFrom = accessInfo?.get("accessFrom") as String
 
         if (accessFrom == "login") {
-            account = bundle.getBundle("account") as Bundle
-            userType = account.get("userType").toString()
+            account = bundle?.getBundle("account") as Bundle
+            userType = account?.get("userType").toString()
             userType = userType.substring(0, userType.length - 1)
         } else {
             userType = accessInfo?.get("userType") as String
@@ -47,9 +48,9 @@ class dashboard : AppCompatActivity() {
             loadFragment(profile(accessInfo))
         } else {
             if (userType == "investor")
-                loadFragment(main_investor(account))
-            /*else
-                loadFragment(main_worker(dbAccount))*/
+                loadFragment(main_investor(bundle))
+            else
+                loadFragment(main_worker(bundle))
         }
     }
 
@@ -70,15 +71,15 @@ class dashboard : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle item selection
         return when (item.itemId) {
-            R.id.menu_i_home -> { replaceFragment(main_investor(account)) ; true }
-            R.id.menu_i_profile -> { replaceFragment(profile(accessInfo)) ; true }
+            R.id.menu_i_home -> { replaceFragment(main_investor(bundle)) ; true }
+            R.id.menu_i_profile -> { replaceFragment(profile(bundle)) ; true }
             R.id.menu_i_invest -> { replaceFragment(invest()) ; true }
             R.id.menu_i_my_investment -> { replaceFragment(my_investment()) ; true }
             R.id.menu_i_history -> { true }
 
-            R.id.menu_w_home -> { replaceFragment(main_worker()) ; true }
-            R.id.menu_w_profile -> { replaceFragment(profile(null)) ; true }
-            R.id.menu_w_lend -> { replaceFragment(lend()) ; true }
+            R.id.menu_w_home -> { replaceFragment(main_worker(bundle)) ; true }
+            R.id.menu_w_profile -> { replaceFragment(profile(bundle)) ; true }
+            R.id.menu_w_lend -> { replaceFragment(lend(bundle)) ; true }
             R.id.menu_w_my_loan -> { replaceFragment(my_loan()) ; true }
             R.id.menu_w_history -> { true }
 
@@ -100,7 +101,7 @@ class dashboard : AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
-    fun onLend(view: View) { replaceFragment(lend()) }
+    fun onLend(view: View) { replaceFragment(lend(bundle)) }
 
     fun onMyLoan(view: View) { replaceFragment(my_loan()) }
 

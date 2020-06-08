@@ -183,14 +183,14 @@
                 android:hint="@string/phone_number"
                 android:inputType="phone"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintEnd_toStartOf="@+id/edit_email_adress"
+                app:layout_constraintEnd_toStartOf="@+id/edit_email_address"
                 app:layout_constraintHeight_percent="0.06"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_contact_info"
                 app:layout_constraintWidth_percent="0.4" />
 
             <EditText
-                android:id="@+id/edit_email_adress"
+                android:id="@+id/edit_email_address"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="32dp"
@@ -206,7 +206,7 @@
                 app:layout_constraintWidth_percent="0.4" />
 
             <EditText
-                android:id="@+id/edit_home_adress"
+                android:id="@+id/edit_home_address"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="32dp"
@@ -214,7 +214,7 @@
                 android:hint="@string/home_address"
                 android:inputType="textPostalAddress"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintEnd_toEndOf="@+id/edit_email_adress"
+                app:layout_constraintEnd_toEndOf="@+id/edit_email_address"
                 app:layout_constraintHeight_percent="0.06"
                 app:layout_constraintStart_toStartOf="@+id/edit_phone_number"
                 app:layout_constraintTop_toBottomOf="@+id/edit_phone_number"
@@ -232,7 +232,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.06"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_home_adress"
+                app:layout_constraintTop_toBottomOf="@+id/edit_home_address"
                 app:layout_constraintWidth_percent="0.5" />
 
 

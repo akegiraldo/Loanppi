@@ -24,17 +24,18 @@ import org.json.JSONObject
  * create an instance of this fragment.
  */
 class profile(bundle: Bundle?) : Fragment() {
-    private val accessInfo: Bundle? = bundle
+    private var accessInfo: Bundle? = Bundle()
+    private var bundle: Bundle? = bundle
 
     // Profile fields
     private lateinit var editFirstName: EditText
     private lateinit var editSecondName: EditText
     private lateinit var editFirstLastName: EditText
     private lateinit var editSecondLastName: EditText
-    private lateinit var editEmailAdress: EditText
+    private lateinit var editEmailAddress: EditText
     private lateinit var imgUserPhoto: ImageView
     private lateinit var editIdDocument: EditText
-    private lateinit var editHomeAdress: EditText
+    private lateinit var editHomeAddress: EditText
     private lateinit var editPhoneNumber: EditText
 
     private lateinit var btnSave: Button
@@ -54,25 +55,30 @@ class profile(bundle: Bundle?) : Fragment() {
         editSecondName = view.findViewById(R.id.edit_second_name)
         editFirstLastName = view.findViewById(R.id.edit_first_last_name)
         editSecondLastName = view.findViewById(R.id.edit_second_last_name)
-        editEmailAdress = view.findViewById(R.id.edit_email_adress)
+        editEmailAddress = view.findViewById(R.id.edit_email_address)
         imgUserPhoto = view.findViewById(R.id.img_user_photo)
         editIdDocument = view.findViewById(R.id.edit_id_document)
-        editHomeAdress = view.findViewById(R.id.edit_home_adress)
+        editHomeAddress = view.findViewById(R.id.edit_home_address)
         editPhoneNumber = view.findViewById(R.id.edit_phone_number)
 
         btnSave = view.findViewById(R.id.btn_save)
 
+        accessInfo = bundle?.getBundle("accessInfo") as Bundle
+
         if (accessInfo?.get("accessFrom") == "signup") {
-            if (accessInfo?.get("accessWith") == "google") { loadGoogleInfo() }
-            else { loadFacebookInfo() }
+            if (accessInfo?.get("accessWith") == "google") {
+                loadGoogleInfo()
+            } else {
+                loadFacebookInfo()
+            }
         } else {
             loadAccountInfo()
         }
 
         btnSave.setOnClickListener(View.OnClickListener {
-            if (validateFields()) {
+            //if (validateFields()) {
                 sendPost()
-            }
+            //}
         })
 
         return view
@@ -86,10 +92,10 @@ class profile(bundle: Bundle?) : Fragment() {
         user.put("secondName", editSecondName.text.toString())
         user.put("firstLastName", editFirstLastName.text.toString())
         user.put("secondLastName", editSecondLastName.text.toString())
-        user.put("emailAdress", editEmailAdress.text.toString())
+        user.put("emailAddress", editEmailAddress.text.toString())
         user.put("idDocument", editIdDocument.text.toString())
         user.put("phoneNumber", editPhoneNumber.text.toString())
-        user.put("homeAdress", editHomeAdress.text.toString())
+        user.put("homeAddress", editHomeAddress.text.toString())
         user.put("userType", accessInfo?.get("userType"))
 
         val queue = Volley.newRequestQueue(context)
@@ -144,7 +150,7 @@ class profile(bundle: Bundle?) : Fragment() {
         editSecondName.setText(secondName)
         editFirstLastName.setText(firstLastName)
         editSecondLastName.setText(secondLastName)
-        editEmailAdress.setText(email)
+        editEmailAddress.setText(email)
 
         Glide.with(this).load(urlUserPhoto).into(imgUserPhoto)
     }
@@ -157,12 +163,30 @@ class profile(bundle: Bundle?) : Fragment() {
 
         editFirstName.setText(fullName?.get(0))
         editFirstLastName.setText(fullName?.get(1))
-        editEmailAdress.setText(emailAddress)
+        editEmailAddress.setText(emailAddress)
         Glide.with(this).load(urlUserPhoto).into(imgUserPhoto)
     }
 
     fun loadAccountInfo() {
-        val account = accessInfo?.get("account") as Bundle
+        val account = bundle?.getBundle("account") as Bundle
+        editFirstName.setText(account.get("firstName").toString())
+        editSecondName.setText(account.get("secondName").toString())
+        editFirstLastName.setText(account.get("firstLastName").toString())
+        editSecondLastName.setText(account.get("secondLastName").toString())
+        editIdDocument.setText(account.get("idDocument").toString())
+        editIdDocument.isEnabled = false
+        editPhoneNumber.setText(account.get("phoneNumber").toString())
+        editEmailAddress.setText(account.get("emailAddress").toString())
+        editHomeAddress.setText(account.get("homeAddress").toString())
+        var urlPhoto: String? = ""
+        if (accessInfo?.get("accessWith") == "facebook") {
+            val facebookAccount = accessInfo?.get("facebookAccount") as Bundle
+            urlPhoto = facebookAccount.get("urlUserPhoto") as String
+        } else {
+            val googleAccount = accessInfo?.get("googleAccount") as GoogleSignInAccount
+            urlPhoto = googleAccount.photoUrl.toString()
+        }
+        Glide.with(this).load(urlPhoto).into(imgUserPhoto)
     }
 
     // Function for validate the fields of profile form
@@ -173,15 +197,15 @@ class profile(bundle: Bundle?) : Fragment() {
             fieldsValidator(editSecondLastName, "onlyLetters", 2, 14) &&
             fieldsValidator(editIdDocument, "onlyNumbers", 5, 12) &&
             fieldsValidator(editPhoneNumber, "onlyNumbers", 7, 10) &&
-            fieldsValidator(editHomeAdress, "homeAddress", 8, 30))
+            fieldsValidator(editHomeAddress, "homeAddress", 8, 30))
     }
 
     // Function for validate the length and type of fields
     fun fieldsValidator(field: EditText,typeValidation: String,lengthMin: Int,lengthMax: Int): Boolean {
         val onlyNumbers = Regex("[0-9]+")
         val onlyLetters = Regex("[a-zA-Z]+")
-        val emailAdress = Regex("")
-        val homeAdress = Regex("")
+        val emailAddress = Regex("")
+        val homeAddress = Regex("")
         val SQLQuery = Regex("DROP|DELETE|UPDATE|SELECT", RegexOption.IGNORE_CASE)
         val textToValidate = field.text.toString()
 
@@ -222,8 +246,8 @@ class profile(bundle: Bundle?) : Fragment() {
                         field.requestFocus()
                         return false
                     }
-                "homeAdress" ->
-                    if (!homeAdress.matches(textToValidate)) {
+                "homeAddress" ->
+                    if (!homeAddress.matches(textToValidate)) {
                         Toast.makeText(
                             context, "El campo no puede contener caracteres especiales " +
                                     "diferentes a '#' y '-'.", Toast.LENGTH_LONG
