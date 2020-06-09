@@ -121,10 +121,10 @@ exports.availableNeeds = data => {
         reject(err);
         return;
       } else {
-        resolve(data);
+        resolve(result);
         return;
       }
     }
-    connection.query("SELECT * FROM needs WHERE status IN ('pending')");
+    connection.query("SELECT * FROM needs WHERE status IN ('pending') LIMIT 5", callbackAvailable);
   });  
 }
