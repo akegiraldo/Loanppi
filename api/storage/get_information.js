@@ -55,7 +55,7 @@ function availableNeeds(data) {
         reject(err);
         return;
       } else {
-        delete result['idNeed'];
+        delete result[0]['interests'];
          
         resolve(result);
         return;
