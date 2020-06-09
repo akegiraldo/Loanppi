@@ -45,7 +45,7 @@ class dashboard : AppCompatActivity() {
         }
 
         if (accessFrom == "signup") {
-            loadFragment(profile(accessInfo))
+            loadFragment(profile(bundle))
         } else {
             if (userType == "investor")
                 loadFragment(main_investor(bundle))
@@ -73,7 +73,7 @@ class dashboard : AppCompatActivity() {
         return when (item.itemId) {
             R.id.menu_i_home -> { replaceFragment(main_investor(bundle)) ; true }
             R.id.menu_i_profile -> { replaceFragment(profile(bundle)) ; true }
-            R.id.menu_i_invest -> { replaceFragment(invest()) ; true }
+            R.id.menu_i_invest -> { replaceFragment(investment_options()) ; true }
             R.id.menu_i_my_investment -> { replaceFragment(my_investment()) ; true }
             R.id.menu_i_history -> { true }
 
@@ -105,7 +105,7 @@ class dashboard : AppCompatActivity() {
 
     fun onMyLoan(view: View) { replaceFragment(my_loan()) }
 
-    fun onInvest(view: View) { replaceFragment(invest()) }
+    fun onInvest(view: View) { replaceFragment(investment_options()) }
 
     fun onMyInvestment(view: View) { replaceFragment(my_investment()) }
 

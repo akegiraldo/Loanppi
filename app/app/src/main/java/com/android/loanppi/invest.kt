@@ -35,7 +35,7 @@ class invest() : Fragment() {
     private lateinit var btnInvest: Button
 
     // Invest values
-    private var moneyAvailable = 0.0F
+    private var availableNeeds = 0.0F
     private var investAmount = 0.0F
     private var interestsWins = 0.0F
     private var returnTotal = 0.0F
@@ -105,7 +105,7 @@ class invest() : Fragment() {
     }
 
     fun getMoneyAvailable() {
-        val url = "http://loanppi.kevingiraldo.tech/app/api/v1/"
+        val url = "http://loanppi.kevingiraldo.tech/app/api/v1/available_needs"
         val queue = Volley.newRequestQueue(context)
 
         // Request a JSON response from the provided URL.
@@ -114,7 +114,7 @@ class invest() : Fragment() {
             Response.Listener { response ->
                 Toast.makeText(context, response.get("status").toString(), Toast.LENGTH_LONG).show()
                 if (response.get("status") == "available") {
-                    moneyAvailable = response.get("moneyAvailable") as Float
+                    availableNeeds = response.get("availableNeeds") as Float
                 } else {
                     Toast.makeText(context, "No hay negocios disponibles para invertir",
                         Toast.LENGTH_LONG).show()

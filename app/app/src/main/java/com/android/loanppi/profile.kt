@@ -101,7 +101,7 @@ class profile(bundle: Bundle?) : Fragment() {
         val queue = Volley.newRequestQueue(context)
         val request = JsonObjectRequest(Request.Method.POST, url, user,
             Response.Listener { response ->
-                println("Response:" + response.toString())
+                println("RESPONSE:" + response.toString())
                 if (response.get("status") == "ok") {
                     Toast.makeText(context, "Usuario registrado con éxito", Toast.LENGTH_LONG)
                         .show()

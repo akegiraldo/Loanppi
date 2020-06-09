@@ -3,7 +3,6 @@
     <corners android:radius="10dp"/>
     <stroke
         android:width="3dp"
-        android:color="@color/btn_orange"
-        />
+        android:color="@color/btn_orange"/>
     <solid android:color="@color/btn_white"/>
 </shape>

@@ -72,8 +72,6 @@ class lend(bundle: Bundle?) : Fragment() {
                 if (lendAmountTxt != "" && lendAmountTxt.toInt() >= 200000 &&
                     lendAmountTxt.toInt() <= 3000000) {
                     lendAmount = lendAmountTxt.toFloat()
-                    interests = lendAmount * 0.05F
-                    totalToPay = lendAmount + interests
 
                     if (lendAmount >= 200000 && lendAmount <= 1500000) {
                         timeToPay = 6
@@ -81,6 +79,8 @@ class lend(bundle: Bundle?) : Fragment() {
                         timeToPay = 12
                     }
 
+                    interests = (((lendAmount / timeToPay) * 0.05) * timeToPay).toFloat()
+                    totalToPay = lendAmount + interests
                     valueToPayMonthly = totalToPay / timeToPay
                     valueToPayWeekly = valueToPayMonthly / 4
 
@@ -136,7 +136,7 @@ class lend(bundle: Bundle?) : Fragment() {
             },
             Response.ErrorListener { error: VolleyError ->
                 Toast.makeText(context,"Error al procesar el pŕestamo.", Toast.LENGTH_LONG).show()
-                println("Error al procesar le pŕestamo: ${error.message}")
+                println("Error al procesar el préstamo: ${error.message}")
             }
         )
         queue.add(request)

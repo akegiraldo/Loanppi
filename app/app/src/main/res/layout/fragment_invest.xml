@@ -21,11 +21,11 @@
             tools:context=".dashboard">
 
             <TextView
-                android:id="@+id/txt_title_invest"
+                android:id="@+id/txt_title_invest_f2"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="16dp"
-                android:text="Nueva inversión"
+                android:text="@string/invest_title"
                 android:textAlignment="center"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
@@ -48,7 +48,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/txt_value_money_available"
                 app:layout_constraintHeight_percent="0.05"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_title_invest"
+                app:layout_constraintTop_toBottomOf="@+id/txt_title_invest_f2"
                 app:layout_constraintWidth_percent="0.5" />
 
             <TextView
@@ -62,7 +62,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.05"
                 app:layout_constraintStart_toEndOf="@+id/txt_money_available"
-                app:layout_constraintTop_toBottomOf="@+id/txt_title_invest"
+                app:layout_constraintTop_toBottomOf="@+id/txt_title_invest_f2"
                 app:layout_constraintWidth_percent="0.3" />
 
             <EditText

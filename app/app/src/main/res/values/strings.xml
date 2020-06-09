@@ -70,12 +70,12 @@
     </string-array>
 
     // Invest
+    <string name="invest_title">Nueva inversión</string>
     <string-array name="time_to_return">
         <item>¿En cuánto tiempo quiere el retorno?</item>
         <item>6 meses</item>
         <item>12 meses</item>
     </string-array>
-
 
     // Login with Facebook
     <string name="facebook_app_id">245844573146164</string>
