@@ -12,3 +12,5 @@ app.use('/', routes);
 app.listen(3000,()=>{
         console.log('Conecting ...');
 });
+
+module.exports = app
