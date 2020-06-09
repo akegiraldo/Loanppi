@@ -1,11 +1,11 @@
 #!/usr/bin/node
 const connection = require('./conection_database');
 
-//busca si un usuario existe en la base de datos
+//Function that checks is the email is in the DB
 function findUser(data) {
   const userType = data.userType + 's';
   return new Promise((resolve, reject) => {
-    const userExists = function (err, result) {
+    const userExists = (err, result) => {
       if (err) {
         reject(err);
         return;
@@ -20,10 +20,11 @@ function findUser(data) {
 });
 }
 
+//Fuction that gets an user and checks if the user exists
 function getUser(email, userType) {
   console.log(userType);
   return new Promise((resolve, reject)=> {
-  const callbackDB =  function (err, result) {
+  const callbackDB =  (err, result) => {
     if (err) {
       reject(err);
       return;
@@ -44,24 +45,19 @@ function getUser(email, userType) {
 });
 }
 
-//Verficar el estado del prestamo
+//Funtion that verifies worker's debt status
 function availableNeeds(data) {
-  delete data['idNeed'];
-  delete data['timeToPayWeekly'];
-  delete data['interests'];
   return new Promise ((resolve, reject) => {
     const callbackAvailable = (err ,result) => {
       if (err) {
         reject(err);
         return;
       } else {
-        delete result[0]['interests'];
-         
         resolve(result);
         return;
       }
     }
-    connection.query("SELECT * FROM needs WHERE status IN ('pending') LIMIT 5", callbackAvailable);
+    connection.query("SELECT * FROM needs WHERE status IN ('pending') LIMIT 3", callbackAvailable);
   });
 }
 

@@ -12,6 +12,7 @@ CREATE TABLE  IF NOT EXISTS investors(
   emailAddress VARCHAR(255) NOT NULL,
   phoneNumber VARCHAR(255) NOT NULL,
   homeAddress VARCHAR(255) NOT NULL,
+  investStack INT(7) NOT NULL,
   PRIMARY KEY (idInvestor)
 ) ENGINE=InnoDB;
 
@@ -36,6 +37,8 @@ CREATE TABLE IF NOT EXISTS workers(
 CREATE TABLE IF NOT EXISTS needs (
   idNeed INT(11) NOT NULL UNIQUE AUTO_INCREMENT,
   idWorker INT(11) NOT NULL,
+  loanAmount INT(7) NOT NULL,
+  amountRemaining INT(7) NOT NULL,
   totalToPay INT(7) NOT NULL,
   timeToPay INT(2) NOT NULL,
   valueToPayWeekly INT(7) NOT NULL,
@@ -61,7 +64,7 @@ CREATE TABLE IF NOT EXISTS investment(
 
 -- TABLE FUNDING WHERE CONECT INVESTORS WITH WORKERS
 CREATE TABLE IF NOT EXISTS funding(
-  idFounding INT(11) NOT NULL UNIQUE AUTO_INCREMENT,
+  idFunding INT(11) NOT NULL UNIQUE AUTO_INCREMENT,
   idNeed INT(11) NOT NULL,
   idInvestment INT(11) NOT NULL,
   PRIMARY KEY (idFounding),

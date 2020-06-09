@@ -11,6 +11,6 @@ router.get('/app/api/v1/user', searchUSer)
 router.post('/app/api/v1/new_user', NewUser)
 router.put('/app/api/v1/update', update)
 router.post('/app/api/v1/lend', newNeed)
-router.get('/app/api/v1/options', options)
+router.get('/app/api/v1/invest_options', options)
 
 module.exports = router
