@@ -22,7 +22,7 @@ class investment_options : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_investment_options, container, false)
+        return inflater.inflate(R.layout.fragment_invest_options, container, false)
     }
 
 }

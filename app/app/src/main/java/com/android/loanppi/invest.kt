@@ -12,10 +12,6 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.facebook.AccessToken
-import com.facebook.GraphRequest
-import com.facebook.HttpMethod
-import com.facebook.login.LoginManager
 
 /**
  * A simple [Fragment] subclass.
@@ -52,7 +48,7 @@ class invest() : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_invest, container, false)
+        val view = inflater.inflate(R.layout.fragment_invest_details, container, false)
 
         editInvestAmount = view.findViewById(R.id.edit_invest_amount)
         spinTimeToReturn = view.findViewById(R.id.spin_time_to_return)
