@@ -1,9 +1,7 @@
 var bodyParser = require('body-parser');
 var express = require('express');
-const saveData = require('./storage').saveData;
-const getUser = require('./storage').getUser;
-const findUser = require('./storage').findUser;
-const sendDebt = require('./storage').sendDebt;
+const { findUser, getUser, availableNeeds } = require('./storage/get_information');
+const { saveData, sendDebt, updateUser } = require('./storage/send_information');
 
 var app = express();
 app.use(bodyParser.json());
@@ -69,7 +67,7 @@ app.put('/app/api/v1/update',(req, res, next) => {
   });
 });
 
-// cuando se crea una nueva necesidad 
+// cuando se crea una nueva necesidad
 app.post('/app/api/v1/lend', (req, res, next) => {
   const allData = req.body;
   sendDebt(allData).then(response => {
@@ -80,6 +78,16 @@ app.post('/app/api/v1/lend', (req, res, next) => {
   });
 });
 
+
+app.get('/app/api/v1/options', (req, res, next) => {
+  const allData = req.body;
+  availableNeeds(allData).then(response => {
+    res.send(response);
+  }).catch(err => {
+      console.err(err);
+      res.status(500).send("Not options found");
+    });
+});
 
 app.listen(3000,()=>{
         console.log('Conecting ...');

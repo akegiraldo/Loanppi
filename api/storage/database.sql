@@ -1,4 +1,4 @@
--- DROP DATABASE loanppi;
+DROP DATABASE loanppi;
 -- como correr eta monda sudo cat database.sql |sudo  mysql -hlocalhost -uroot -p
 CREATE DATABASE IF NOT EXISTS loanppi;
 USE loanppi;
@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS needs (
   timeToPay INT(2) NOT NULL,
   valueToPayWeekly INT(7) NOT NULL,
   interests INT(6) NOT NULL,
+  status VARCHAR(255) NOT NULL,
   PRIMARY KEY (idNeed),
   KEY idWorker (idWorker),
   CONSTRAINT needs_ibfk_1 FOREIGN KEY (idWorker) REFERENCES workers (idWorker) ON DELETE NO ACTION
