@@ -14,7 +14,6 @@ import com.facebook.GraphRequest
 import com.facebook.HttpMethod
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
 class dashboard : AppCompatActivity() {
@@ -73,7 +72,7 @@ class dashboard : AppCompatActivity() {
         return when (item.itemId) {
             R.id.menu_i_home -> { replaceFragment(main_investor(bundle)) ; true }
             R.id.menu_i_profile -> { replaceFragment(profile(bundle)) ; true }
-            R.id.menu_i_invest -> { replaceFragment(investment_options()) ; true }
+            R.id.menu_i_invest -> { replaceFragment(invest_options(account)) ; true }
             R.id.menu_i_my_investment -> { replaceFragment(my_investment()) ; true }
             R.id.menu_i_history -> { true }
 
@@ -105,7 +104,7 @@ class dashboard : AppCompatActivity() {
 
     fun onMyLoan(view: View) { replaceFragment(my_loan()) }
 
-    fun onInvest(view: View) { replaceFragment(investment_options()) }
+    fun onInvest(view: View) { replaceFragment(invest_options(account)) }
 
     fun onMyInvestment(view: View) { replaceFragment(my_investment()) }
 

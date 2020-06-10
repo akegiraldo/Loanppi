@@ -36,7 +36,7 @@ class lend(bundle: Bundle?) : Fragment() {
     private lateinit var btnLend: Button
 
     // Lend values
-    private var lendAmount = 0.0F
+    private var loanAmount = 0.0F
     private var interests = 0.0F
     private var totalToPay = 0.0F
     private var timeToPay = 0
@@ -68,19 +68,19 @@ class lend(bundle: Bundle?) : Fragment() {
 
         editLendAmount.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                val lendAmountTxt = editLendAmount.text.toString()
-                if (lendAmountTxt != "" && lendAmountTxt.toInt() >= 200000 &&
-                    lendAmountTxt.toInt() <= 3000000) {
-                    lendAmount = lendAmountTxt.toFloat()
+                val loanAmountTxt = editLendAmount.text.toString()
+                if (loanAmountTxt != "" && loanAmountTxt.toInt() >= 200000 &&
+                    loanAmountTxt.toInt() <= 3000000) {
+                    loanAmount = loanAmountTxt.toFloat()
 
-                    if (lendAmount >= 200000 && lendAmount <= 1500000) {
+                    if (loanAmount >= 200000 && loanAmount <= 1500000) {
                         timeToPay = 6
                     } else {
                         timeToPay = 12
                     }
 
-                    interests = (((lendAmount / timeToPay) * 0.05) * timeToPay).toFloat()
-                    totalToPay = lendAmount + interests
+                    interests = (((loanAmount / timeToPay) * 0.05) * timeToPay).toFloat()
+                    totalToPay = loanAmount + interests
                     valueToPayMonthly = totalToPay / timeToPay
                     valueToPayWeekly = valueToPayMonthly / 4
 
@@ -117,10 +117,13 @@ class lend(bundle: Bundle?) : Fragment() {
         val loan = JSONObject()
 
         loan.put("totalToPay", totalToPay)
+        loan.put("loanAmount", loanAmount)
         loan.put("timeToPay", timeToPay)
         loan.put("valueToPayWeekly", valueToPayWeekly)
         loan.put("interests", interests)
         loan.put("idWorker", account?.get("userId"))
+
+        println("LOAN: " + loan.toString())
 
         val queue = Volley.newRequestQueue(context)
         val request = JsonObjectRequest(Request.Method.POST, url, loan, Response.Listener {

@@ -222,6 +222,7 @@ class landing : AppCompatActivity() {
                     account.putString("userType", response.get("userType").toString())
                     if (response.get("userType").toString() == "investors") {
                         account.putString("userId", response.get("idInvestor").toString())
+                        account.putString("investStack", response.get("investStack").toString())
                     } else {
                         account.putString("userId", response.get("idWorker").toString())
                     }
@@ -239,8 +240,8 @@ class landing : AppCompatActivity() {
                                 LoginManager.getInstance().logOut()
                             }).executeAsync()
                     }
-                    /*Toast.makeText(this, "El usuario no existe. Regístrate por favor.",
-                        Toast.LENGTH_LONG).show()*/
+                    Toast.makeText(this, "El usuario no existe. Regístrate por favor.",
+                        Toast.LENGTH_LONG).show()
                 }
             },
             Response.ErrorListener {

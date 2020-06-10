@@ -15,13 +15,16 @@ import com.android.volley.toolbox.Volley
 
 /**
  * A simple [Fragment] subclass.
- * Use the [invest.newInstance] factory method to
+ * Use the [invest_details.newInstance] factory method to
  * create an instance of this fragment.
  */
-class invest() : Fragment() {
+class invest_details(bundle: Bundle) : Fragment() {
+    // Loan data
+    private val loanData = bundle
 
     // Invest fields
     private lateinit var editInvestAmount: EditText
+    private lateinit var txtInvestAmount: TextView
     private lateinit var spinTimeToReturn: Spinner
     private lateinit var valTimeToReturn: TextView
     private lateinit var valReturnWeekly: TextView
@@ -51,6 +54,7 @@ class invest() : Fragment() {
         val view = inflater.inflate(R.layout.fragment_invest_details, container, false)
 
         editInvestAmount = view.findViewById(R.id.edit_invest_amount)
+        txtInvestAmount = view.findViewById(R.id.txt_value_invest_amount)
         spinTimeToReturn = view.findViewById(R.id.spin_time_to_return)
         valTimeToReturn = view.findViewById(R.id.txt_value_time_to_return)
         valReturnWeekly = view.findViewById(R.id.txt_value_return_weekly)
@@ -58,9 +62,17 @@ class invest() : Fragment() {
         valInterestsWins = view.findViewById(R.id.txt_value_interests_wins)
         valReturnTotal = view.findViewById(R.id.txt_value_return_total)
 
-        btnInvest = view.findViewById(R.id.btn_invest)
+        btnInvest = view.findViewById(R.id.btn_let_invest)
 
         //getMoneyAvailable()
+
+        var investStack = loanData.get("investStack").toString().toFloat()
+        val amountRemaining = loanData.get("amountRemaining").toString().toFloat()
+        if (investStack > amountRemaining) {
+            investStack = amountRemaining
+        }
+        editInvestAmount.setText(investStack.toString())
+        txtInvestAmount.setText(investStack.toString())
 
         editInvestAmount.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(s: Editable?) {

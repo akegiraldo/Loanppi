@@ -76,6 +76,9 @@
         <item>6 meses</item>
         <item>12 meses</item>
     </string-array>
+    <string name="moneyToInvest">moneyToInvest</string>
+    <string name="amountRemaining">amountRemaining</string>
+    <string name="returnTime">returnTime</string>
 
     // Login with Facebook
     <string name="facebook_app_id">245844573146164</string>

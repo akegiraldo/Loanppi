@@ -102,8 +102,8 @@ class signup : AppCompatActivity() {
         if (btn_clicked == btn_worker) {
             btn_to_deselect = btn_investor
             userType = "worker"
-            btn_facebook.isVisible = false
-            btn_google.isVisible = false
+            btn_facebook.isVisible = true
+            btn_google.isVisible = true
             btn_rappi.isVisible = true
         } else {
             btn_to_deselect = btn_worker

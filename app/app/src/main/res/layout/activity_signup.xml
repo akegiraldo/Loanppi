@@ -192,7 +192,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHeight_percent="0.25"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_register_with"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_s_google"
                     app:layout_constraintWidth_percent="0.5" />
 
                 <Button
