@@ -1,5 +1,7 @@
 #!/usr/bin/node
 const connection = require('./conection_database');
+const newBalanceInvestor = require('./modificate_information');
+
 
 //Function that  creates a new user in DB
 const createNewUSerDB = data => {
@@ -42,9 +44,27 @@ const sendDebt = data => {
 
 //Functio that creates a new Investment with needs' id in DB
 const createInvestment = data => {
+  delete data['idNeed'];
+  newBalanceInvestor(data);
   return new Promise((resolve, reject) => {
     console.log(data)
     const callbackInsertInvestment =  (err, result) => {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve(result.insertId);
+        return;
+      }
+    }
+    connection.query('INSERT INTO investment SET ?', data , callbackInsertInvestment);
+  });
+}
+
+const createFunding = data => {
+  delete data['moneyInvestment']
+  return new Promise((resolve, reject) => {
+    const callbackCreateFunding =  (err, result) => {
       if (err) {
         reject(err);
         return;
@@ -53,10 +73,9 @@ const createInvestment = data => {
         return;
       }
     }
-    connection.query('INSERT INTO investment SET ?', data , callbackInsertInvestment);
+    connection.query('INSERT INTO funding SET ?', data , callbackCreateFunding);
   });
 }
-
 
 //Function that updates user's profile
 const updateUser = data => {
@@ -74,4 +93,4 @@ const updateUser = data => {
 }
 
 
-module.exports = { createNewUSerDB, sendDebt, updateUser, createInvestment };
+module.exports = { createNewUSerDB, sendDebt, updateUser, createInvestment, createFunding };

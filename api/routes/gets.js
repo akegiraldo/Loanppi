@@ -1,6 +1,7 @@
 #!/usr/bin/node
 const { findUser, getUser, availableNeeds } = require('../storage/get_information');
-const { createNewUSerDB, sendDebt, updateUser, createInvestment } = require('../storage/send_information');
+const { createNewUSerDB, sendDebt, updateUser, createInvestment, createFunding } = require('../storage/send_information');
+const { response } = require('express');
 
 
 const helloWorld = (req,res,next) => {
@@ -91,8 +92,14 @@ const options = (req, res, next) => {
 //Function that creates a new invesment in the DB
 const newInvestment = (req, res, next) => {
   const allData = req.body;
-   console.log(allData)
-  createInvestment(allData).then(response => {
+  const backup = { ...req.body };
+  backup['idInvestment'] = createInvestment(allData).then(response => {
+    return response;
+  }).catch(err => {
+    console.err(err);
+    res.status(500).send("DB Error, NOT FOUND!");
+  });
+  createFunding(backup).then(response => {
     res.send(response);
   }).catch(err => {
     console.err(err);
