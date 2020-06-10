@@ -1,15 +1,15 @@
 #!/usr/bin/node
 const { findUser, getUser, availableNeeds } = require('../storage/get_information');
-const { createNewUSerDB, sendDebt, updateUser } = require('../storage/send_information');
+const { createNewUSerDB, sendDebt, updateUser, createInvestment } = require('../storage/send_information');
 
 
-function helloWorld(req,res,next) {
+const helloWorld = (req,res,next) => {
   res.send('hola mundo');
   console.log("get");
 }
 
-// busca si el usuario existe si existe lo devuelve
-function searchUSer(req, res, next) {
+// Function that checks wether the user exists
+const searchUSer = (req, res, next) => {
   var data = "";
   const userEmail = req.query.email;
   console.log(userEmail);
@@ -33,8 +33,8 @@ function searchUSer(req, res, next) {
 }
 
 
-// busca si el usuario existe y si no existe lo guartda si existe no lo guarda
-function NewUser(req, res, next) {
+//Function that checks the existence of the user and creates it
+const NewUser = (req, res, next) => {
   const allData = req.body;
   findUser(allData).then(response => {
     if (response.status === 'exists') {
@@ -53,8 +53,8 @@ function NewUser(req, res, next) {
   });
 }
 
-// actualiza datos
-function update(req, res, next) {
+// Function that updates user
+const update = (req, res, next) => {
   const allData = req.body;
   updateUser(allData).then(response => {
     const data = JSON.stringify({"updated": response});
@@ -66,8 +66,8 @@ function update(req, res, next) {
   });
 }
 
-// cuando se crea una nueva necesidad
-function newNeed(req, res, next) {
+//Function that creates a new Need in the DB
+const newNeed = (req, res, next) => {
   const allData = req.body;
   sendDebt(allData).then(response => {
     res.send(response);
@@ -77,8 +77,8 @@ function newNeed(req, res, next) {
   });
 }
 
-
-function options(req, res, next) {
+//Function that gets invesments' options
+const options = (req, res, next) => {
   const allData = req.body;
   availableNeeds(allData).then(response => {
     res.send(response);
@@ -88,4 +88,16 @@ function options(req, res, next) {
     });
 }
 
-module.exports = { helloWorld, searchUSer, NewUser, update, newNeed, options }
+//Function that creates a new invesment in the DB
+const newInvestment = (req, res, next) => {
+  const allData = req.body;
+   console.log(allData)
+  createInvestment(allData).then(response => {
+    res.send(response);
+  }).catch(err => {
+    console.err(err);
+    res.status(500).send("DB Error, NOT FOUND!");
+  });
+}
+
+module.exports = { helloWorld, searchUSer, NewUser, update, newNeed, options, newInvestment}

@@ -1,8 +1,8 @@
 #!/usr/bin/node
 const connection = require('./conection_database');
 
-// create a new user in db
-function createNewUSerDB(data) {
+//Function that  creates a new user in DB
+const createNewUSerDB = data => {
   const userType = data.userType + 's';
   delete data['userType'];
   if (userType == "investors") {
@@ -22,12 +22,12 @@ function createNewUSerDB(data) {
 }
 
 
-// create new debt with id of user in db
-function sendDebt(data) {
+//Function that creates new debt with id of user in DB
+const sendDebt = data => {
   data['status'] = 'pending';
   data['amountRemaining'] = data['loanAmount']
   return new Promise((resolve, reject) => {
-    const callbackInserDebt = function (err, result) {
+    const callbackInsertDebt = (err, result) => {
       if (err) {
         reject(err);
         return;
@@ -36,12 +36,30 @@ function sendDebt(data) {
         return;
       }
     }
-    connection.query('INSERT INTO needs SET ?', data , callbackInserDebt);
+    connection.query('INSERT INTO needs SET ?', data , callbackInsertDebt);
+  });
+}
+
+//Functio that creates a new Investment with needs' id in DB
+const createInvestment = data => {
+  return new Promise((resolve, reject) => {
+    console.log(data)
+    const callbackInsertInvestment =  (err, result) => {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve({'status': 'created'});
+        return;
+      }
+    }
+    connection.query('INSERT INTO investment SET ?', data , callbackInsertInvestment);
   });
 }
 
 
-function updateUser(data) {
+//Function that updates user's profile
+const updateUser = data => {
   const userType = data.userType + 's';
   if (userType === "workers") {
     const id = "idWorker";
@@ -56,4 +74,4 @@ function updateUser(data) {
 }
 
 
-module.exports = { createNewUSerDB, sendDebt, updateUser };
+module.exports = { createNewUSerDB, sendDebt, updateUser, createInvestment };

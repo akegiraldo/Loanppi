@@ -1,8 +1,8 @@
 #!/usr/bin/node
 const connection = require('./conection_database');
 
-//Function that checks is the email is in the DB
-function findUser(data) {
+//Function that checks is if the email is in the DB
+const findUser = data => {
   const userType = data.userType + 's';
   return new Promise((resolve, reject) => {
     const userExists = (err, result) => {
@@ -20,8 +20,8 @@ function findUser(data) {
 });
 }
 
-//Fuction that gets an user and checks if the user exists
-function getUser(email, userType) {
+//Function that gets an user and checks if the user exists
+const  getUser= (email, userType) => {
   console.log(userType);
   return new Promise((resolve, reject)=> {
   const callbackDB =  (err, result) => {
@@ -46,7 +46,7 @@ function getUser(email, userType) {
 }
 
 //Funtion that verifies worker's debt status
-function availableNeeds(data) {
+const availableNeeds = data => {
   return new Promise ((resolve, reject) => {
     const callbackAvailable = (err ,result) => {
       if (err) {
