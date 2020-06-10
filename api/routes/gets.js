@@ -1,6 +1,6 @@
 #!/usr/bin/node
 const { findUser, getUser, availableNeeds } = require('../storage/get_information');
-const { saveData, sendDebt, updateUser } = require('../storage/send_information');
+const { createNewUSerDB, sendDebt, updateUser } = require('../storage/send_information');
 
 
 function helloWorld(req,res,next) {
@@ -40,7 +40,7 @@ function NewUser(req, res, next) {
     if (response.status === 'exists') {
       res.send(response);
     } else {
-      saveData(allData).then(responseSave => {
+      createNewUSerDB(allData).then(responseSave => {
         res.send(responseSave);
       }).catch(err => {
         console.error(err);

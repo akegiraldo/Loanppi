@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router()
 const { helloWorld, searchUSer, NewUser, update, newNeed, options } = require('./gets')
 
-
+// rutas de la api
 router.get('/app/api/v1/', helloWorld)
 router.get('/app/api/v1/user', searchUSer)
 router.post('/app/api/v1/new_user', NewUser)

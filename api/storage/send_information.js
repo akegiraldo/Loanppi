@@ -1,8 +1,8 @@
 #!/usr/bin/node
 const connection = require('./conection_database');
 
-// solo inserta datos de un json a la base de datos
-function saveData(data) {
+// create a new user in db
+function createNewUSerDB(data) {
   const userType = data.userType + 's';
   delete data['userType'];
   if (userType == "investors") {
@@ -22,7 +22,7 @@ function saveData(data) {
 }
 
 
-//inserta en la base de datos una necesidad con el id del worker
+// create new debt with id of user in db
 function sendDebt(data) {
   data['status'] = 'pending';
   data['amountRemaining'] = data['loanAmount']
@@ -56,4 +56,4 @@ function updateUser(data) {
 }
 
 
-module.exports = { saveData, sendDebt, updateUser };
+module.exports = { createNewUSerDB, sendDebt, updateUser };
