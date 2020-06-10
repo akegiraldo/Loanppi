@@ -12,6 +12,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import java.text.NumberFormat
 
 /**
  * A simple [Fragment] subclass.
@@ -24,8 +25,7 @@ class invest_details(bundle: Bundle) : Fragment() {
 
     // Invest fields
     private lateinit var editInvestAmount: EditText
-    private lateinit var txtInvestAmount: TextView
-    private lateinit var spinTimeToReturn: Spinner
+    private lateinit var txtMaxInvestAmount: TextView
     private lateinit var valTimeToReturn: TextView
     private lateinit var valReturnWeekly: TextView
     private lateinit var valReturnMonthly: TextView
@@ -34,8 +34,7 @@ class invest_details(bundle: Bundle) : Fragment() {
     private lateinit var btnInvest: Button
 
     // Invest values
-    private var availableNeeds = 0.0F
-    private var investAmount = 0.0F
+    private var investAmount = 0
     private var interestsWins = 0.0F
     private var returnTotal = 0.0F
     private var timeToReturn = 0
@@ -54,8 +53,7 @@ class invest_details(bundle: Bundle) : Fragment() {
         val view = inflater.inflate(R.layout.fragment_invest_details, container, false)
 
         editInvestAmount = view.findViewById(R.id.edit_invest_amount)
-        txtInvestAmount = view.findViewById(R.id.txt_value_invest_amount)
-        spinTimeToReturn = view.findViewById(R.id.spin_time_to_return)
+        txtMaxInvestAmount = view.findViewById(R.id.txt_value_max_invest_amount)
         valTimeToReturn = view.findViewById(R.id.txt_value_time_to_return)
         valReturnWeekly = view.findViewById(R.id.txt_value_return_weekly)
         valReturnMonthly = view.findViewById(R.id.txt_value_return_monthly)
@@ -64,76 +62,48 @@ class invest_details(bundle: Bundle) : Fragment() {
 
         btnInvest = view.findViewById(R.id.btn_let_invest)
 
-        //getMoneyAvailable()
-
-        var investStack = loanData.get("investStack").toString().toFloat()
-        val amountRemaining = loanData.get("amountRemaining").toString().toFloat()
+        val copFormat: NumberFormat = NumberFormat.getCurrencyInstance()
+        copFormat.maximumFractionDigits = 0
+        var investStack = loanData.get("investStack").toString().toInt()
+        val amountRemaining = loanData.get("amountRemaining").toString().toInt()
         if (investStack > amountRemaining) {
             investStack = amountRemaining
         }
-        editInvestAmount.setText(investStack.toString())
-        txtInvestAmount.setText(investStack.toString())
 
         editInvestAmount.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                val investAmountTxt = editInvestAmount.text.toString()
-                /*if (investAmountTxt != "" && investAmountTxt.toInt() >= 200000 &&
-                    lendAmountTxt.toInt() <= 3000000) {
-                    lendAmount = lendAmountTxt.toFloat()
-                    interests = lendAmount * 0.05F
-                    totalToPay = lendAmount + interests
+                val investAmountStr = editInvestAmount.text.toString()
+                if (investAmountStr != "" && investAmountStr.toInt() >= 50000 &&
+                    investAmountStr.toInt() <= investStack) {
+                    investAmount = investAmountStr.toInt()
+                    interestsWins = investAmount * 0.05F
+                    returnTotal = investAmount + interestsWins
 
-                    if (lendAmount >= 200000 && lendAmount <= 1500000) {
-                        timeToPay = 6
-                    } else {
-                        timeToPay = 12
-                    }
+                    timeToReturn = loanData.get("timeToPay").toString().toInt()
 
-                    valueToPayMonthly = totalToPay / timeToPay
-                    valueToPayWeekly = valueToPayMonthly / 4
+                    valueToReturnMonthly = returnTotal / timeToReturn
+                    valueToReturnWeekly = valueToReturnMonthly / 4
 
-                    valTimeToPay.setText(timeToPay.toString() + " meses")
-                    valToPayWeekly.setText(valueToPayWeekly.toString())
-                    valToPayMonthly.setText(valueToPayMonthly.toString())
-                    valInterests.setText(interests.toString())
-                    valTotalToPay.setText(totalToPay.toString())
+                    valTimeToReturn.setText(timeToReturn.toString() + " meses")
+                    valReturnWeekly.setText(valueToReturnWeekly.toString())
+                    valReturnMonthly.setText(valueToReturnMonthly.toString())
+                    valInterestsWins.setText(interestsWins.toString())
+                    valReturnTotal.setText(returnTotal.toString())
                 } else {
-                    valTimeToPay.setText("0 meses")
-                    valToPayWeekly.setText("00.000")
-                    valToPayMonthly.setText("000.000")
-                    valInterests.setText("000.000")
-                    valTotalToPay.setText("0'000.000")
-                }*/
+                    valTimeToReturn.setText("0 meses")
+                    valReturnWeekly.setText("$00,000")
+                    valReturnMonthly.setText("$000,000")
+                    valInterestsWins.setText("$000,000")
+                    valReturnTotal.setText("$0,000,000")
+                }
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
         })
 
+        editInvestAmount.setText(investStack.toString())
+        txtMaxInvestAmount.setText(copFormat.format(investStack))
+
         return view
-    }
-
-    fun getMoneyAvailable() {
-        val url = "http://loanppi.kevingiraldo.tech/app/api/v1/available_needs"
-        val queue = Volley.newRequestQueue(context)
-
-        // Request a JSON response from the provided URL.
-        val request = JsonObjectRequest(
-            Request.Method.GET, url, null,
-            Response.Listener { response ->
-                Toast.makeText(context, response.get("status").toString(), Toast.LENGTH_LONG).show()
-                if (response.get("status") == "available") {
-                    availableNeeds = response.get("availableNeeds") as Float
-                } else {
-                    Toast.makeText(context, "No hay negocios disponibles para invertir",
-                        Toast.LENGTH_LONG).show()
-                }
-            },
-            Response.ErrorListener {
-                Toast.makeText(context, "Error en la petición de dinero disponible",
-                    Toast.LENGTH_LONG).show()
-            })
-
-        // Add the request to the RequestQueue.
-        queue.add(request)
     }
 }

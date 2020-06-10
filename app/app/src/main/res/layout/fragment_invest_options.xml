@@ -46,7 +46,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.2"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_title_invest_f1"
+                app:layout_constraintTop_toBottomOf="@+id/txt_choose_an_invest_for_details"
                 app:layout_constraintWidth_percent="0.8">
 
                 <TextView
@@ -125,7 +125,7 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/txt_card_1_money_to_invest"
                     app:layout_constraintTop_toBottomOf="@+id/card_1_title"
-                    app:layout_constraintWidth_percent="0.45" />
+                    app:layout_constraintWidth_percent="0.35" />
 
                 <TextView
                     android:id="@+id/txt_card_1_value_amount_remaining"
@@ -140,7 +140,7 @@
                     app:layout_constraintHeight_percent="0.14"
                     app:layout_constraintStart_toStartOf="@+id/txt_card_1_value_money_to_invest"
                     app:layout_constraintTop_toBottomOf="@+id/txt_card_1_value_money_to_invest"
-                    app:layout_constraintWidth_percent="0.45" />
+                    app:layout_constraintWidth_percent="0.35" />
 
                 <TextView
                     android:id="@+id/txt_card_1_value_return_time"
@@ -155,7 +155,7 @@
                     app:layout_constraintHeight_percent="0.14"
                     app:layout_constraintStart_toStartOf="@+id/txt_card_1_value_amount_remaining"
                     app:layout_constraintTop_toBottomOf="@+id/txt_card_1_value_amount_remaining"
-                    app:layout_constraintWidth_percent="0.45" />
+                    app:layout_constraintWidth_percent="0.35" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -249,7 +249,7 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/txt_card_2_money_to_invest"
                     app:layout_constraintTop_toBottomOf="@+id/card_2_title"
-                    app:layout_constraintWidth_percent="0.45" />
+                    app:layout_constraintWidth_percent="0.35" />
 
                 <TextView
                     android:id="@+id/txt_card_2_value_amount_remaining"
@@ -264,7 +264,7 @@
                     app:layout_constraintHeight_percent="0.14"
                     app:layout_constraintStart_toStartOf="@+id/txt_card_2_value_money_to_invest"
                     app:layout_constraintTop_toBottomOf="@+id/txt_card_2_value_money_to_invest"
-                    app:layout_constraintWidth_percent="0.45" />
+                    app:layout_constraintWidth_percent="0.35" />
 
                 <TextView
                     android:id="@+id/txt_card_2_value_return_time"
@@ -279,7 +279,7 @@
                     app:layout_constraintHeight_percent="0.14"
                     app:layout_constraintStart_toStartOf="@+id/txt_card_2_value_amount_remaining"
                     app:layout_constraintTop_toBottomOf="@+id/txt_card_2_value_amount_remaining"
-                    app:layout_constraintWidth_percent="0.45" />
+                    app:layout_constraintWidth_percent="0.35" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -373,7 +373,7 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/txt_card_3_money_to_invest"
                     app:layout_constraintTop_toBottomOf="@+id/card_3_title"
-                    app:layout_constraintWidth_percent="0.45" />
+                    app:layout_constraintWidth_percent="0.35" />
 
                 <TextView
                     android:id="@+id/txt_card_3_value_amount_remaining"
@@ -388,7 +388,7 @@
                     app:layout_constraintHeight_percent="0.14"
                     app:layout_constraintStart_toStartOf="@+id/txt_card_3_value_money_to_invest"
                     app:layout_constraintTop_toBottomOf="@+id/txt_card_3_value_money_to_invest"
-                    app:layout_constraintWidth_percent="0.45" />
+                    app:layout_constraintWidth_percent="0.35" />
 
                 <TextView
                     android:id="@+id/txt_card_3_value_return_time"
@@ -403,9 +403,24 @@
                     app:layout_constraintHeight_percent="0.14"
                     app:layout_constraintStart_toStartOf="@+id/txt_card_3_value_amount_remaining"
                     app:layout_constraintTop_toBottomOf="@+id/txt_card_3_value_amount_remaining"
-                    app:layout_constraintWidth_percent="0.45" />
+                    app:layout_constraintWidth_percent="0.35" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/txt_choose_an_invest_for_details"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="32dp"
+                android:text="Escoge una inversión para ver en detalle"
+                android:textAlignment="center"
+                android:textColor="@color/textPrimary"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toEndOf="@+id/card_1"
+                app:layout_constraintHeight_percent="0.04"
+                app:layout_constraintStart_toStartOf="@+id/card_1"
+                app:layout_constraintTop_toBottomOf="@+id/txt_title_invest_f1"
+                app:layout_constraintWidth_percent="0.8" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
