@@ -34,7 +34,8 @@ const sendDebt = data => {
         reject(err);
         return;
       } else {
-        resolve({'status': 'pending'});
+        
+        resolve(result);
         return;
       }
     }

@@ -70,8 +70,14 @@ const update = (req, res, next) => {
 //Function that creates a new Need in the DB
 const newNeed = (req, res, next) => {
   const allData = req.body;
+  const id = allData.idWorker;
   sendDebt(allData).then(response => {
-    res.send(response);
+     const loan = checkLoan(id).then(response => {
+      res.send(response[0]);
+}).catch(err => {
+    console.error(err);
+    res.status(500).send("DB Error, NOT FOUND!");
+  });
   }).catch(err => {
     console.error(err);
     res.status(500).send("DB Error, NOT FOUND!");
@@ -94,6 +100,7 @@ const newInvestment = (req, res, next) => {
   const allData = req.body;
   console.log(allData);
   const backup = { ...req.body };
+  console.log('back:', backup);
   createInvestment(allData).then(response => {
     backup['idInvestment'] = response;
     return backup;
@@ -109,7 +116,7 @@ const newInvestment = (req, res, next) => {
 const activeLoan = (req, res, next) => {
   const workerId = req.query.idWorker;
   checkLoan(workerId).then(response => {
-    res.send(response);
+    res.send(response[0]);
   }).catch(err => {
      console.error(err);
      res.status(500).send("DB Error, NOT FOUND");

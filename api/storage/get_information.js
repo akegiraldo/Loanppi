@@ -69,7 +69,6 @@ const checkLoan = id => {
         reject(err);
         return;
       } else {
-        result[0]['loanStatus'] = 'active';
         resolve(result);
       }
     }
@@ -77,32 +76,5 @@ const checkLoan = id => {
   });
 }
 
-//Function that gets loan by need's id
-const checkStatus = id => {
-  console.log(id)
-  return new Promise((resolve, reject) => {
-    const callbackCheckStatus = (err, result) => {
-      if (err) {
-        reject(err);
-        return;
-      } else {
-        resolve(result);
-      }
-    }
-    connection.query("SELECT * FROM needs WHERE idNeed=?", id, callbackCheckStatus);
-  });
-}
 
-//Function that updates
-const changeStatus = id => {
-  const callbackStatus = (err, result) => {
-    if (err) {
-      return;
-    } else {
-      return ({status:'Changed'});
-    }
-  }
-  connection.query("UPDATE needs SET status='resolved' WHERE idNeed=?", id, callbackStatus)
-}
-
-module.exports = { findUser, getUser, availableNeeds, checkLoan, checkStatus, changeStatus };
+module.exports = { findUser, getUser, availableNeeds, checkLoan };
