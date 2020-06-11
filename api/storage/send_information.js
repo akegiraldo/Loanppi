@@ -1,6 +1,6 @@
 #!/usr/bin/node
 const connection = require('./conection_database');
-const newBalanceInvestor = require('./modificate_information');
+const { newBalanceInvestor, updatemoneyNeed } = require('./modificate_information');
 
 
 //Function that  creates a new user in DB
@@ -45,10 +45,11 @@ const sendDebt = data => {
 
 //Functio that creates a new Investment with needs' id in DB
 const createInvestment = data => {
+  const backup = { ...data };
   delete data['idNeed'];
-  newBalanceInvestor(data);
   return new Promise((resolve, reject) => {
-    console.log(data)
+    updatemoneyNeed(backup);
+    newBalanceInvestor(backup);
     const callbackInsertInvestment =  (err, result) => {
       if (err) {
         reject(err);

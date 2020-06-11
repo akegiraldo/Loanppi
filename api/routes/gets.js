@@ -1,6 +1,7 @@
 #!/usr/bin/node
 const { findUser, getUser, availableNeeds, checkLoan } = require('../storage/get_information');
 const { createNewUSerDB, sendDebt, updateUser, createInvestment, createFunding } = require('../storage/send_information');
+const { newBalanceInvestor, updatemoneyNeed } = require('../storage/modificate_information');
 const { response } = require('express');
 
 
@@ -100,11 +101,11 @@ const newInvestment = (req, res, next) => {
   const allData = req.body;
   console.log(allData);
   const backup = { ...req.body };
-  console.log('back:', backup);
   createInvestment(allData).then(response => {
     backup['idInvestment'] = response;
     return backup;
   }).then( createFunding ).then(response => {
+    updatemoneyNeed(backup);
     res.send(response);
   }).catch(err => {
     console.error(err);
