@@ -1,7 +1,6 @@
 package com.android.loanppi
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,10 +12,9 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
-import com.facebook.AccessToken
-import com.facebook.GraphRequest
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import org.json.JSONObject
+import com.android.loanppi.fieldsValidator as fieldsValidator
 
 /**
  * A simple [Fragment] subclass.
@@ -76,9 +74,9 @@ class profile(bundle: Bundle?) : Fragment() {
         }
 
         btnSave.setOnClickListener(View.OnClickListener {
-            //if (validateFields()) {
+            if (validateFields()) {
                 sendPost()
-            //}
+            }
         })
 
         return view
@@ -191,74 +189,13 @@ class profile(bundle: Bundle?) : Fragment() {
 
     // Function for validate the fields of profile form
     fun validateFields(): Boolean {
-        return (fieldsValidator(editFirstName, "onlyLetters", 2, 14) &&
-            fieldsValidator(editSecondName, "onlyLetters", 0, 14) &&
-            fieldsValidator(editFirstLastName, "onlyLetters", 2, 14) &&
-            fieldsValidator(editSecondLastName, "onlyLetters", 2, 14) &&
-            fieldsValidator(editIdDocument, "onlyNumbers", 5, 12) &&
-            fieldsValidator(editPhoneNumber, "onlyNumbers", 7, 10) &&
-            fieldsValidator(editHomeAddress, "homeAddress", 8, 30))
-    }
-
-    // Function for validate the length and type of fields
-    fun fieldsValidator(field: EditText,typeValidation: String,lengthMin: Int,lengthMax: Int): Boolean {
-        val onlyNumbers = Regex("[0-9]+")
-        val onlyLetters = Regex("[a-zA-Z]+")
-        val emailAddress = Regex("")
-        val homeAddress = Regex("")
-        val SQLQuery = Regex("DROP|DELETE|UPDATE|SELECT", RegexOption.IGNORE_CASE)
-        val textToValidate = field.text.toString()
-
-        if (textToValidate.length < lengthMin) {
-            Toast.makeText(
-                context, "El campo no puede contener " +
-                        "menos de " + lengthMin.toString() + " caracteres.", Toast.LENGTH_LONG
-            ).show()
-            field.requestFocus()
-            return false
-        } else if (textToValidate.length > lengthMax) {
-            Toast.makeText(
-                context, "El campo no puede contener " +
-                        "más de " + lengthMax.toString() + " caracteres.", Toast.LENGTH_LONG
-            ).show()
-            field.requestFocus()
-            return false
-        } else if (SQLQuery.containsMatchIn(textToValidate)) {
-            Toast.makeText(context, "No puedes incluir querys", Toast.LENGTH_LONG).show()
-            field.requestFocus()
-        } else {
-            when (typeValidation) {
-                "onlyNumbers" ->
-                    if (!onlyNumbers.matches(textToValidate)) {
-                        Toast.makeText(
-                            context, "El campo no puede contener " +
-                                    "caracteres diferentes a números.", Toast.LENGTH_LONG
-                        ).show()
-                        field.requestFocus()
-                        return false
-                    }
-                "onlyLetters" ->
-                    if (!onlyLetters.matches(textToValidate)) {
-                        Toast.makeText(
-                            context, "El campo no puede contener " +
-                                    "caracteres diferentes a letras.", Toast.LENGTH_LONG
-                        ).show()
-                        field.requestFocus()
-                        return false
-                    }
-                "homeAddress" ->
-                    if (!homeAddress.matches(textToValidate)) {
-                        Toast.makeText(
-                            context, "El campo no puede contener caracteres especiales " +
-                                    "diferentes a '#' y '-'.", Toast.LENGTH_LONG
-                        ).show()
-                        field.requestFocus()
-                        return false
-                    }
-                else -> {
-                }
-            }
-        }
-        return true
+        return (
+            fieldsValidator(context, editFirstName, "onlyLetters", 2, 14, true) &&
+            fieldsValidator(context, editSecondName, "onlyLetters", 2, 14, false) &&
+            fieldsValidator(context, editFirstLastName, "onlyLetters", 2, 14, true) &&
+            fieldsValidator(context, editSecondLastName, "onlyLetters", 2, 14, true) &&
+            fieldsValidator(context, editIdDocument, "onlyNumbers", 5, 12, true) &&
+            fieldsValidator(context, editPhoneNumber, "onlyNumbers", 7, 10, true) &&
+            fieldsValidator(context, editHomeAddress, "homeAddress", 8, 30, true))
     }
 }

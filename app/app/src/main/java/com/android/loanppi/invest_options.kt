@@ -52,13 +52,13 @@ class invest_options(bundle: Bundle?) : Fragment() {
         getInvestOptions()
 
         card_1?.setOnClickListener(View.OnClickListener {
-            replaceFragment(invest_details(bundle_card_1))
+            replaceFragment(invest_details(bundle_card_1, account))
         })
         card_2?.setOnClickListener(View.OnClickListener {
-            replaceFragment(invest_details(bundle_card_2))
+            replaceFragment(invest_details(bundle_card_2, account))
         })
         card_3?.setOnClickListener(View.OnClickListener {
-            replaceFragment(invest_details(bundle_card_3))
+            replaceFragment(invest_details(bundle_card_3, account))
         })
 
         return view
@@ -78,17 +78,20 @@ class invest_options(bundle: Bundle?) : Fragment() {
                     amountRemaining = response.getJSONObject(0).getString("amountRemaining").toInt()
                     if (investStack > amountRemaining) { investStack = amountRemaining }
                     bundle_card_1.putString("investStack", investStack.toString())
+                    bundle_card_1.putString("idNeed", response.getJSONObject(0).getString("idNeed"))
                     bundle_card_1.putString("amountRemaining", response.getJSONObject(0).getString("amountRemaining"))
                     bundle_card_1.putString("timeToPay", response.getJSONObject(0).getString("timeToPay"))
                     if (response.length() > 1) {
                         amountRemaining = response.getJSONObject(1).getString("amountRemaining").toInt()
                         if (investStack > amountRemaining) { investStack = amountRemaining }
+                        bundle_card_2.putString("idNeed", response.getJSONObject(1).getString("idNeed"))
                         bundle_card_2.putString("investStack", investStack.toString())
                         bundle_card_2.putString("amountRemaining", response.getJSONObject(1).getString("amountRemaining"))
                         bundle_card_2.putString("timeToPay", response.getJSONObject(1).getString("timeToPay"))
                         if (response.length() > 2) {
                             amountRemaining = response.getJSONObject(2).getString("amountRemaining").toInt()
                             if (investStack > amountRemaining) { investStack = amountRemaining }
+                            bundle_card_3.putString("idNeed", response.getJSONObject(2).getString("idNeed"))
                             bundle_card_3.putString("investStack", investStack.toString())
                             bundle_card_3.putString("amountRemaining", response.getJSONObject(2).getString("amountRemaining"))
                             bundle_card_3.putString("timeToPay", response.getJSONObject(2).getString("timeToPay"))

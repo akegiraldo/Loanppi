@@ -24,7 +24,7 @@
                 android:id="@+id/txt_title_invest_f2"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
                 android:text="@string/invest_title"
                 android:textAlignment="center"
                 android:textColor="@color/textPrimary"
@@ -120,7 +120,7 @@
                 app:layout_constraintHeight_percent="0.035"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_invest_details"
-                app:layout_constraintWidth_percent="0.4" />
+                app:layout_constraintWidth_percent="0.45" />
 
             <TextView
                 android:id="@+id/txt_value_time_to_return"
@@ -135,7 +135,7 @@
                 app:layout_constraintHeight_percent="0.035"
                 app:layout_constraintStart_toEndOf="@+id/txt_time_to_return"
                 app:layout_constraintTop_toBottomOf="@+id/txt_invest_details"
-                app:layout_constraintWidth_percent="0.4" />
+                app:layout_constraintWidth_percent="0.35" />
 
             <TextView
                 android:id="@+id/txt_return_weekly"
@@ -149,7 +149,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/txt_time_to_return"
                 app:layout_constraintHeight_percent="0.035"
                 app:layout_constraintTop_toBottomOf="@+id/txt_time_to_return"
-                app:layout_constraintWidth_percent="0.4" />
+                app:layout_constraintWidth_percent="0.45" />
 
             <TextView
                 android:id="@+id/txt_value_return_weekly"
@@ -163,7 +163,7 @@
                 app:layout_constraintHeight_percent="0.035"
                 app:layout_constraintStart_toStartOf="@+id/txt_value_time_to_return"
                 app:layout_constraintTop_toBottomOf="@+id/txt_value_time_to_return"
-                app:layout_constraintWidth_percent="0.4" />
+                app:layout_constraintWidth_percent="0.35" />
 
             <TextView
                 android:id="@+id/txt_return_monthly"
@@ -177,7 +177,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/txt_return_weekly"
                 app:layout_constraintHeight_percent="0.035"
                 app:layout_constraintTop_toBottomOf="@+id/txt_return_weekly"
-                app:layout_constraintWidth_percent="0.4" />
+                app:layout_constraintWidth_percent="0.45" />
 
             <TextView
                 android:id="@+id/txt_value_return_monthly"
@@ -191,7 +191,7 @@
                 app:layout_constraintHeight_percent="0.035"
                 app:layout_constraintStart_toStartOf="@+id/txt_value_return_weekly"
                 app:layout_constraintTop_toBottomOf="@+id/txt_value_return_weekly"
-                app:layout_constraintWidth_percent="0.4" />
+                app:layout_constraintWidth_percent="0.35" />
 
             <TextView
                 android:id="@+id/txt_interests_wins"
@@ -205,7 +205,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/txt_return_monthly"
                 app:layout_constraintHeight_percent="0.035"
                 app:layout_constraintTop_toBottomOf="@+id/txt_return_monthly"
-                app:layout_constraintWidth_percent="0.4" />
+                app:layout_constraintWidth_percent="0.45" />
 
             <TextView
                 android:id="@+id/txt_value_interests_wins"
@@ -219,7 +219,7 @@
                 app:layout_constraintHeight_percent="0.035"
                 app:layout_constraintStart_toStartOf="@+id/txt_value_return_monthly"
                 app:layout_constraintTop_toBottomOf="@+id/txt_value_return_monthly"
-                app:layout_constraintWidth_percent="0.4" />
+                app:layout_constraintWidth_percent="0.35" />
 
             <TextView
                 android:id="@+id/txt_return_total"
@@ -233,7 +233,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/txt_interests_wins"
                 app:layout_constraintHeight_percent="0.035"
                 app:layout_constraintTop_toBottomOf="@+id/txt_interests_wins"
-                app:layout_constraintWidth_percent="0.4" />
+                app:layout_constraintWidth_percent="0.45" />
 
             <TextView
                 android:id="@+id/txt_value_return_total"
@@ -247,13 +247,13 @@
                 app:layout_constraintHeight_percent="0.035"
                 app:layout_constraintStart_toStartOf="@+id/txt_value_interests_wins"
                 app:layout_constraintTop_toBottomOf="@+id/txt_value_interests_wins"
-                app:layout_constraintWidth_percent="0.4" />
+                app:layout_constraintWidth_percent="0.35" />
 
             <Button
                 android:id="@+id/btn_let_invest"
                 android:layout_width="206dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="68dp"
+                android:layout_marginTop="60dp"
                 android:background="@drawable/btn_background_white"
                 android:text="Invertir"
                 android:textColor="@color/textPrimary"

@@ -36,7 +36,7 @@ class lend(bundle: Bundle?) : Fragment() {
     private lateinit var btnLend: Button
 
     // Lend values
-    private var loanAmount = 0.0F
+    private var loanAmount = 0
     private var interests = 0.0F
     private var totalToPay = 0.0F
     private var timeToPay = 0
@@ -71,7 +71,7 @@ class lend(bundle: Bundle?) : Fragment() {
                 val loanAmountTxt = editLendAmount.text.toString()
                 if (loanAmountTxt != "" && loanAmountTxt.toInt() >= 200000 &&
                     loanAmountTxt.toInt() <= 3000000) {
-                    loanAmount = loanAmountTxt.toFloat()
+                    loanAmount = loanAmountTxt.toInt()
 
                     if (loanAmount >= 200000 && loanAmount <= 1500000) {
                         timeToPay = 6
@@ -104,9 +104,9 @@ class lend(bundle: Bundle?) : Fragment() {
         })
 
         btnLend.setOnClickListener(View.OnClickListener {
-            //if (validateFields()) {
-            sendPost()
-            //}
+            if (validateField()) {
+                sendPost()
+            }
         })
 
         return view
@@ -120,10 +120,9 @@ class lend(bundle: Bundle?) : Fragment() {
         loan.put("loanAmount", loanAmount)
         loan.put("timeToPay", timeToPay)
         loan.put("valueToPayWeekly", valueToPayWeekly)
+        loan.put("loanReason", spinLendReason.selectedItem.toString())
         loan.put("interests", interests)
         loan.put("idWorker", account?.get("userId"))
-
-        println("LOAN: " + loan.toString())
 
         val queue = Volley.newRequestQueue(context)
         val request = JsonObjectRequest(Request.Method.POST, url, loan, Response.Listener {
@@ -132,6 +131,7 @@ class lend(bundle: Bundle?) : Fragment() {
                 if (response.get("status") == "pending") {
                     Toast.makeText(context, "Préstamo solicitado correctamente.", Toast.LENGTH_LONG)
                         .show()
+
                 } else {
                     Toast.makeText(context, "El préstamo no pudo ser procesado.",
                         Toast.LENGTH_LONG).show()
@@ -145,5 +145,24 @@ class lend(bundle: Bundle?) : Fragment() {
         queue.add(request)
     }
 
-
+    fun validateField(): Boolean {
+        println("FORMULA: " + loanAmount % 100000)
+        if (fieldsValidator(context, editLendAmount, "onlyNumbers", 6,
+            7, true)) {
+            if (loanAmount < 200000 || loanAmount > 3000000) {
+                Toast.makeText(context, "La cantidad a prestar tiene que estar entre $200,000" +
+                        " y $3,000,000.", Toast.LENGTH_LONG).show()
+                editLendAmount.requestFocus()
+                return false
+            } else if (loanAmount % 1000 != 0) {
+                Toast.makeText(context, "La cantidad a prestar tiene que estar unicamente" +
+                        " en miles.", Toast.LENGTH_LONG).show()
+                editLendAmount.requestFocus()
+                return false
+            } else {
+                return true
+            }
+        }
+        return false
+    }
 }

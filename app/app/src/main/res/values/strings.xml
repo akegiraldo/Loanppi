@@ -61,7 +61,7 @@
 
     // Lend
     <string-array name="lend_reason">
-        <item>¿En qué lo va a utilizar?</item>
+        <item>¿En qué lo vas a utilizar?</item>
         <item>Comprar moto</item>
         <item>Comprar SOAT</item>
         <item>Renovar licencia</item>
