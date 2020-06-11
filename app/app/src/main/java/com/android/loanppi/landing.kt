@@ -31,12 +31,13 @@ import com.google.android.gms.tasks.Task
 import org.json.JSONObject
 import java.util.*
 
+
 class landing : AppCompatActivity() {
 
     // Variables for signup with google
-    lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var gso: GoogleSignInOptions
     private lateinit var btn_google: Button
-    lateinit var gso: GoogleSignInOptions
     var RC_SIGN_IN: Int = 1
 
     // Variables for signup with Facebook
@@ -50,9 +51,10 @@ class landing : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_landing)
 
         checkFacebookLogin()
+
+        setContentView(R.layout.activity_landing)
     }
 
     fun onSignUp(view: View) {
@@ -186,9 +188,11 @@ class landing : AppCompatActivity() {
         startActivity(intent)
     }
 
+    // Function that check if exists a current session with facebook
     fun checkFacebookLogin() {
         if (AccessToken.getCurrentAccessToken() != null) {
-
+            accessWith = "facebook"
+            getFacebokAccount()
         } else {
             println("El token está nulo")
         }
@@ -225,6 +229,7 @@ class landing : AppCompatActivity() {
                         account.putString("investStack", response.get("investStack").toString())
                     } else {
                         account.putString("userId", response.get("idWorker").toString())
+
                     }
                     if (accessWith == "google")
                         googleAccount?.let { updateUIG(it, account) }

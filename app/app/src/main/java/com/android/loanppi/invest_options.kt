@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isVisible
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
@@ -104,7 +105,7 @@ class invest_options(bundle: Bundle?) : Fragment() {
                 }
             },
             Response.ErrorListener {
-                println("ERROR OPTS: " + it.toString())
+                println("Error al cargar las opciones: " + it.toString())
                 Toast.makeText(context, "Error al cargar las opciones", Toast.LENGTH_LONG).show()
             })
 
@@ -116,26 +117,29 @@ class invest_options(bundle: Bundle?) : Fragment() {
         val copFormat: NumberFormat = NumberFormat.getCurrencyInstance()
         copFormat.maximumFractionDigits = 0
         if (bundle_card_1 != null) {
+            card_1?.isVisible = true
             txt_card_1_value_money_to_invest.setText(copFormat.format(
                 bundle_card_1.getString("investStack")?.toInt()))
             txt_card_1_value_amount_remaining.setText(copFormat.format(
                 bundle_card_1.getString("amountRemaining")?.toInt()))
             txt_card_1_value_return_time.setText(bundle_card_1.get("timeToPay").toString() + " meses")
         }
-        if (bundle_card_2 != null) {
+        /*if (bundle_card_2 != null) {
+            card_2?.isVisible = true
             txt_card_2_value_money_to_invest.setText(copFormat.format(
                 bundle_card_2.getString("investStack")?.toInt()))
             txt_card_2_value_amount_remaining.setText(copFormat.format(
                 bundle_card_2.getString("amountRemaining")?.toInt()))
-            txt_card_2_value_return_time.setText(bundle_card_2.get("timeToPay").toString() + " meses")
+            txt_card_2_value_return_time.setTe0xt(bundle_card_2.get("timeToPay").toString() + " meses")
         }
         if (bundle_card_3 != null) {
+            card_2?.isVisible = true
             txt_card_3_value_money_to_invest.setText(copFormat.format(
                 bundle_card_3.getString("investStack")?.toInt()))
             txt_card_3_value_amount_remaining.setText(copFormat.format(
                 bundle_card_3.getString("amountRemaining")?.toInt()))
             txt_card_3_value_return_time.setText(bundle_card_3.get("timeToPay").toString() + " meses")
-        }
+        }*/
     }
 
     fun replaceFragment(fragment: Fragment) {

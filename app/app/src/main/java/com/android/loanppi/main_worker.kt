@@ -18,6 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 class main_worker(bundle: Bundle?) : Fragment() {
     private lateinit var accessInfo: Bundle
     private lateinit var account: Bundle
+    private lateinit var myLoan: Bundle
     private var bundle: Bundle? = bundle
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,9 +31,9 @@ class main_worker(bundle: Bundle?) : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_main_worker, container, false)
-
         accessInfo = bundle?.getBundle("accessInfo") as Bundle
         account = bundle?.getBundle("account") as Bundle
+        myLoan = bundle?.getBundle("myLoan") as Bundle
 
         val firstName: String? = account.getString("firstName")
 
@@ -43,6 +44,11 @@ class main_worker(bundle: Bundle?) : Fragment() {
         } else {
             val googleAccount = accessInfo.get("googleAccount") as GoogleSignInAccount
             urlPhoto = googleAccount.photoUrl.toString()
+        }
+
+        if (myLoan.get("status") != "not_found") {
+            val meta = myLoan.get("totalToPay")
+            view.findViewById<TextView>(R.id.txt_value_meta_amount).setText(meta.toString())
         }
 
         view.findViewById<TextView>(R.id.txt_grettings).setText("Hola, "+ firstName)

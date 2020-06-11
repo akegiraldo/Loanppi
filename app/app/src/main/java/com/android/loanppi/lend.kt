@@ -131,7 +131,19 @@ class lend(bundle: Bundle?) : Fragment() {
                 if (response.get("status") == "pending") {
                     Toast.makeText(context, "Préstamo solicitado correctamente.", Toast.LENGTH_LONG)
                         .show()
-
+                    val myLoan = Bundle()
+                    myLoan.putString("idNeed", response.get("idNeed").toString())
+                    myLoan.putString("idWorker", response.get("idWorker").toString())
+                    myLoan.putString("totalToPay", response.get("totalToPay").toString())
+                    myLoan.putString("timeToPay", response.get("timeToPay").toString())
+                    myLoan.putString("valueToPayWeekly", response.get("valueToPayWeekly").toString())
+                    myLoan.putString("interests", response.get("interests").toString())
+                    myLoan.putString("status", response.get("status").toString())
+                    myLoan.putString("loanAmount", response.get("loanAmount").toString())
+                    myLoan.putString("amountRemaining", response.get("amountRemaining").toString())
+                    myLoan.putString("loanReason", response.get("loanReason").toString())
+                    bundle?.putBundle("myLoan", myLoan)
+                    replaceFragment(my_loan(bundle))
                 } else {
                     Toast.makeText(context, "El préstamo no pudo ser procesado.",
                         Toast.LENGTH_LONG).show()
@@ -146,7 +158,6 @@ class lend(bundle: Bundle?) : Fragment() {
     }
 
     fun validateField(): Boolean {
-        println("FORMULA: " + loanAmount % 100000)
         if (fieldsValidator(context, editLendAmount, "onlyNumbers", 6,
             7, true)) {
             if (loanAmount < 200000 || loanAmount > 3000000) {
@@ -164,5 +175,12 @@ class lend(bundle: Bundle?) : Fragment() {
             }
         }
         return false
+    }
+
+    fun replaceFragment(fragment: Fragment) {
+        val fragmentTransaction = parentFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.dashboard_container, fragment)
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
     }
 }
