@@ -1,5 +1,5 @@
 #!/usr/bin/node
-const { findUser, getUser, availableNeeds, checkLoan, checkStatus, changeStatus } = require('../storage/get_information');
+const { findUser, getUser, availableNeeds, checkLoan } = require('../storage/get_information');
 const { createNewUSerDB, sendDebt, updateUser, createInvestment, createFunding } = require('../storage/send_information');
 const { response } = require('express');
 
@@ -109,29 +109,12 @@ const newInvestment = (req, res, next) => {
 const activeLoan = (req, res, next) => {
   const workerId = req.query.idWorker;
   checkLoan(workerId).then(response => {
-    res.send(JSON.stringify(response));
+    res.send(response);
   }).catch(err => {
      console.error(err);
      res.status(500).send("DB Error, NOT FOUND");
   });
 }
 
-//Function that changes loan's status
-const loanStatus = (req, res, next) => {
-  const idNeed = req.query.idNeed;
- console.log(idNeed)
-  checkStatus(idNeed).then(response => {
-       console.log("response:", response)
-    if (response[0].amountRemaining === 0){
-      changeStatus(idNeed);
-      res.send({'status':'resolved'});
-    } else {
-      res.send({'status':'There is still amount remaining'})
-    }
-  }).catch(err => {
-     console.error(err)
-     res.status(500).send("DB Error, NOT FOUND");  
-  });  
-}
 
-module.exports = { helloWorld, searchUSer, NewUser, update, newNeed, options, newInvestment, activeLoan, loanStatus }
+module.exports = { helloWorld, searchUSer, NewUser, update, newNeed, options, newInvestment, activeLoan }
