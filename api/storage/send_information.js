@@ -61,6 +61,7 @@ const createInvestment = data => {
   });
 }
 
+//Function that creates relation between investors and workers in the DB
 const createFunding = data => {
   delete data['moneyInvestment'];
   delete data['idInvestor'];
@@ -79,7 +80,7 @@ const createFunding = data => {
   });
 }
 
-//Function that updates user's profile
+//Function that updates user's profile in DB
 const updateUser = data => {
   const userType = data.userType + 's';
   if (userType === "workers") {
@@ -91,7 +92,7 @@ const updateUser = data => {
     if (err) throw err;
     resolve({"status": "Profile has been succesfully updated"});
   }
-  connection.query("UPDATE " + usertype + " SET ? WHERE id = ?", id, callbackDB);
+  connection.query("UPDATE " + usertype + " SET ? WHERE id = ?", data, id, callbackDB);
 }
 
 
