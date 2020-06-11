@@ -28,4 +28,4 @@ const checkStatusNeed = data => {
   })
 }
 
-module.exports = { newBalanceInvestor, updatemoneyNeed };
+module.exports = { newBalanceInvestor, updatemoneyNeed, checkStatusNeed };
