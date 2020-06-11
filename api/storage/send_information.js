@@ -62,7 +62,9 @@ const createInvestment = data => {
 }
 
 const createFunding = data => {
-  delete data['moneyInvestment']
+  delete data['moneyInvestment'];
+  delete data['idInvestor'];
+  console.log(data);
   return new Promise((resolve, reject) => {
     const callbackCreateFunding =  (err, result) => {
       if (err) {
