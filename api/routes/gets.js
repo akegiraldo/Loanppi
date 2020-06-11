@@ -1,7 +1,7 @@
 #!/usr/bin/node
 const { findUser, getUser, availableNeeds, checkLoan } = require('../storage/get_information');
 const { createNewUSerDB, sendDebt, updateUser, createInvestment, createFunding } = require('../storage/send_information');
-const { newBalanceInvestor, updatemoneyNeed } = require('../storage/modificate_information');
+const { newBalanceInvestor, updatemoneyNeed, checkStatusNeed } = require('../storage/modificate_information');
 const { response } = require('express');
 
 
@@ -105,7 +105,7 @@ const newInvestment = (req, res, next) => {
     backup['idInvestment'] = response;
     return backup;
   }).then( createFunding ).then(response => {
-    updatemoneyNeed(backup);
+    checkStatusNeed(backup);
     res.send(response);
   }).catch(err => {
     console.error(err);
@@ -116,13 +116,17 @@ const newInvestment = (req, res, next) => {
 //Function that checks whether a worker's loan is active
 const activeLoan = (req, res, next) => {
   const workerId = req.query.idWorker;
-  checkLoan(workerId).then(response => {
-    res.send(response[0]);
+   checkLoan(workerId).then(response => {
+   if (response.length === 0){
+      const json = {};
+      res.send(json);
+   } else {
+     res.send(response[0]);
+   }
   }).catch(err => {
      console.error(err);
      res.status(500).send("DB Error, NOT FOUND");
   });
 }
-
 
 module.exports = { helloWorld, searchUSer, NewUser, update, newNeed, options, newInvestment, activeLoan }
