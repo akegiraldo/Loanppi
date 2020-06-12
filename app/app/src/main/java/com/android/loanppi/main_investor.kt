@@ -49,12 +49,4 @@ class main_investor(bundle: Bundle?) : Fragment() {
 
         return view
     }
-
-    fun onInvest() {
-
-    }
-
-    fun onMyInvestment() {
-
-    }
 }

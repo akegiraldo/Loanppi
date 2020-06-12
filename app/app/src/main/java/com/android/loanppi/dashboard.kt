@@ -128,7 +128,7 @@ class dashboard : AppCompatActivity() {
 
     fun onInvest(view: View) { replaceFragment(invest_options(account)) }
 
-    fun onMyInvestment(view: View) { replaceFragment(my_investment()) }
+    fun onMyInvestment(view: View) { replaceFragment(my_investment_options(bundle)) }
 
     private fun signOut() {
         if (accessWith == "google") {

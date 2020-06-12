@@ -27,10 +27,12 @@
     <string name="balance">Balance</string>
     <string name="history">Historial</string>
     <string name="home">Home</string>
+
     // Investor
     <string name="txt_return">Retorno</string>
     <string name="invest">Invertir</string>
-    <string name="my_investment">Mi inversión</string>
+    <string name="my_investments">Mis inversiones</string>
+
     // Worker
     <string name="txt_goal">Meta</string>
     <string name="lend">Solicitar préstamo</string>
@@ -71,11 +73,6 @@
 
     // Invest
     <string name="invest_title">Nueva inversión</string>
-    <string-array name="time_to_return">
-        <item>¿En cuánto tiempo quiere el retorno?</item>
-        <item>6 meses</item>
-        <item>12 meses</item>
-    </string-array>
     <string name="moneyToInvest">$0,000,000</string>
     <string name="amountRemaining">$0,000,000</string>
     <string name="returnTime">12 meses</string>
@@ -83,6 +80,5 @@
     // Login with Facebook
     <string name="facebook_app_id">245844573146164</string>
     <string name="fb_login_protocol_scheme">fb245844573146164</string>
-
 
 </resources>
