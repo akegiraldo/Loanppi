@@ -12,7 +12,13 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
+import com.facebook.AccessToken
+import com.facebook.GraphRequest
+import com.facebook.HttpMethod
+import com.facebook.login.LoginManager
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import org.json.JSONObject
 import com.android.loanppi.fieldsValidator as fieldsValidator
 
@@ -74,15 +80,15 @@ class profile(bundle: Bundle?) : Fragment() {
         }
 
         btnSave.setOnClickListener(View.OnClickListener {
-            if (validateFields()) {
-                sendPost()
+            if (validateFields() && accessInfo?.get("accessFrom") == "signup") {
+                createUser()
             }
         })
 
         return view
     }
 
-    fun sendPost() {
+    fun createUser() {
         val url = "http://loanppi.kevingiraldo.tech/app/api/v1/new_user/"
         val user = JSONObject()
 
@@ -103,6 +109,18 @@ class profile(bundle: Bundle?) : Fragment() {
                 if (response.get("status") == "ok") {
                     Toast.makeText(context, "Usuario registrado con éxito", Toast.LENGTH_LONG)
                         .show()
+                    if (accessInfo?.get("accessWith") == "google") {
+                        val gso = accessInfo?.get("gso") as GoogleSignInOptions
+                        val mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+                        mGoogleSignInClient.signOut()
+                    } else if (AccessToken.getCurrentAccessToken() != null) {
+                        GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/",
+                            null, HttpMethod.DELETE, GraphRequest.Callback {
+                                AccessToken.setCurrentAccessToken(null)
+                                LoginManager.getInstance().logOut()
+                            }).executeAsync()
+                    }
+                    requireActivity().finish()
                 } else if (response.get("status") == "exists") {
                     Toast.makeText(context, "El usuario ya existe.", Toast.LENGTH_LONG).show()
                 } else {
@@ -119,7 +137,7 @@ class profile(bundle: Bundle?) : Fragment() {
                     "Error, el usuario no pudo ser registrado",
                     Toast.LENGTH_LONG
                 ).show()
-                println("Error al guardar el usuario $error.message")
+                println("Error al guardar el usuario ${error.message}")
             }
         )
         queue.add(request)

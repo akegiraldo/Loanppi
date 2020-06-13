@@ -83,7 +83,7 @@ class dashboard : AppCompatActivity() {
             R.id.menu_i_home -> { replaceFragment(main_investor(bundle)) ; true }
             R.id.menu_i_profile -> { replaceFragment(profile(bundle)) ; true }
             R.id.menu_i_invest -> { replaceFragment(invest_options(account)) ; true }
-            R.id.menu_i_my_investment -> { replaceFragment(my_investment()) ; true }
+            R.id.menu_i_my_investment -> { replaceFragment(my_investment_options(bundle)) ; true }
             R.id.menu_i_history -> { true }
 
             R.id.menu_w_home -> { replaceFragment(main_worker(bundle)) ; true }
@@ -126,7 +126,11 @@ class dashboard : AppCompatActivity() {
         }
     }
 
-    fun onInvest(view: View) { replaceFragment(invest_options(account)) }
+    fun onInvest(view: View) {
+        if (account?.get("investStack").toString().toFloat() >= 50000) {
+            replaceFragment(invest_options(account))
+        }
+    }
 
     fun onMyInvestment(view: View) { replaceFragment(my_investment_options(bundle)) }
 

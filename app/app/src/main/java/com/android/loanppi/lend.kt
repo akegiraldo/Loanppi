@@ -15,6 +15,7 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
+import java.text.NumberFormat
 
 /**
  * A simple [Fragment] subclass.
@@ -66,6 +67,9 @@ class lend(bundle: Bundle?) : Fragment() {
 
         btnLend = view.findViewById(R.id.btn_let_lend)
 
+        val copFormat: NumberFormat = NumberFormat.getCurrencyInstance()
+        copFormat.maximumFractionDigits = 0
+
         editLendAmount.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 val loanAmountTxt = editLendAmount.text.toString()
@@ -85,16 +89,16 @@ class lend(bundle: Bundle?) : Fragment() {
                     valueToPayWeekly = valueToPayMonthly / 4
 
                     valTimeToPay.setText(timeToPay.toString() + " meses")
-                    valToPayWeekly.setText(valueToPayWeekly.toString())
-                    valToPayMonthly.setText(valueToPayMonthly.toString())
-                    valInterests.setText(interests.toString())
-                    valTotalToPay.setText(totalToPay.toString())
+                    valToPayWeekly.setText(copFormat.format(valueToPayWeekly))
+                    valToPayMonthly.setText(copFormat.format(valueToPayMonthly))
+                    valInterests.setText(copFormat.format(interests))
+                    valTotalToPay.setText(copFormat.format(totalToPay))
                 } else {
                     valTimeToPay.setText("0 meses")
-                    valToPayWeekly.setText("00.000")
-                    valToPayMonthly.setText("000.000")
-                    valInterests.setText("000.000")
-                    valTotalToPay.setText("0'000.000")
+                    valToPayWeekly.setText("$00,000")
+                    valToPayMonthly.setText("$000,000")
+                    valInterests.setText("$000,000")
+                    valTotalToPay.setText("$0,000,000")
                 }
 
                 println("Account: " + account.toString())
@@ -127,7 +131,6 @@ class lend(bundle: Bundle?) : Fragment() {
         val queue = Volley.newRequestQueue(context)
         val request = JsonObjectRequest(Request.Method.POST, url, loan, Response.Listener {
             response ->
-                println("RESPONSE: " + response.toString())
                 if (response.get("status") == "pending") {
                     Toast.makeText(context, "Préstamo solicitado correctamente.", Toast.LENGTH_LONG)
                         .show()

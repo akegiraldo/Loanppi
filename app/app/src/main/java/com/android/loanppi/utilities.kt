@@ -3,12 +3,13 @@ package com.android.loanppi
 import android.content.Context
 import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 
 // Function for validate the length, type and content of the fields
 fun fieldsValidator(context: Context?, field: EditText, typeValidation: String, lengthMin: Int, lengthMax: Int, required: Boolean): Boolean {
     val onlyNumbers = Regex("[0-9]+")
     val onlyLetters = Regex("[a-zA-Z]+")
-    val homeAddress = Regex("")
+    val homeAddress = Regex("[a-zA-Z]+")
     val sqlQuery = Regex("DROP|DELETE|UPDATE|SELECT", RegexOption.IGNORE_CASE)
     val textToValidate = field.text.toString()
 

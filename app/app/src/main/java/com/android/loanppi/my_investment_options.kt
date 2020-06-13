@@ -23,12 +23,13 @@ import java.text.NumberFormat
  * create an instance of this fragment.
  */
 class my_investment_options(bundle: Bundle?) : Fragment() {
-    private lateinit var listView: ListView
-    private lateinit var investmentsListString: ArrayList<String>
-    private lateinit var arrayAdapter: ArrayAdapter<String>
     private val bundle = bundle
     private lateinit var account: Bundle
+    private lateinit var listView: ListView
+
+    private lateinit var arrayAdapter: ArrayAdapter<String>
     private lateinit var investmentData: ArrayList<String>
+    private lateinit var investmentsListString: ArrayList<String>
     private lateinit var investmentsListArray: ArrayList<ArrayList<String>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,8 +45,8 @@ class my_investment_options(bundle: Bundle?) : Fragment() {
 
         listView = view.findViewById(R.id.listview)
 
-        investmentsListString = ArrayList()
         investmentData = ArrayList()
+        investmentsListString = ArrayList()
         investmentsListArray = ArrayList()
         arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, investmentsListString)
         listView.adapter = arrayAdapter
@@ -53,10 +54,17 @@ class my_investment_options(bundle: Bundle?) : Fragment() {
         account = bundle?.getBundle("account") as Bundle
 
         listView.setOnItemClickListener(object : OnItemClickListener {
+            val investmentSelected = Bundle()
             override fun onItemClick(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
                 Toast.makeText(context, "You selected : ${listView.getItemAtPosition(position)}",
                     Toast.LENGTH_SHORT).show()
-                println("LISTA2: " + investmentsListArray.get(position).toString())
+                investmentSelected.putString("moneyInvestment", investmentsListArray.get(position).get(1))
+                investmentSelected.putString("idInvestment", investmentsListArray.get(position).get(2))
+                investmentSelected.putString("timeToReturn", investmentsListArray.get(position).get(3))
+                investmentSelected.putString("returnTotal", investmentsListArray.get(position).get(4))
+                investmentSelected.putString("valueToReturnWeekly", investmentsListArray.get(position).get(5))
+                investmentSelected.putString("interestsWins", investmentsListArray.get(position).get(6))
+                replaceFragment(my_investment_details(investmentSelected))
             }
         })
 
@@ -66,7 +74,7 @@ class my_investment_options(bundle: Bundle?) : Fragment() {
     }
 
     fun getInvestments() {
-        val id = account?.get("userId")
+        val id = account.get("userId")
         val url = "http://loanppi.kevingiraldo.tech/app/api/v1/my_investments?idInvestor=" + id
         val queue = Volley.newRequestQueue(context)
 
@@ -79,6 +87,10 @@ class my_investment_options(bundle: Bundle?) : Fragment() {
                         investmentData.add(i.toString())
                         investmentData.add(response.getJSONObject(i).get("moneyInvestment").toString())
                         investmentData.add(response.getJSONObject(i).get("idInvestment").toString())
+                        investmentData.add(response.getJSONObject(i).get("timeToReturn").toString())
+                        investmentData.add(response.getJSONObject(i).get("returnTotal").toString())
+                        investmentData.add(response.getJSONObject(i).get("valueToReturnWeekly").toString())
+                        investmentData.add(response.getJSONObject(i).get("interestsWins").toString())
                         investmentsListString.add(getStringFromArray(investmentData))
                         investmentsListArray.add(investmentData.clone() as ArrayList<String>)
                         investmentData.clear()
@@ -107,4 +119,10 @@ class my_investment_options(bundle: Bundle?) : Fragment() {
         return string
     }
 
+    fun replaceFragment(fragment: Fragment) {
+        val fragmentTransaction = parentFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.dashboard_container, fragment)
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+    }
 }

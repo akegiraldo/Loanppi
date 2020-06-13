@@ -1,5 +1,6 @@
 package com.android.loanppi
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -35,6 +36,8 @@ class invest_options(bundle: Bundle?) : Fragment() {
     private val bundle_card_2 = Bundle()
     private val bundle_card_3 = Bundle()
 
+    private lateinit var cardLists: ArrayList<Bundle>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -49,6 +52,12 @@ class invest_options(bundle: Bundle?) : Fragment() {
         card_1 = view.findViewById(R.id.card_1)
         card_2 = view.findViewById(R.id.card_2)
         card_3 = view.findViewById(R.id.card_3)
+
+        cardLists = ArrayList()
+
+        cardLists.add(bundle_card_1)
+        cardLists.add(bundle_card_2)
+        cardLists.add(bundle_card_3)
 
         getInvestOptions()
 
@@ -76,33 +85,20 @@ class invest_options(bundle: Bundle?) : Fragment() {
                 var investStack = account?.get("investStack").toString().toInt()
                 var amountRemaining = 0
                 if (response.length() > 0) {
-                    amountRemaining = response.getJSONObject(0).getString("amountRemaining").toInt()
-                    if (investStack > amountRemaining) { investStack = amountRemaining }
-                    bundle_card_1.putString("investStack", investStack.toString())
-                    bundle_card_1.putString("idNeed", response.getJSONObject(0).getString("idNeed"))
-                    bundle_card_1.putString("amountRemaining", response.getJSONObject(0).getString("amountRemaining"))
-                    bundle_card_1.putString("timeToPay", response.getJSONObject(0).getString("timeToPay"))
-                    if (response.length() > 1) {
-                        amountRemaining = response.getJSONObject(1).getString("amountRemaining").toInt()
+                    for (i in 0..response.length() - 1) {
+                        amountRemaining = response.getJSONObject(i).getString("amountRemaining").toInt()
                         if (investStack > amountRemaining) { investStack = amountRemaining }
-                        bundle_card_2.putString("idNeed", response.getJSONObject(1).getString("idNeed"))
-                        bundle_card_2.putString("investStack", investStack.toString())
-                        bundle_card_2.putString("amountRemaining", response.getJSONObject(1).getString("amountRemaining"))
-                        bundle_card_2.putString("timeToPay", response.getJSONObject(1).getString("timeToPay"))
-                        if (response.length() > 2) {
-                            amountRemaining = response.getJSONObject(2).getString("amountRemaining").toInt()
-                            if (investStack > amountRemaining) { investStack = amountRemaining }
-                            bundle_card_3.putString("idNeed", response.getJSONObject(2).getString("idNeed"))
-                            bundle_card_3.putString("investStack", investStack.toString())
-                            bundle_card_3.putString("amountRemaining", response.getJSONObject(2).getString("amountRemaining"))
-                            bundle_card_3.putString("timeToPay", response.getJSONObject(2).getString("timeToPay"))
-                        }
+                        cardLists.get(i).putString("investStack", investStack.toString())
+                        cardLists.get(i).putString("idNeed", response.getJSONObject(i).getString("idNeed"))
+                        cardLists.get(i).putString("loanAmount", response.getJSONObject(i).getString("loanAmount"))
+                        cardLists.get(i).putString("amountRemaining", response.getJSONObject(i).getString("amountRemaining"))
+                        cardLists.get(i).putString("timeToPay", response.getJSONObject(i).getString("timeToPay"))
                     }
-                    loadInvestOptions()
                 } else {
                     Toast.makeText(context, "No se encuentran inversiones disponibles.",
                         Toast.LENGTH_LONG).show()
                 }
+                loadInvestOptions()
             },
             Response.ErrorListener {
                 println("Error al cargar las opciones: " + it.toString())
@@ -113,6 +109,7 @@ class invest_options(bundle: Bundle?) : Fragment() {
         queue.add(request)
     }
 
+    @SuppressLint("SetTextI18n")
     fun loadInvestOptions() {
         val copFormat: NumberFormat = NumberFormat.getCurrencyInstance()
         copFormat.maximumFractionDigits = 0
@@ -122,7 +119,8 @@ class invest_options(bundle: Bundle?) : Fragment() {
                 bundle_card_1.getString("investStack")?.toInt()))
             txt_card_1_value_amount_remaining.setText(copFormat.format(
                 bundle_card_1.getString("amountRemaining")?.toInt()))
-            txt_card_1_value_return_time.setText(bundle_card_1.get("timeToPay").toString() + " meses")
+            txt_card_1_value_return_time.setText(bundle_card_1
+                .get("timeToPay").toString() + " meses")
         }
         if (!bundle_card_2.isEmpty) {
             card_2?.isVisible = true

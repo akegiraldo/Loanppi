@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_my_loan.*
+import java.text.NumberFormat
 
 /**
  * A simple [Fragment] subclass.
@@ -48,16 +49,19 @@ class my_loan(bundle: Bundle?) : Fragment() {
         totalToPay = view.findViewById(R.id.txt_loan_value_total_to_pay)
 
         val valueToPayMonthly = myLoan.get("valueToPayWeekly").toString().toFloat() * 4
-        val valueInterestsMonthlyAmount = myLoan.get("interests").toString().toFloat()
+        val valueTotalInterestsAmount = myLoan.get("interests").toString().toFloat()
         val valueTimeToPay = myLoan.get("timeToPay").toString().toInt()
 
-        metaAmount.setText(myLoan.get("totalToPay").toString())
-        interestsMonthlyAmount.setText((valueInterestsMonthlyAmount / valueTimeToPay).toString())
-        totalInterestsAmount.setText(myLoan.get("interests").toString())
-        duesWeeklyAmount.setText(myLoan.get("valueToPayWeekly").toString())
-        duesMonthlyAmount.setText(valueToPayMonthly.toString())
-        amountLent.setText(myLoan.get("loanAmount").toString())
-        totalToPay.setText(myLoan.get("totalToPay").toString())
+        val copFormat: NumberFormat = NumberFormat.getCurrencyInstance()
+        copFormat.maximumFractionDigits = 0
+
+        metaAmount.setText(copFormat.format(myLoan.get("totalToPay").toString().toInt()))
+        interestsMonthlyAmount.setText(copFormat.format(valueTotalInterestsAmount / valueTimeToPay))
+        totalInterestsAmount.setText(copFormat.format(myLoan.get("interests").toString().toInt()))
+        duesWeeklyAmount.setText(copFormat.format(myLoan.get("valueToPayWeekly").toString().toInt()))
+        duesMonthlyAmount.setText(copFormat.format(valueToPayMonthly))
+        amountLent.setText(copFormat.format(myLoan.get("loanAmount").toString().toInt()))
+        totalToPay.setText(copFormat.format(myLoan.get("totalToPay").toString().toInt()))
 
         return view
     }

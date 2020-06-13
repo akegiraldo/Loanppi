@@ -138,31 +138,31 @@
                 android:id="@+id/btn_lend"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="32dp"
                 android:background="@drawable/btn_dashboard"
-                android:text="@string/lend"
-                android:onClick="onLend"
-                android:textColor="@color/textPrimary"
                 android:elevation="4dp"
+                android:onClick="onLend"
+                android:text="@string/lend"
+                android:textColor="@color/textPrimary"
                 app:layout_constraintEnd_toStartOf="@+id/btn_my_loan"
                 app:layout_constraintHeight_percent="0.15"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/container_amount_paid"
+                app:layout_constraintTop_toBottomOf="@+id/btn_let_pay"
                 app:layout_constraintWidth_percent="0.4" />
 
             <Button
                 android:id="@+id/btn_my_loan"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="32dp"
                 android:background="@drawable/btn_dashboard"
-                android:text="@string/my_loan"
                 android:onClick="onMyLoan"
+                android:text="@string/my_loan"
                 android:textColor="@color/textPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.15"
                 app:layout_constraintStart_toEndOf="@+id/btn_lend"
-                app:layout_constraintTop_toBottomOf="@+id/container_amount_paid"
+                app:layout_constraintTop_toBottomOf="@+id/btn_let_pay"
                 app:layout_constraintWidth_percent="0.4" />
 
             <Button
@@ -179,6 +179,16 @@
                 app:layout_constraintStart_toStartOf="@+id/btn_lend"
                 app:layout_constraintTop_toBottomOf="@+id/btn_lend"
                 app:layout_constraintWidth_percent="0.4" />
+
+            <Button
+                android:id="@+id/btn_let_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="Pagar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/container_amount_paid" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -403,12 +403,12 @@
                 app:layout_constraintWidth_percent="0.22" />
 
             <TextView
-                android:id="@+id/txt_invest_total_returned"
+                android:id="@+id/txt_invest_return_amount"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="24dp"
                 android:gravity="center"
-                android:text="Retornado"
+                android:text="A recibir"
                 android:textColor="@color/textPrimary"
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
@@ -419,7 +419,7 @@
                 app:layout_constraintWidth_percent="0.22" />
 
             <TextView
-                android:id="@+id/txt_invest_value_total_returned"
+                android:id="@+id/txt_invest_value_return_amount"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="24dp"
@@ -427,10 +427,10 @@
                 android:textAlignment="center"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintEnd_toEndOf="@+id/txt_invest_total_returned"
+                app:layout_constraintEnd_toEndOf="@+id/txt_invest_return_amount"
                 app:layout_constraintHeight_percent="0.03"
-                app:layout_constraintStart_toStartOf="@+id/txt_invest_total_returned"
-                app:layout_constraintTop_toBottomOf="@+id/txt_invest_total_returned"
+                app:layout_constraintStart_toStartOf="@+id/txt_invest_return_amount"
+                app:layout_constraintTop_toBottomOf="@+id/txt_invest_return_amount"
                 app:layout_constraintWidth_percent="0.22" />
 
             <TextView
@@ -524,9 +524,9 @@
                 android:textColor="@color/textPrimary"
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintEnd_toEndOf="@+id/txt_invest_value_total_returned"
+                app:layout_constraintEnd_toEndOf="@+id/txt_invest_value_return_amount"
                 app:layout_constraintHeight_percent="0.03"
-                app:layout_constraintStart_toStartOf="@+id/txt_invest_value_total_returned"
+                app:layout_constraintStart_toStartOf="@+id/txt_invest_value_return_amount"
                 app:layout_constraintTop_toBottomOf="@+id/txt_returns_paid"
                 app:layout_constraintWidth_percent="0.22" />
 

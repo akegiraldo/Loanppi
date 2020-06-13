@@ -122,11 +122,16 @@ class invest_details(bundle1: Bundle, bundle2: Bundle?) : Fragment() {
         val url = "http://loanppi.kevingiraldo.tech/app/api/v1/new_investment/"
         val investment = JSONObject()
 
-        println("IDNEED DETAILS: " + loanData.get("idNeed"))
+        val loanShare = investAmount.toFloat() / loanData.get("loanAmount").toString().toFloat()
 
         investment.put("moneyInvestment", investAmount)
         investment.put("idInvestor", account?.get("userId"))
         investment.put("idNeed", loanData.get("idNeed"))
+        investment.put("loanShare", loanShare)
+        investment.put("timeToReturn", timeToReturn)
+        investment.put("returnTotal", returnTotal)
+        investment.put("valueToReturnWeekly", valueToReturnWeekly)
+        investment.put("interestsWins", interestsWins)
 
         val queue = Volley.newRequestQueue(context)
         val request = JsonObjectRequest(Request.Method.POST, url, investment,
@@ -135,6 +140,14 @@ class invest_details(bundle1: Bundle, bundle2: Bundle?) : Fragment() {
                 if (response.get("status") == "created") {
                     Toast.makeText(context,"Inversión registrada con éxito.", Toast.LENGTH_LONG)
                         .show()
+                    val myInvestment = Bundle()
+                    myInvestment.putString("moneyInvestment", response.get("moneyInvestment").toString())
+                    myInvestment.putString("idInvestment", response.get("idInvestment").toString())
+                    myInvestment.putString("timeToReturn", response.get("timeToReturn").toString())
+                    myInvestment.putString("returnTotal", response.get("returnTotal").toString())
+                    myInvestment.putString("valueToReturnWeekly", response.get("valueToReturnWeekly").toString())
+                    myInvestment.putString("interestsWins", response.get("interestsWins").toString())
+                    replaceFragment(my_investment_details(myInvestment))
                 } else {
                     Toast.makeText(context,"Error, la inversión no fue registrada.",
                         Toast.LENGTH_LONG).show()
@@ -147,5 +160,12 @@ class invest_details(bundle1: Bundle, bundle2: Bundle?) : Fragment() {
             }
         )
         queue.add(request)
+    }
+
+    fun replaceFragment(fragment: Fragment) {
+        val fragmentTransaction = parentFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.dashboard_container, fragment)
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
     }
 }
