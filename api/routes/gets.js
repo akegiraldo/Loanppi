@@ -98,22 +98,19 @@ const options = (req, res, next) => {
 
 //Function that creates a new invesment in the DB
 const newInvestment = (req, res, next) => {
-  const allData = req.body;
-  console.log(allData);
+  let allData = req.body;
   const backup = { ...req.body };
   createInvestment(allData).then(response => {
-    backup['idInvestment'] = response;
-    returnInvestment(backup).then(response => {
-      response[0]['status'] = 'created';
-      res.send(response[0]);
-    }).catch(err => {
-    console.error(err);
-    res.status(500).send("DB Error, NOT FOUND!");
-  });
-   return backup;
+    backup['idInvestment'] = response.idInvestment;
+    allData = backup;
+    return backup;
   }).then( createFunding ).then(response => {
     checkStatusNeed(backup);
-    res.send(response);
+    return allData;
+  }).then( returnInvestment ).then(response => {
+    allData = response[0];
+    allData['status'] = 'created';
+    res.send(allData);
   }).catch(err => {
     console.error(err);
     res.status(500).send("DB Error, NOT FOUND!");
