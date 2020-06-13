@@ -1,4 +1,5 @@
 #!/usr/bin/node
+
 const connection = require('./conection_database');
 const { newBalanceInvestor, updatemoneyNeed } = require('./modificate_information');
 
@@ -34,7 +35,6 @@ const sendDebt = data => {
         reject(err);
         return;
       } else {
-        
         resolve(result);
         return;
       }
@@ -43,19 +43,19 @@ const sendDebt = data => {
   });
 }
 
+
 //Functio that creates a new Investment with needs' id in DB
 const createInvestment = data => {
-  const backup = { ...data };
   delete data['idNeed'];
   return new Promise((resolve, reject) => {
-    updatemoneyNeed(backup);
-    newBalanceInvestor(backup);
     const callbackInsertInvestment =  (err, result) => {
       if (err) {
         reject(err);
         return;
       } else {
-        resolve(result.insertId);
+        
+        result['idInvestment'] = result.insertId;
+        resolve(result);
         return;
       }
     }
@@ -65,22 +65,24 @@ const createInvestment = data => {
 
 //Function that creates relation between investors and workers in the DB
 const createFunding = data => {
-  delete data['moneyInvestment'];
-  delete data['idInvestor'];
-  console.log(data);
+  const backup = { ...data };
+  const values = {'idNeed': data.idNeed, 'idInvestment': data.idInvestment}
   return new Promise((resolve, reject) => {
     const callbackCreateFunding =  (err, result) => {
       if (err) {
         reject(err);
         return;
       } else {
+        updatemoneyNeed(backup);
+        newBalanceInvestor(backup);
         resolve({'status': 'created'});
         return;
       }
     }
-    connection.query('INSERT INTO funding SET ?', data , callbackCreateFunding);
+    connection.query('INSERT INTO funding SET ?', values, callbackCreateFunding);
   });
 }
+
 
 //Function that updates user's profile in DB
 const updateUser = data => {
@@ -95,6 +97,23 @@ const updateUser = data => {
     resolve({"status": "Profile has been succesfully updated"});
   }
   connection.query("UPDATE " + usertype + " SET ? WHERE id = ?", data, id, callbackDB);
+}
+
+// santiago subir esto
+const createPayment = data => {
+  pay(data);
+  data['datePayment'] = 'NOW()';
+return new Promise((resolve, reject) => {
+  const callbackCreatePayment = (err, result) => {
+    if (err) {
+      reject(err);
+      return;
+    } else {
+      resolve({"status": "pago realizado"});
+    }
+  }
+  connection.query("INSER INTO payments SET ?", data, callbackCreatePayment);
+})
 }
 
 

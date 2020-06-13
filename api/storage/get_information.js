@@ -76,5 +76,52 @@ const checkLoan = id => {
   });
 }
 
+//Function that gets invesments by Investor's id
+const investments = id => {
+  return new Promise((resolve, reject) => {
+    const callbackInvestments = (err, result) => {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve(result);
+      }
+    }
+    connection.query("SELECT * FROM investment WHERE idInvestor=?", id, callbackInvestments);
+  });
+}
 
-module.exports = { findUser, getUser, availableNeeds, checkLoan };
+const returnInvestment = data => {
+  const id = data.idInvestment;
+  return new Promise((resolve, reject) => {
+    const callbackInvestment = (err, result) => {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        console.log(result);
+        resolve(result);
+      }
+    }
+    connection.query("SELECT * FROM investment WHERE idInvestment = " + id, callbackInvestment);
+  });
+}
+
+// aldana (cambiar)
+const getInvestorConectToNeed = data => {
+  return new Promise((resolve, reject) => {
+    const callbackGetInvestor = (err, result) => {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve(result);
+      }
+    }
+    connection.query("SELECT idInvestment FROM funding WHERE idNeed = " + data.idNeed, callbackGetInvestor);
+  })
+}
+
+
+
+module.exports = { findUser, getUser, availableNeeds, checkLoan, investments, returnInvestment };

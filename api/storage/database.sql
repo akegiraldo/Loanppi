@@ -1,4 +1,3 @@
-DROP DATABASE loanppi;
 -- como correr eta monda sudo cat database.sql |sudo  mysql -hlocalhost -uroot -p
 CREATE DATABASE IF NOT EXISTS loanppi;
 USE loanppi;
@@ -68,18 +67,17 @@ CREATE TABLE IF NOT EXISTS funding(
   idFunding INT(11) NOT NULL UNIQUE AUTO_INCREMENT,
   idNeed INT(11) NOT NULL,
   idInvestment INT(11) NOT NULL,
-  PRIMARY KEY (idFounding),
+  PRIMARY KEY (idFunding),
   KEY idNeed (idNeed),
   CONSTRAINT funding_ibfk_1 FOREIGN KEY (idNeed) REFERENCES needs (idNeed) ON DELETE NO ACTION,
   KEY idInvestment (idInvestment),
   CONSTRAINT funding_ibfk_2 FOREIGN KEY (idInvestment) REFERENCES investment (idInvestment) ON DELETE NO ACTION
 ) ENGINE=InnoDB;
 
---TABLE WORKERS' PAYMENTS 
+-- TABLE WORKERS' PAYMENTS 
 CREATE TABLE IF NOT EXISTS payments(
   idPayment INT(11) NOT NULL UNIQUE AUTO_INCREMENT,
   idWorker INT(11) NOT NULL,
-  idNeed INT(11) NOT NULL,
   payment INT(6) NOT NULL,
   datePayment TIMESTAMP NOT NULL,
   PRIMARY KEY (idPayment),
@@ -87,12 +85,27 @@ CREATE TABLE IF NOT EXISTS payments(
   CONSTRAINT payments_ibfk_1 FOREIGN KEY (idWorker) REFERENCES needs (idWorker) ON DELETE NO ACTION
   ) ENGINE=InnoDB;
   
---TABLE RELATION PAYMENTS WITH INVESTORS
+-- TABLE RELATION PAYMENTS WITH INVESTORS
 CREATE TABLE IF NOT EXISTS benefits(
-  idPayment INT(11) NOT NULL,
+  idReturn INT(11) NOT NULL NOT NULL UNIQUE AUTO_INCREMENT,
   idInvestment INT(11) NOT NULL,
-  payment INT(6) NOT NULL,
+  idPayment INT(11) NOT NULL,
+  idNeed INT(11) NOT NULL,
   investorShare INT(6) NOT NULL,
-  CONSTRAINT payments_ibfk_1 FOREIGN KEY (idPayment) REFERENCES needs (idPayment) ON DELETE NO ACTION,
-  CONSTRAINT payments_ibfk_2 FOREIGN KEY (idInvestment) REFERENCES needs (idInvestment) ON DELETE NO ACTION
+  PRIMARY KEY (idReturn),
+  CONSTRAINT benefits_ibfk_1 FOREIGN KEY (idPayment) REFERENCES payments (idPayment) ON DELETE NO ACTION,
+  CONSTRAINT benefits_ibfk_2 FOREIGN KEY (idInvestment) REFERENCES  funding (idInvestment) ON DELETE NO ACTION,
+  CONSTRAINT benefits_ibfk_3 FOREIGN KEY (idNeed) REFERENCES  funding (idNeed) ON DELETE NO ACTION
   ) ENGINE=InnoDB;
+
+-- table para simular dinero
+CREATE TABLE IF NOT EXISTS moneyWorkers(
+  idMoney INT(11) NOT NULL,
+  money INT(11) NOT NULL,
+  idWorker INT(11) NOT NULL,
+  idNeed INT(11) NOT NULL,
+  PRIMARY KEY (idMoney),
+  CONSTRAINT moneyWorkers_ibfk_1 FOREIGN KEY (idWorker) REFERENCES needs (idWorker) ON DELETE NO ACTION,
+  CONSTRAINT moneyWorkers_ibfk_2 FOREIGN KEY (idNeed) REFERENCES  funding (idNeed) ON DELETE NO ACTION
+) ENGINE=InnoDB;
+

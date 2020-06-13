@@ -28,4 +28,14 @@ const checkStatusNeed = data => {
   })
 }
 
+// se le suma el pago que hizo
+const pay = data => {
+  connection.query("UPDATE needs SET amountRemaining = " + data.pay + " WHERE idWorker = " + data.idWorker, (err, rows) => {
+    if(err) throw err;
+
+    console.log("pago realizado");
+  })
+}
+
+
 module.exports = { newBalanceInvestor, updatemoneyNeed, checkStatusNeed };
