@@ -1,5 +1,5 @@
 #!/usr/bin/node
-const { findUser, getUser, availableNeeds, checkLoan } = require('../storage/get_information');
+const { findUser, getUser, availableNeeds, checkLoan, investments, returnInvestment } = require('../storage/get_information');
 const { createNewUSerDB, sendDebt, updateUser, createInvestment, createFunding } = require('../storage/send_information');
 const { newBalanceInvestor, updatemoneyNeed, checkStatusNeed } = require('../storage/modificate_information');
 const { response } = require('express');
@@ -91,7 +91,7 @@ const options = (req, res, next) => {
   availableNeeds(allData).then(response => {
     res.send(response);
   }).catch(err => {
-      console.err(err);
+      console.error(err);
       res.status(500).send("Not options found");
     });
 }
@@ -103,7 +103,14 @@ const newInvestment = (req, res, next) => {
   const backup = { ...req.body };
   createInvestment(allData).then(response => {
     backup['idInvestment'] = response;
-    return backup;
+    returnInvestment(backup).then(response => {
+      response[0]['status'] = 'created';
+      res.send(response[0]);
+    }).catch(err => {
+    console.error(err);
+    res.status(500).send("DB Error, NOT FOUND!");
+  });
+   return backup;
   }).then( createFunding ).then(response => {
     checkStatusNeed(backup);
     res.send(response);
@@ -129,4 +136,17 @@ const activeLoan = (req, res, next) => {
   });
 }
 
-module.exports = { helloWorld, searchUSer, NewUser, update, newNeed, options, newInvestment, activeLoan }
+//Function that gets the investments by Investors' Id
+const myInvestments = (req, res, next) => {
+  const idInvestor = req.query.idInvestor;
+  investments(idInvestor).then(response => {
+   console.log(response)
+    res.send(response);
+  }).catch(err => {
+      console.error(err);
+      res.status(500).send("Not investments found!");
+    });
+}
+
+
+module.exports = { helloWorld, searchUSer, NewUser, update, newNeed, options, newInvestment, activeLoan, myInvestments }
