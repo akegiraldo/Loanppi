@@ -152,6 +152,7 @@ class signup : AppCompatActivity() {
         accessInfo.putParcelable("googleAccount", googleAccount)
         accessInfo.putParcelable("gso", gso)
         intent.putExtra("accessInfo", accessInfo)
+        finish()
         startActivity(intent)
 
     }
@@ -192,6 +193,7 @@ class signup : AppCompatActivity() {
         accessInfo.putString("accessFrom", "signup")
         accessInfo.putBundle("facebookAccount", facebookAccount)
         intent.putExtra("accessInfo", accessInfo)
+        finish()
         startActivity(intent)
     }
 
