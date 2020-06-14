@@ -34,9 +34,6 @@ class signup : AppCompatActivity() {
     private lateinit var callbackManager: CallbackManager
     private lateinit var btn_facebook: Button
 
-    // Variables for signup with SoyRappi
-    private lateinit var btn_rappi: Button
-
     // Variables that handles type of signup method and user type
     private lateinit var btn_worker: Button
     private lateinit var btn_investor: Button
@@ -50,7 +47,6 @@ class signup : AppCompatActivity() {
 
         btn_google = findViewById(R.id.btn_s_google)
         btn_facebook = findViewById<LoginButton>(R.id.btn_s_facebook)
-        btn_rappi = findViewById<View>(R.id.btn_s_rappi) as Button
         btn_worker = findViewById<View>(R.id.btn_worker) as Button
         btn_investor = findViewById<View>(R.id.btn_investor) as Button
 
@@ -102,16 +98,13 @@ class signup : AppCompatActivity() {
         if (btn_clicked == btn_worker) {
             btn_to_deselect = btn_investor
             userType = "worker"
-            btn_facebook.isVisible = true
-            btn_google.isVisible = true
-            btn_rappi.isVisible = true
         } else {
             btn_to_deselect = btn_worker
             userType = "investor"
-            btn_facebook.isVisible = true
-            btn_google.isVisible = true
-            btn_rappi.isVisible = false
         }
+
+        btn_facebook.isVisible = true
+        btn_google.isVisible = true
 
         btn_to_deselect.setBackgroundResource(R.drawable.btn_background_white)
         btn_to_deselect.setTextColor(getColor(R.color.textPrimary))
