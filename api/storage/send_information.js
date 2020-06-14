@@ -117,4 +117,4 @@ return new Promise((resolve, reject) => {
 }
 
 
-module.exports = { createNewUSerDB, sendDebt, updateUser, createInvestment, createFunding };
+module.exports = { createNewUSerDB, sendDebt, updateUser, createInvestment, createFunding, createPayment};

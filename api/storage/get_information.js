@@ -124,4 +124,4 @@ const getInvestorConectToNeed = data => {
 
 
 
-module.exports = { findUser, getUser, availableNeeds, checkLoan, investments, returnInvestment };
+module.exports = { findUser, getUser, availableNeeds, checkLoan, investments, returnInvestment, getInvestorConectToNeed };
