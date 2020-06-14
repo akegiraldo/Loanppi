@@ -1,5 +1,5 @@
 #!/usr/bin/node
-const { findUser, getUser, availableNeeds, checkLoan, investments, returnInvestment, getInvestorConectToNeed } = require('../storage/get_information');
+const { findUser, getUser, availableNeeds, checkLoan, investments, returnInvestment, getInvestorConectToNeed, share, insertBenefits } = require('../storage/get_information');
 const { createNewUSerDB, sendDebt, updateUser, createInvestment, createFunding, createPayment } = require('../storage/send_information');
 const { newBalanceInvestor, updatemoneyNeed, checkStatusNeed } = require('../storage/modificate_information');
 const { response } = require('express');
@@ -146,6 +146,7 @@ const myInvestments = (req, res, next) => {
 }
 
 const makePago = (req, res, next) => {
+  console.log(req.body);
   const allData = req.body;
   createPayment(allData).then(response => {
     console.log(response);
@@ -154,7 +155,21 @@ const makePago = (req, res, next) => {
     res.status(500).send("Not investments found!");
   });
   getInvestorConectToNeed(allData).then(response => {
-    console.log(response);
+    for (let i = 0; i < response.length; i++) {
+      benefits(response[i].idInvestment);
+    }
+  }).catch(err => {
+    console.error(err);
+    res.status(500).send("Not investments found!");
+  });
+}
+
+//Function that insersts data
+const benefits = id => {
+  var data = {};
+  share(id).then(response => {
+    console.log(response)
+    data = response;
   }).catch(err => {
     console.error(err);
     res.status(500).send("Not investments found!");
