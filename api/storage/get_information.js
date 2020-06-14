@@ -107,8 +107,8 @@ const returnInvestment = data => {
   });
 }
 
-// aldana (cambiar)
-const getInvestorConectToNeed = (data, values) => {
+//Function that gest Id investment
+const getIdinvestment = (data, values) => {
   console.log(values)
   return new Promise((resolve, reject) => {
     const callbackGetInvestor = (err, result) => {
@@ -139,4 +139,4 @@ const share = id => {
 }
 
 
-module.exports = { findUser, getUser, availableNeeds, checkLoan, investments, returnInvestment, getInvestorConectToNeed, share };
+module.exports = { findUser, getUser, availableNeeds, checkLoan, investments, returnInvestment, getIdinvestment, share };

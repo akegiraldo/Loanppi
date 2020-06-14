@@ -116,12 +116,12 @@ const createPayment = data => {
 }
 
 
-
+//Function that inserts data to the benefit Table
 const sendBenefit = data => {
   connection.query("INSERT INTO benefits SET ?", data, (err, rows) => {
     if(err) throw err;
 
-    console.log("se inserto en benefits");
+    console.log("Data inserted");
   })
 }
 
