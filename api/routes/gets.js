@@ -1,6 +1,6 @@
 #!/usr/bin/node
 const { findUser, getUser, availableNeeds, checkLoan, investments, returnInvestment, getInvestorConectToNeed, share, insertBenefits } = require('../storage/get_information');
-const { createNewUSerDB, sendDebt, updateUser, createInvestment, createFunding, createPayment } = require('../storage/send_information');
+const { createNewUSerDB, sendDebt, updateUser, createInvestment, createFunding, createPayment, sendBenefit } = require('../storage/send_information');
 const { newBalanceInvestor, updatemoneyNeed, checkStatusNeed } = require('../storage/modificate_information');
 const { response } = require('express');
 
@@ -158,10 +158,11 @@ const makePago = (req, res, next) => {
 
 
 
-const papilafuncionquearreglatodo = (theJson, values, laplatica) => {
+const papilafuncionquearreglatodo = (theJson, values, money) => {
   for (let i = 0; i < values.length; i++) {
     share(values[i].idInvestment).then(response => {
-      theJson['investorShare'] = response[0].loanShare * laplatica;
+      theJson['investorShare'] = response[0].loanShare * money;
+      sendBenefit(theJson);
     }).catch(err => {
       console.error(err);
       res.status(500).send("Not investments found!");

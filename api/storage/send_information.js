@@ -116,4 +116,13 @@ const createPayment = data => {
 }
 
 
-module.exports = { createNewUSerDB, sendDebt, updateUser, createInvestment, createFunding, createPayment};
+
+const sendBenefit = data => {
+  connection.query("INSERT INTO benefits SET ?", data, (err, rows) => {
+    if(err) throw err;
+
+    console.log("se inserto en benefits");
+  })
+}
+
+module.exports = { createNewUSerDB, sendDebt, updateUser, createInvestment, createFunding, createPayment, sendBenefit};
