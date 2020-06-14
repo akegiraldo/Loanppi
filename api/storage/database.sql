@@ -57,6 +57,10 @@ CREATE TABLE IF NOT EXISTS investment(
   idInvestor int(11) NOT NULL,
   moneyInvestment INT(7) NOT NULL,
   loanShare FLOAT(24) NOT NULL,
+  timeToReturn INT(2) NOT NULL,
+  returnTotal int(7) NO NULL,
+  valueToREturnWeekly INT(6) NOT NULL,
+  interestsWins INT(6) NOT NULL,
   PRIMARY KEY (idInvestment),
   KEY idInvestor (idInvestor),
   CONSTRAINT investment_ibfk_1 FOREIGN KEY (idInvestor) REFERENCES investors (idInvestor) ON DELETE NO ACTION
@@ -108,4 +112,5 @@ CREATE TABLE IF NOT EXISTS moneyWorkers(
   CONSTRAINT moneyWorkers_ibfk_1 FOREIGN KEY (idWorker) REFERENCES needs (idWorker) ON DELETE NO ACTION,
   CONSTRAINT moneyWorkers_ibfk_2 FOREIGN KEY (idNeed) REFERENCES  funding (idNeed) ON DELETE NO ACTION
 ) ENGINE=InnoDB;
+
 

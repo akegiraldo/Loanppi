@@ -122,6 +122,20 @@ const getInvestorConectToNeed = data => {
   })
 }
 
+//Function that gets loanshare by id Investment
+const share = id => {
+  return new Promise((resolve, reject) => {
+    const callbackShare = (err, result) => {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve(result)
+      }
+    }
+    connection.query("SELECT loanShare,idInvestment  FROM investment WHERE idInvestment=?", id, callbackShare);
+  })
+}
 
 
-module.exports = { findUser, getUser, availableNeeds, checkLoan, investments, returnInvestment, getInvestorConectToNeed };
+module.exports = { findUser, getUser, availableNeeds, checkLoan, investments, returnInvestment, getInvestorConectToNeed, share };

@@ -101,19 +101,18 @@ const updateUser = data => {
 
 // santiago subir esto
 const createPayment = data => {
-  pay(data);
-  data['datePayment'] = 'NOW()';
-return new Promise((resolve, reject) => {
-  const callbackCreatePayment = (err, result) => {
-    if (err) {
-      reject(err);
-      return;
-    } else {
-      resolve({"status": "pago realizado"});
+  console.log(data);
+  return new Promise((resolve, reject) => {
+    const callbackCreatePayment = (err, result) => {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve({"status": "pago realizado"});
+      }
     }
-  }
-  connection.query("INSER INTO payments SET ?", data, callbackCreatePayment);
-})
+    connection.query("INSERT INTO payments SET ?", data, callbackCreatePayment);
+  })
 }
 
 
