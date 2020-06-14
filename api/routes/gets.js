@@ -146,7 +146,6 @@ const myInvestments = (req, res, next) => {
 }
 
 const makePago = (req, res, next) => {
-  console.log(req.body);
   let allData = req.body;
   let jsonTobenefits = {};
   let aux = {};
@@ -158,7 +157,6 @@ const makePago = (req, res, next) => {
       jsonTobenefits['idPayment'] = allData.idPayment;
       aux = benefits(response[i].idInvestment);
       jsonTobenefits['investorShare'] = allData.payment * aux.loanShare;
-      console.log(jsonTobenefits);
     }
   }).catch(err => {
     console.error(err);
@@ -167,7 +165,7 @@ const makePago = (req, res, next) => {
 }
 
 //Function that insersts data
-const benefits = data => {
+const benefits = id => {
   let data = {};
   share(id).then(response => {
     data = response;
