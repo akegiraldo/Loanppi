@@ -102,14 +102,6 @@ class dashboard : AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
-    fun onInvest(view: View) {
-        if (account?.get("investStack").toString().toFloat() >= 50000) {
-            replaceFragment(invest_options(account))
-        }
-    }
-
-    fun onMyInvestment(view: View) { replaceFragment(my_investment_options(bundle)) }
-
     private fun signOut() {
         if (accessWith == "google") {
             val gso = accessInfo?.get("gso") as GoogleSignInOptions
