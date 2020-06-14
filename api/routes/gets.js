@@ -149,33 +149,26 @@ const makePago = (req, res, next) => {
   let allData = req.body;
   let jsonTobenefits = {};
   let aux = {};
-  createPayment(allData).then(response => {
-    allData['idPayment'] = response;
-    return allData;
-  }).then( getInvestorConectToNeed ).then(response => {
-    for (let i = 0; i < response.length; i++) {
-      jsonTobenefits['idPayment'] = allData.idPayment;
-      aux = benefits(response[i].idInvestment);
-      jsonTobenefits['investorShare'] = allData.payment * aux.loanShare;
-    }
-  }).catch(err => {
-    console.error(err);
-    res.status(500).send("Not investments found!");
-  });
+  Promise.all([createPayment(allData), getInvestorConectToNeed(allData)]).then((values) => {
+    jsonTobenefits['idPayment'] = values[0];
+    papilafuncionquearreglatodo(jsonTobenefits, values[1], allData.payment);
+  })
 }
 
-//Function that insersts data
-const benefits = id => {
-  let data = {};
-  share(id).then(response => {
-    data = response;
-    return data;
-  }).catch(err => {
-    console.error(err);
-    res.status(500).send("Not investments found!");
-  });
-  return data;
+
+
+
+const papilafuncionquearreglatodo = (theJson, values, laplatica) => {
+  for (let i = 0; i < values.length; i++) {
+    share(values[i].idInvestment).then(response => {
+      theJson['investorShare'] = response[0].loanShare * laplatica;
+    }).catch(err => {
+      console.error(err);
+      res.status(500).send("Not investments found!");
+    });
+  }
 }
+
 
 
 module.exports = { helloWorld, searchUSer, NewUser, update, newNeed, options, newInvestment, activeLoan, myInvestments, makePago }

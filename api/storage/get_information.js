@@ -108,7 +108,8 @@ const returnInvestment = data => {
 }
 
 // aldana (cambiar)
-const getInvestorConectToNeed = data => {
+const getInvestorConectToNeed = (data, values) => {
+  console.log(values)
   return new Promise((resolve, reject) => {
     const callbackGetInvestor = (err, result) => {
       if (err) {
