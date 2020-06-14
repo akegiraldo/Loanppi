@@ -10,11 +10,6 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.JsonArrayRequest
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
 import com.facebook.AccessToken
 import com.facebook.GraphRequest
 import com.facebook.HttpMethod
@@ -29,7 +24,6 @@ class dashboard : AppCompatActivity() {
     private var accessInfo: Bundle? = Bundle()
     private var account: Bundle? = Bundle()
     private var bundle: Bundle? = Bundle()
-    private val myLoan = Bundle()
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,8 +32,6 @@ class dashboard : AppCompatActivity() {
 
         bundle = intent.extras
         accessInfo = bundle?.getBundle("accessInfo") as Bundle
-        myLoan.putString("status", "not_found")
-        bundle?.putBundle("myLoan", myLoan)
 
         accessWith = accessInfo?.get("accessWith") as String
         accessFrom = accessInfo?.get("accessFrom") as String
@@ -58,7 +50,7 @@ class dashboard : AppCompatActivity() {
             if (userType == "investor")
                 loadFragment(main_investor(bundle))
             else {
-                getLoan()
+                loadFragment(main_worker(bundle))
             }
         }
     }
@@ -110,22 +102,6 @@ class dashboard : AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
-    fun onLend(view: View) {
-        if (myLoan.get("status") == "not_found") {
-            replaceFragment(lend(bundle))
-        } else {
-            Toast.makeText(this, "Ya tienes un préstamo activo", Toast.LENGTH_LONG).show()
-        }
-    }
-
-    fun onMyLoan(view: View) {
-        if (myLoan.get("status") != "not_found") {
-            replaceFragment(my_loan(bundle))
-        } else {
-            Toast.makeText(this, "Debes solicitar un préstamo primero", Toast.LENGTH_LONG).show()
-        }
-    }
-
     fun onInvest(view: View) {
         if (account?.get("investStack").toString().toFloat() >= 50000) {
             replaceFragment(invest_options(account))
@@ -148,40 +124,5 @@ class dashboard : AppCompatActivity() {
         }
 
         finish()
-    }
-
-    fun getLoan() {
-        val id = account?.get("userId")
-        val url = "http://loanppi.kevingiraldo.tech/app/api/v1/active_loan?idWorker="+id
-        val queue = Volley.newRequestQueue(this)
-
-        // Request a JSON response from the provided URL.
-        val request = JsonObjectRequest(Request.Method.GET, url, null,
-            Response.Listener { response ->
-                if (response.length() > 0) {
-                    myLoan.putString("idNeed", response.get("idNeed").toString())
-                    myLoan.putString("idWorker", response.get("idWorker").toString())
-                    myLoan.putString("totalToPay", response.get("totalToPay").toString())
-                    myLoan.putString("timeToPay", response.get("timeToPay").toString())
-                    myLoan.putString("valueToPayWeekly", response.get("valueToPayWeekly").toString())
-                    myLoan.putString("interests", response.get("interests").toString())
-                    myLoan.putString("status", response.get("status").toString())
-                    myLoan.putString("loanAmount", response.get("loanAmount").toString())
-                    myLoan.putString("amountRemaining", response.get("amountRemaining").toString())
-                    myLoan.putString("loanReason", response.get("loanReason").toString())
-                    loadFragment(main_worker(bundle))
-                } else {
-                    /*Toast.makeText(this, "No se encuentra ningún préstamo asociado al usuario.",
-                        Toast.LENGTH_LONG).show()*/
-                    loadFragment(main_worker(bundle))
-                }
-            },
-            Response.ErrorListener {
-                Toast.makeText(this, "Error en la consulta", Toast.LENGTH_LONG).show()
-                println("ERROR CONSULTA: " + it.toString())
-            })
-
-        // Add the request to the RequestQueue.
-        queue.add(request)
     }
 }

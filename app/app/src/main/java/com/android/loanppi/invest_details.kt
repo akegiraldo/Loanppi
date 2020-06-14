@@ -147,7 +147,7 @@ class invest_details(bundle1: Bundle, bundle2: Bundle?) : Fragment() {
                     myInvestment.putString("returnTotal", response.get("returnTotal").toString())
                     myInvestment.putString("valueToReturnWeekly", response.get("valueToReturnWeekly").toString())
                     myInvestment.putString("interestsWins", response.get("interestsWins").toString())
-                    replaceFragment(my_investment_details(myInvestment))
+                    replaceFragment(my_investment_details(myInvestment), parentFragmentManager)
                 } else {
                     Toast.makeText(context,"Error, la inversión no fue registrada.",
                         Toast.LENGTH_LONG).show()
@@ -160,12 +160,5 @@ class invest_details(bundle1: Bundle, bundle2: Bundle?) : Fragment() {
             }
         )
         queue.add(request)
-    }
-
-    fun replaceFragment(fragment: Fragment) {
-        val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.dashboard_container, fragment)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
     }
 }

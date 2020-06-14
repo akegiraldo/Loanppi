@@ -145,7 +145,7 @@ class lend(bundle: Bundle?) : Fragment() {
                     myLoan.putString("amountRemaining", response.get("amountRemaining").toString())
                     myLoan.putString("loanReason", response.get("loanReason").toString())
                     bundle?.putBundle("myLoan", myLoan)
-                    replaceFragment(my_loan(bundle))
+                    replaceFragment(my_loan(bundle), parentFragmentManager)
                 } else {
                     Toast.makeText(context, "El préstamo no pudo ser procesado.",
                         Toast.LENGTH_LONG).show()
@@ -177,12 +177,5 @@ class lend(bundle: Bundle?) : Fragment() {
             }
         }
         return false
-    }
-
-    fun replaceFragment(fragment: Fragment) {
-        val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.dashboard_container, fragment)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
     }
 }

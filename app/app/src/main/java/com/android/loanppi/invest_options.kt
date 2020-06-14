@@ -62,13 +62,13 @@ class invest_options(bundle: Bundle?) : Fragment() {
         getInvestOptions()
 
         card_1?.setOnClickListener(View.OnClickListener {
-            replaceFragment(invest_details(bundle_card_1, account))
+            replaceFragment(invest_details(bundle_card_1, account), parentFragmentManager)
         })
         card_2?.setOnClickListener(View.OnClickListener {
-            replaceFragment(invest_details(bundle_card_2, account))
+            replaceFragment(invest_details(bundle_card_2, account), parentFragmentManager)
         })
         card_3?.setOnClickListener(View.OnClickListener {
-            replaceFragment(invest_details(bundle_card_3, account))
+            replaceFragment(invest_details(bundle_card_3, account), parentFragmentManager)
         })
 
         return view
@@ -138,12 +138,5 @@ class invest_options(bundle: Bundle?) : Fragment() {
                 bundle_card_3.getString("amountRemaining")?.toInt()))
             txt_card_3_value_return_time.setText(bundle_card_3.get("timeToPay").toString() + " meses")
         }
-    }
-
-    fun replaceFragment(fragment: Fragment) {
-        val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.dashboard_container, fragment)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
     }
 }

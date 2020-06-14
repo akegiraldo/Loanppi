@@ -4,6 +4,7 @@ import android.content.Context
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 
 // Function for validate the length, type and content of the fields
 fun fieldsValidator(context: Context?, field: EditText, typeValidation: String, lengthMin: Int, lengthMax: Int, required: Boolean): Boolean {
@@ -66,4 +67,11 @@ fun fieldsValidator(context: Context?, field: EditText, typeValidation: String, 
         }
     }
     return true
+}
+
+fun replaceFragment(fragment: Fragment, parentFragmentManager: FragmentManager) {
+    val fragmentTransaction = parentFragmentManager.beginTransaction()
+    fragmentTransaction.replace(R.id.dashboard_container, fragment)
+    fragmentTransaction.addToBackStack(null)
+    fragmentTransaction.commit()
 }

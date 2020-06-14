@@ -64,7 +64,7 @@ class my_investment_options(bundle: Bundle?) : Fragment() {
                 investmentSelected.putString("returnTotal", investmentsListArray.get(position).get(4))
                 investmentSelected.putString("valueToReturnWeekly", investmentsListArray.get(position).get(5))
                 investmentSelected.putString("interestsWins", investmentsListArray.get(position).get(6))
-                replaceFragment(my_investment_details(investmentSelected))
+                replaceFragment(my_investment_details(investmentSelected), parentFragmentManager)
             }
         })
 
@@ -117,12 +117,5 @@ class my_investment_options(bundle: Bundle?) : Fragment() {
         for (i in array.get(0).length..10) { string += " " }
         string += copFormat.format(array.get(1).toInt())
         return string
-    }
-
-    fun replaceFragment(fragment: Fragment) {
-        val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.dashboard_container, fragment)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
     }
 }
