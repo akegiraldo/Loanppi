@@ -108,7 +108,7 @@ const createPayment = data => {
         reject(err);
         return;
       } else {
-        resolve({"status": "pago realizado"});
+        resolve(result.insertId);
       }
     }
     connection.query("INSERT INTO payments SET ?", data, callbackCreatePayment);

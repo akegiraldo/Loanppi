@@ -147,16 +147,18 @@ const myInvestments = (req, res, next) => {
 
 const makePago = (req, res, next) => {
   console.log(req.body);
-  const allData = req.body;
+  let allData = req.body;
+  let jsonTobenefits = {};
+  let aux = {};
   createPayment(allData).then(response => {
-    console.log(response);
-  }).catch(err => {
-    console.error(err);
-    res.status(500).send("Not investments found!");
-  });
-  getInvestorConectToNeed(allData).then(response => {
+    allData['idPayment'] = response;
+    return allData;
+  }).then( getInvestorConectToNeed ).then(response => {
     for (let i = 0; i < response.length; i++) {
-      benefits(response[i].idInvestment);
+      jsonTobenefits['idPayment'] = allData.idPayment;
+      aux = benefits(response[i].idInvestment);
+      jsonTobenefits['investorShare'] = allData.payment * aux.loanShare;
+      console.log(jsonTobenefits);
     }
   }).catch(err => {
     console.error(err);
@@ -165,15 +167,16 @@ const makePago = (req, res, next) => {
 }
 
 //Function that insersts data
-const benefits = id => {
-  var data = {};
+const benefits = data => {
+  let data = {};
   share(id).then(response => {
-    console.log(response)
     data = response;
+    return data;
   }).catch(err => {
     console.error(err);
     res.status(500).send("Not investments found!");
   });
+  return data;
 }
 
 

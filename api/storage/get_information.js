@@ -133,7 +133,7 @@ const share = id => {
         resolve(result)
       }
     }
-    connection.query("SELECT loanShare,idInvestment  FROM investment WHERE idInvestment=?", id, callbackShare);
+    connection.query("SELECT loanShare, idInvestor  FROM investment WHERE idInvestment=?", id, callbackShare);
   })
 }
 
