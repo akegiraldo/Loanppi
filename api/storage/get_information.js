@@ -91,6 +91,8 @@ const investments = id => {
   });
 }
 
+
+//Function that returns investments details by id
 const returnInvestment = data => {
   const id = data.idInvestment;
   return new Promise((resolve, reject) => {
@@ -133,9 +135,54 @@ const share = id => {
         resolve(result)
       }
     }
-    connection.query("SELECT loanShare, idInvestor  FROM investment WHERE idInvestment=?", id, callbackShare);
+    connection.query("SELECT loanShare FROM investment WHERE idInvestment=?", id, callbackShare);
   })
 }
 
+//Function that gets payments by worker's id
+const getPayments = id => {
+  return new Promise((resolve, reject) => {
+    const callbackGetPayments = (err, result) => {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve(result);
+      }
+    }
+    connection.query("SELECT * FROM payments WHERE idWorker=?", id, callbackGetPayments);
+  });
+}
 
-module.exports = { findUser, getUser, availableNeeds, checkLoan, investments, returnInvestment, getIdinvestment, share };
+//Function that gets investments by its Id
+const getInvestments = id => {
+  return new Promise((resolve, reject) => {
+    const callbackGetInvestments = (err, result) => {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve(result);
+      }
+    }
+    connection.query("SELECT * FROM investment WHERE idInvestment=?", id, callbackGetInvestments);
+  });
+}
+
+
+//Function that gets returns by investment's id
+const getReturns = id => {
+  return new Promise((resolve, reject) => {
+    const callbackGetReturns = (err, result) => {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve(result);
+      }
+    }
+    connection.query("SELECT * FROM benefits WHERE idInvestment=?", id, callbackGetReturns);
+  });
+}
+
+module.exports = { findUser, getUser, availableNeeds, checkLoan, investments, returnInvestment, getIdinvestment, share, getPayments, getInvestments, getReturns };

@@ -165,8 +165,10 @@ const payments = (req, res, next) => {
   const id = req.query.idWorker;
   let payments = [];
   Promise.all([checkLoan(id), getPayments(id)]).then(values => {
-   payments.push(values[0][0]);
-   payments.push(values[1]);
+    if (values[0].length > 0) { 
+    payments.push(values[0][0]);
+     payments.push(values[1]);
+   }
    res.send(payments);
   }).catch(err => {
       console.error(err);
@@ -179,9 +181,11 @@ const listInvestments = (req, res, next) => {
   const id = req.query.idInvestment;
   let investments = [];
   Promise.all([getInvestments(id), getReturns(id)]).then(values => {
+  if (values[0].length > 0) {
     investments.push(values[0][0]);
     investments.push(values[1]);
-    res.send(investments);
+  }
+   res.send(investments);
   }).catch(err => {
       console.error(err);
       res.status(500).send("Not investments found!");

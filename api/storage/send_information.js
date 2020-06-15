@@ -44,8 +44,9 @@ const sendDebt = data => {
 }
 
 
-//Functio that creates a new Investment with needs' id in DB
+//Function that creates a new Investment with needs' id in DB
 const createInvestment = data => {
+  data['status'] = 'active';
   delete data['idNeed'];
   return new Promise((resolve, reject) => {
     const callbackInsertInvestment =  (err, result) => {
@@ -99,7 +100,7 @@ const updateUser = data => {
   connection.query("UPDATE " + usertype + " SET ? WHERE id = ?", data, id, callbackDB);
 }
 
-// santiago subir esto
+//Function that creates a new payment
 const createPayment = data => {
   data['datePayment'] = new Date()
   console.log(data);
@@ -119,9 +120,10 @@ const createPayment = data => {
 
 //Function that inserts data to the benefit Table
 const sendBenefit = data => {
+  data['dateReturn'] = new Date()
+  console.log(data);
   connection.query("INSERT INTO benefits SET ?", data, (err, rows) => {
     if(err) throw err;
-
     console.log("Data inserted");
   })
 }

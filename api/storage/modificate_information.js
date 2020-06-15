@@ -50,5 +50,23 @@ const needResolved = data => {
 
 
 
+const updateInvestment = data => {
+  connection.query("UPDATE investment SET totalReturn = totalreturn + " + data.investorShare  + " WHERE idInvestment = " + data.idInvestment, (err, rows) => {
+    if(err) throw err;
 
-module.exports = { newBalanceInvestor, updatemoneyNeed, checkStatusNeed, pay, needResolved };
+    console.log("Return made it");
+ })
+}
+
+//Function that changes the status of the investment when is closed
+const changeStatusInvestment = data => {
+  const id = data.idInvestment;
+  connection.query("UPDATE investment SET status='closed' WHERE idInvestment = " + id + " AND  returnTotal - totalReturn = 0", (err, rows) => {
+    if(err) throw err;
+
+    console.log("An investment has been completed");
+  })
+}
+
+
+module.exports = { newBalanceInvestor, updatemoneyNeed, checkStatusNeed, pay, needResolved, changeStatusInvestment, updateInvestment };

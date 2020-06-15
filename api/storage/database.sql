@@ -61,6 +61,8 @@ CREATE TABLE IF NOT EXISTS investment(
   returnTotal FLOAT(24) NO NULL,
   valueToREturnWeekly FLOAT(24) NOT NULL,
   interestsWins FLOAT(24) NOT NULL,
+  totalReturn FLOAT(24) DEFAULT 0,
+  status VARCHAR(255) NOT NULL,
   PRIMARY KEY (idInvestment),
   KEY idInvestor (idInvestor),
   CONSTRAINT investment_ibfk_1 FOREIGN KEY (idInvestor) REFERENCES investors (idInvestor) ON DELETE NO ACTION
@@ -95,6 +97,7 @@ CREATE TABLE IF NOT EXISTS benefits(
   idInvestment INT(11) NOT NULL,
   idPayment INT(11) NOT NULL,
   investorShare FLOAT(24) NOT NULL,
+  dateReturn TIMESTAMP NOT NULL,
   PRIMARY KEY (idReturn),
   CONSTRAINT benefits_ibfk_1 FOREIGN KEY (idPayment) REFERENCES payments (idPayment) ON DELETE NO ACTION,
   CONSTRAINT benefits_ibfk_2 FOREIGN KEY (idInvestment) REFERENCES  funding (idInvestment) ON DELETE NO ACTION,
