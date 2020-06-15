@@ -2,11 +2,129 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/dashboard_container"
+    android:id="@+id/dashboard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pattern_background"
+    android:layout_gravity="right|center_horizontal"
+    android:gravity="bottom|center_horizontal"
     android:orientation="vertical"
     tools:context=".dashboard"
     tools:layout_editor_absoluteX="1dp"
-    tools:layout_editor_absoluteY="1dp"/>
+    tools:layout_editor_absoluteY="1dp">
+
+    <LinearLayout
+        android:id="@+id/dashboard_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/pattern_background"
+        android:orientation="vertical">
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/dashboard_bar">
+
+        <TextView
+            android:id="@+id/bar_icon_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:text="@string/icon_home"
+            android:textColor="@color/textPrimary"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toStartOf="@+id/bar_icon_deal"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/bar_txt_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|top"
+            android:text="@string/txt_home"
+            android:textColor="@color/textPrimary"
+            app:layout_constraintEnd_toEndOf="@+id/bar_icon_home"
+            app:layout_constraintStart_toStartOf="@+id/bar_icon_home"
+            app:layout_constraintTop_toBottomOf="@+id/bar_icon_home" />
+
+        <TextView
+            android:id="@+id/bar_icon_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:text="@string/icon_profile"
+            android:textColor="@color/textPrimary"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/bar_icon_my_business"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/bar_txt_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|top"
+            android:text="@string/txt_profile"
+            android:textColor="@color/textPrimary"
+            app:layout_constraintEnd_toEndOf="@+id/bar_icon_profile"
+            app:layout_constraintStart_toStartOf="@+id/bar_icon_profile"
+            app:layout_constraintTop_toBottomOf="@+id/bar_icon_profile" />
+
+
+        <TextView
+            android:id="@+id/bar_icon_deal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:text="@string/icon_lend"
+            android:textColor="@color/textPrimary"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toStartOf="@+id/bar_icon_my_business"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/bar_icon_home"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/bar_txt_deal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|top"
+            android:text="@string/txt_lend"
+            android:textColor="@color/textPrimary"
+            app:layout_constraintEnd_toEndOf="@+id/bar_icon_deal"
+            app:layout_constraintStart_toStartOf="@+id/bar_icon_deal"
+            app:layout_constraintTop_toBottomOf="@+id/bar_icon_deal" />
+
+        <TextView
+            android:id="@+id/bar_icon_my_business"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:text="@string/icon_my_loan"
+            android:textColor="@color/textPrimary"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toStartOf="@+id/bar_icon_profile"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/bar_icon_deal"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/bar_txt_my_business"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|top"
+            android:text="@string/txt_my_loan"
+            android:textColor="@color/textPrimary"
+            app:layout_constraintEnd_toEndOf="@+id/bar_icon_my_business"
+            app:layout_constraintStart_toStartOf="@+id/bar_icon_my_business"
+            app:layout_constraintTop_toBottomOf="@+id/bar_icon_my_business" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

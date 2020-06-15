@@ -1,11 +1,14 @@
 package com.android.loanppi
 
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +19,7 @@ import com.facebook.HttpMethod
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import kotlinx.android.synthetic.main.activity_dashboard.*
 
 class dashboard : AppCompatActivity() {
     private lateinit var userType: String
@@ -25,10 +29,26 @@ class dashboard : AppCompatActivity() {
     private var account: Bundle? = Bundle()
     private var bundle: Bundle? = Bundle()
 
+    // Toggle color on selected fragment
+    private lateinit var currentIcon: TextView
+    private lateinit var currentText: TextView
+
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
+
+        val iconManager = icon_manager()
+
+        findViewById<TextView>(R.id.bar_icon_home).setTypeface(iconManager
+            .get_icons<Typeface>("icomoon.ttf", this))
+        findViewById<TextView>(R.id.bar_icon_deal).setTypeface(iconManager
+            .get_icons<Typeface>("icomoon.ttf", this))
+        findViewById<TextView>(R.id.bar_icon_my_business).setTypeface(iconManager
+            .get_icons<Typeface>("icomoon.ttf", this))
+        findViewById<TextView>(R.id.bar_icon_profile).setTypeface(iconManager
+            .get_icons<Typeface>("icomoon.ttf", this))
+
 
         bundle = intent.extras
         accessInfo = bundle?.getBundle("accessInfo") as Bundle
@@ -44,15 +64,84 @@ class dashboard : AppCompatActivity() {
             userType = accessInfo?.get("userType") as String
         }
 
+        if (userType == "worker") {
+            findViewById<TextView>(R.id.bar_icon_deal).setText(getString(R.string.icon_lend))
+            findViewById<TextView>(R.id.bar_txt_deal).setText(getString(R.string.txt_lend))
+            findViewById<TextView>(R.id.bar_icon_my_business).setText(getString(R.string.icon_my_loan))
+            findViewById<TextView>(R.id.bar_txt_my_business).setText(getString(R.string.txt_my_loan))
+        } else {
+            findViewById<TextView>(R.id.bar_icon_deal).setText(getString(R.string.icon_invest))
+            findViewById<TextView>(R.id.bar_txt_deal).setText(getString(R.string.txt_invest))
+            findViewById<TextView>(R.id.bar_icon_my_business).setText(getString(R.string.icon_my_investments))
+            findViewById<TextView>(R.id.bar_txt_my_business).setText(getString(R.string.txt_my_investments))
+        }
+
+        currentIcon = findViewById(R.id.bar_icon_home)
+        currentText = findViewById(R.id.bar_txt_home)
+        toggleColor(currentIcon, currentText)
+
         if (accessFrom == "signup") {
             loadFragment(profile(bundle))
         } else {
-            if (userType == "investor")
-                loadFragment(main_investor(bundle))
-            else {
-                loadFragment(main_worker(bundle))
-            }
+            selectFragment("main")
         }
+
+        // Load main
+        findViewById<TextView>(R.id.bar_icon_home).setOnClickListener(View.OnClickListener {
+            selectFragment("main")
+            toggleColor(findViewById(R.id.bar_icon_home), findViewById(R.id.bar_txt_home))
+        })
+        findViewById<TextView>(R.id.bar_txt_home).setOnClickListener(View.OnClickListener {
+            selectFragment("main")
+            toggleColor(findViewById(R.id.bar_icon_home), findViewById(R.id.bar_txt_home))
+        })
+
+        // Load deal
+        findViewById<TextView>(R.id.bar_icon_deal).setOnClickListener(View.OnClickListener {
+            selectFragment("deal")
+            toggleColor(findViewById(R.id.bar_icon_deal), findViewById(R.id.bar_txt_deal))
+        })
+        findViewById<TextView>(R.id.bar_txt_deal).setOnClickListener(View.OnClickListener {
+            selectFragment("deal")
+            toggleColor(findViewById(R.id.bar_icon_deal), findViewById(R.id.bar_txt_deal))
+        })
+
+        /*if (myLoan.get("status") != "loading") {
+                if (myLoan.get("status") == "not_found") {
+                    replaceFragment(lend(bundle), parentFragmentManager)
+                } else {
+                    Toast.makeText(context, "Ya tienes un préstamo activo", Toast.LENGTH_LONG)
+                        .show()
+                }
+        }
+        if (myLoan.get("status") != "loading") {
+                if (myLoan.get("status") != "not_found") {
+                    replaceFragment(my_loan(bundle), parentFragmentManager)
+                } else {
+                    Toast.makeText(context, "Debes solicitar un préstamo primero", Toast.LENGTH_LONG).show()
+                }
+        }*/
+
+        // Load my business
+        findViewById<TextView>(R.id.bar_icon_my_business).setOnClickListener(View.OnClickListener {
+            selectFragment("my_business")
+            toggleColor(findViewById(R.id.bar_icon_my_business), findViewById(R.id.bar_txt_my_business))
+        })
+        findViewById<TextView>(R.id.bar_txt_my_business).setOnClickListener(View.OnClickListener {
+            selectFragment("my_business")
+            toggleColor(findViewById(R.id.bar_icon_my_business), findViewById(R.id.bar_txt_my_business))
+        })
+
+        // Load profile
+        findViewById<TextView>(R.id.bar_icon_profile).setOnClickListener(View.OnClickListener {
+            selectFragment("profile")
+            toggleColor(findViewById(R.id.bar_icon_profile), findViewById(R.id.bar_txt_profile))
+        })
+        findViewById<TextView>(R.id.bar_txt_profile).setOnClickListener(View.OnClickListener {
+            selectFragment("profile")
+            toggleColor(findViewById(R.id.bar_icon_profile), findViewById(R.id.bar_txt_profile))
+        })
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -60,11 +149,7 @@ class dashboard : AppCompatActivity() {
         if (accessFrom == "signup") {
             inflater.inflate(R.menu.menu_non_registered, menu)
         } else {
-            if (userType == "worker") {
-                inflater.inflate(R.menu.menu_worker, menu)
-            } else {
-                inflater.inflate(R.menu.menu_investor, menu)
-            }
+            inflater.inflate(R.menu.menu_registered, menu)
         }
         return true
     }
@@ -72,29 +157,19 @@ class dashboard : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle item selection
         return when (item.itemId) {
-            R.id.menu_i_home -> { replaceFragment(main_investor(bundle)) ; true }
-            R.id.menu_i_profile -> { replaceFragment(profile(bundle)) ; true }
-            R.id.menu_i_invest -> { replaceFragment(invest_options(account)) ; true }
-            R.id.menu_i_my_investment -> { replaceFragment(my_investment_options(bundle)) ; true }
-            R.id.menu_i_history -> { true }
-
-            R.id.menu_w_home -> { replaceFragment(main_worker(bundle)) ; true }
-            R.id.menu_w_profile -> { replaceFragment(profile(bundle)) ; true }
-            R.id.menu_w_lend -> { replaceFragment(lend(bundle)) ; true }
-            R.id.menu_w_my_loan -> { replaceFragment(my_loan(bundle)) ; true }
-            R.id.menu_w_history -> { true }
-
             R.id.menu_signout -> { signOut() ; true }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
+    // Function that load a fragment on container
     fun loadFragment(fragment: Fragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.dashboard_container, fragment)
         fragmentTransaction.commit()
     }
 
+    // Function that replace the current fragment for other fragment
     fun replaceFragment(fragment: Fragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.dashboard_container, fragment)
@@ -102,6 +177,7 @@ class dashboard : AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
+    // Function to finish the current session
     private fun signOut() {
         if (accessWith == "google") {
             val gso = accessInfo?.get("gso") as GoogleSignInOptions
@@ -116,5 +192,34 @@ class dashboard : AppCompatActivity() {
         }
 
         finish()
+    }
+
+    // Load main segment
+    fun selectFragment(fragmentName: String) {
+        if (userType == "worker")
+            when (fragmentName) {
+                "main" -> replaceFragment(main_worker(bundle))
+                "deal" -> replaceFragment(lend(bundle))
+                "my_business" -> replaceFragment(my_loan(bundle))
+                "profile" -> replaceFragment(profile(bundle))
+                else -> {}
+            }
+        else
+            when (fragmentName) {
+                "main" -> replaceFragment(main_investor(bundle))
+                "deal" -> replaceFragment(invest_options(account))
+                "my_business" -> replaceFragment(my_investment_options(bundle))
+                "profile" -> replaceFragment(profile(bundle))
+                else -> {}
+            }
+    }
+
+    fun toggleColor(icon: TextView, text: TextView) {
+        currentIcon.setTextColor(getColor(R.color.textPrimary))
+        currentText.setTextColor(getColor(R.color.textPrimary))
+        currentIcon = icon
+        currentText = text
+        currentIcon.setTextColor(getColor(R.color.loanppi))
+        currentText.setTextColor(getColor(R.color.loanppi))
     }
 }

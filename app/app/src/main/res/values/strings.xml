@@ -25,7 +25,6 @@
     <string name="user_photo">User profile photo</string>
     <string name="balance">Balance</string>
     <string name="history">Historial</string>
-    <string name="home">Home</string>
 
     // Investor
     <string name="txt_return">Retorno</string>
@@ -38,11 +37,12 @@
     <string name="my_loan">Mi prestamo</string>
 
     // Menu
-    <string name="profile">Perfil</string>
     <string name="signout">Cerrar sesión</string>
+    <string name="home">Inicio</string>
 
     // Profile
     <string name="personal_info">Información personal</string>
+    <string name="profile">Perfil</string>
     <string name="first_name">Primer nombre</string>
     <string name="second_name">Segundo nombre</string>
     <string name="first_last_name">Primer apellido</string>
@@ -79,5 +79,21 @@
     // Login with Facebook
     <string name="facebook_app_id">245844573146164</string>
     <string name="fb_login_protocol_scheme">fb245844573146164</string>
+    
+    
+    // Icon test
+    <string name="icon_home">&#xe900;</string>
+    <string name="icon_profile">&#xe901;</string>
+    <string name="icon_lend">&#xe904;</string>
+    <string name="icon_my_loan">&#xe905;</string>
+    <string name="icon_invest">&#xe903;</string>
+    <string name="icon_my_investments">&#xe902;</string>
 
+    // Dashboard buttons
+    <string name="txt_home">Inicio</string>
+    <string name="txt_profile">Perfil</string>
+    <string name="txt_lend">Prestar</string>
+    <string name="txt_my_loan">Mi préstamo</string>
+    <string name="txt_invest">Invertir</string>
+    <string name="txt_my_investments">Mis inversiones</string>
 </resources>

@@ -27,10 +27,6 @@ class main_worker(bundle: Bundle?) : Fragment() {
     private var myLoan = Bundle()
     private var bundle = bundle
 
-    // Main buttons
-    private lateinit var btn_lend: Button
-    private lateinit var btn_my_loan: Button
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -41,9 +37,6 @@ class main_worker(bundle: Bundle?) : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_main_worker, container, false)
-
-        btn_lend = view.findViewById(R.id.btn_lend)
-        btn_my_loan = view.findViewById(R.id.btn_my_loan)
 
         accessInfo = bundle?.getBundle("accessInfo") as Bundle
         account = bundle?.getBundle("account") as Bundle
@@ -64,27 +57,6 @@ class main_worker(bundle: Bundle?) : Fragment() {
 
         view.findViewById<TextView>(R.id.txt_grettings).setText("Hola, "+ firstName)
         Glide.with(this).load(urlPhoto).into(view.findViewById(R.id.img_user_photo))
-
-        btn_lend.setOnClickListener(View.OnClickListener {
-            if (myLoan.get("status") != "loading") {
-                if (myLoan.get("status") == "not_found") {
-                    replaceFragment(lend(bundle), parentFragmentManager)
-                } else {
-                    Toast.makeText(context, "Ya tienes un préstamo activo", Toast.LENGTH_LONG)
-                        .show()
-                }
-            }
-        })
-
-        btn_my_loan.setOnClickListener(View.OnClickListener {
-            if (myLoan.get("status") != "loading") {
-                if (myLoan.get("status") != "not_found") {
-                    replaceFragment(my_loan(bundle), parentFragmentManager)
-                } else {
-                    Toast.makeText(context, "Debes solicitar un préstamo primero", Toast.LENGTH_LONG).show()
-                }
-            }
-        })
 
         return view
     }
