@@ -32,12 +32,23 @@ const checkStatusNeed = data => {
 
 //Function that sums all the payments
 const pay = data => {
-  connection.query("UPDATE needs SET amountRemaining = " + data.pay + " WHERE idWorker = " + data.idWorker, (err, rows) => {
+  connection.query("UPDATE needs SET amountRemaining = amountRemaining + " + data.payment + " WHERE idWorker = " + data.idWorker, (err, rows) => {
     if(err) throw err;
 
     console.log("Payment effective");
   })
 }
 
+//Function that changes status when a need is totally paid
+const needResolved = data => {
+  connection.query("UPDATE needs SET status='paid' WHERE idNeed="+ data.idNeed + " AND amountRemaining - totalToPay = 0", (err, rows) => {
+    if(err) throw err;
 
-module.exports = { newBalanceInvestor, updatemoneyNeed, checkStatusNeed };
+    console.log("A needs is solved");
+ })
+}
+
+
+
+
+module.exports = { newBalanceInvestor, updatemoneyNeed, checkStatusNeed, pay, needResolved };

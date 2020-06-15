@@ -108,8 +108,7 @@ const returnInvestment = data => {
 }
 
 //Function that gest Id investment
-const getIdinvestment = (data, values) => {
-  console.log(values)
+const getIdinvestment = (data) => {
   return new Promise((resolve, reject) => {
     const callbackGetInvestor = (err, result) => {
       if (err) {

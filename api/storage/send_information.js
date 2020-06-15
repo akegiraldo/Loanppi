@@ -101,6 +101,7 @@ const updateUser = data => {
 
 // santiago subir esto
 const createPayment = data => {
+  data['datePayment'] = new Date()
   console.log(data);
   return new Promise((resolve, reject) => {
     const callbackCreatePayment = (err, result) => {

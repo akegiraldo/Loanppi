@@ -37,11 +37,11 @@ CREATE TABLE IF NOT EXISTS needs (
   idNeed INT(11) NOT NULL UNIQUE AUTO_INCREMENT,
   idWorker INT(11) NOT NULL,
   loanAmount INT(7) NOT NULL,
-  amountRemaining INT(7) NOT NULL,
-  totalToPay INT(7) NOT NULL,
+  amountRemaining FLOAT(24) NOT NULL,
+  totalToPay FLOAT(24) NOT NULL,
   timeToPay INT(2) NOT NULL,
-  valueToPayWeekly INT(7) NOT NULL,
-  interests INT(6) NOT NULL,
+  valueToPayWeekly FLOAT(24) NOT NULL,
+  interests FLOAT(24) NOT NULL,
   status VARCHAR(255) NOT NULL,
   PRIMARY KEY (idNeed),
   KEY idWorker (idWorker),
@@ -58,9 +58,9 @@ CREATE TABLE IF NOT EXISTS investment(
   moneyInvestment INT(7) NOT NULL,
   loanShare FLOAT(24) NOT NULL,
   timeToReturn INT(2) NOT NULL,
-  returnTotal int(7) NO NULL,
-  valueToREturnWeekly INT(6) NOT NULL,
-  interestsWins INT(6) NOT NULL,
+  returnTotal FLOAT(24) NO NULL,
+  valueToREturnWeekly FLOAT(24) NOT NULL,
+  interestsWins FLOAT(24) NOT NULL,
   PRIMARY KEY (idInvestment),
   KEY idInvestor (idInvestor),
   CONSTRAINT investment_ibfk_1 FOREIGN KEY (idInvestor) REFERENCES investors (idInvestor) ON DELETE NO ACTION
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS funding(
 CREATE TABLE IF NOT EXISTS payments(
   idPayment INT(11) NOT NULL UNIQUE AUTO_INCREMENT,
   idWorker INT(11) NOT NULL,
-  payment INT(6) NOT NULL,
+  payment FLOAT(24) NOT NULL,
   datePayment TIMESTAMP NOT NULL,
   PRIMARY KEY (idPayment),
   KEY idNeed (idWorker),
@@ -94,23 +94,9 @@ CREATE TABLE IF NOT EXISTS benefits(
   idReturn INT(11) NOT NULL NOT NULL UNIQUE AUTO_INCREMENT,
   idInvestment INT(11) NOT NULL,
   idPayment INT(11) NOT NULL,
-  idNeed INT(11) NOT NULL,
-  investorShare INT(6) NOT NULL,
+  investorShare FLOAT(24) NOT NULL,
   PRIMARY KEY (idReturn),
   CONSTRAINT benefits_ibfk_1 FOREIGN KEY (idPayment) REFERENCES payments (idPayment) ON DELETE NO ACTION,
   CONSTRAINT benefits_ibfk_2 FOREIGN KEY (idInvestment) REFERENCES  funding (idInvestment) ON DELETE NO ACTION,
-  CONSTRAINT benefits_ibfk_3 FOREIGN KEY (idNeed) REFERENCES  funding (idNeed) ON DELETE NO ACTION
   ) ENGINE=InnoDB;
-
--- table para simular dinero
-CREATE TABLE IF NOT EXISTS moneyWorkers(
-  idMoney INT(11) NOT NULL,
-  money INT(11) NOT NULL,
-  idWorker INT(11) NOT NULL,
-  idNeed INT(11) NOT NULL,
-  PRIMARY KEY (idMoney),
-  CONSTRAINT moneyWorkers_ibfk_1 FOREIGN KEY (idWorker) REFERENCES needs (idWorker) ON DELETE NO ACTION,
-  CONSTRAINT moneyWorkers_ibfk_2 FOREIGN KEY (idNeed) REFERENCES  funding (idNeed) ON DELETE NO ACTION
-) ENGINE=InnoDB;
-
 
