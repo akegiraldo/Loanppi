@@ -1,5 +1,5 @@
 #!/usr/bin/node
-const { findUser, getUser, availableNeeds, checkLoan, investments, returnInvestment, getInvestorConectToNeed, share, insertBenefits } = require('../storage/get_information');
+const { findUser, getUser, availableNeeds, checkLoan, investments, returnInvestment, getIdinvestment, share, insertBenefits } = require('../storage/get_information');
 const { createNewUSerDB, sendDebt, updateUser, createInvestment, createFunding, createPayment, sendBenefit } = require('../storage/send_information');
 const { newBalanceInvestor, updatemoneyNeed, checkStatusNeed } = require('../storage/modificate_information');
 const { response } = require('express');
@@ -145,24 +145,23 @@ const myInvestments = (req, res, next) => {
     });
 }
 
-const makePago = (req, res, next) => {
+
+//Function that creates a payment
+const payment = (req, res, next) => {
   let allData = req.body;
   let jsonTobenefits = {};
-  let aux = {};
-  Promise.all([createPayment(allData), getInvestorConectToNeed(allData)]).then((values) => {
+  Promise.all([createPayment(allData), getIdinvestment(allData)]).then((values) => {
     jsonTobenefits['idPayment'] = values[0];
-    papilafuncionquearreglatodo(jsonTobenefits, values[1], allData.payment);
+    saveBenefit(jsonTobenefits, values[1], allData.payment);
   })
 }
 
-
-
-
-const papilafuncionquearreglatodo = (theJson, values, money) => {
+//Function that sends data to benefits DB
+const saveBenefit = (Json, values, money) => {
   for (let i = 0; i < values.length; i++) {
     share(values[i].idInvestment).then(response => {
-      theJson['investorShare'] = response[0].loanShare * money;
-      sendBenefit(theJson);
+      Json['investorShare'] = response[0].loanShare * money;
+      sendBenefit(Json);
     }).catch(err => {
       console.error(err);
       res.status(500).send("Not investments found!");
@@ -171,5 +170,4 @@ const papilafuncionquearreglatodo = (theJson, values, money) => {
 }
 
 
-
-module.exports = { helloWorld, searchUSer, NewUser, update, newNeed, options, newInvestment, activeLoan, myInvestments, makePago }
+module.exports = { helloWorld, searchUSer, NewUser, update, newNeed, options, newInvestment, activeLoan, myInvestments, payment  }
