@@ -1,7 +1,7 @@
 #!/usr/bin/node
-const { findUser, getUser, availableNeeds, checkLoan, investments, returnInvestment, getIdinvestment, share, insertBenefits } = require('../storage/get_information');
+const { findUser, getUser, availableNeeds, checkLoan, investments, returnInvestment, getIdinvestment, share, insertBenefits, getPayments, getInvestments, getReturns } = require('../storage/get_information');
 const { createNewUSerDB, sendDebt, updateUser, createInvestment, createFunding, createPayment, sendBenefit } = require('../storage/send_information');
-const { newBalanceInvestor, updatemoneyNeed, checkStatusNeed } = require('../storage/modificate_information');
+const { newBalanceInvestor, updatemoneyNeed, checkStatusNeed, pay, needResolved, changeStatusInvestment, updateInvestment } = require('../storage/modificate_information');
 const { response } = require('express');
 
 
@@ -117,21 +117,6 @@ const newInvestment = (req, res, next) => {
   });  
 }
 
-//Function that checks whether a worker's loan is active
-const activeLoan = (req, res, next) => {
-  const workerId = req.query.idWorker;
-   checkLoan(workerId).then(response => {
-   if (response.length === 0){
-      const json = {};
-      res.send(json);
-   } else {
-     res.send(response[0]);
-   }
-  }).catch(err => {
-     console.error(err);
-     res.status(500).send("DB Error, NOT FOUND");
-  });
-}
 
 //Function that gets the investments by Investors' Id
 const myInvestments = (req, res, next) => {
@@ -147,12 +132,16 @@ const myInvestments = (req, res, next) => {
 
 
 //Function that creates a payment
-const payment = (req, res, next) => {
+const newPayment = (req, res, next) => {
   let allData = req.body;
   let jsonTobenefits = {};
   Promise.all([createPayment(allData), getIdinvestment(allData)]).then((values) => {
     jsonTobenefits['idPayment'] = values[0];
+    jsonTobenefits['idInvestment'] = values[1][0].idInvestment;
     saveBenefit(jsonTobenefits, values[1], allData.payment);
+    pay(allData);
+    needResolved(allData);
+    res.send({'status':'paid'});
   })
 }
 
@@ -162,6 +151,8 @@ const saveBenefit = (Json, values, money) => {
     share(values[i].idInvestment).then(response => {
       Json['investorShare'] = response[0].loanShare * money;
       sendBenefit(Json);
+      changeStatusInvestment(Json);
+      updateInvestment(Json);
     }).catch(err => {
       console.error(err);
       res.status(500).send("Not investments found!");
@@ -169,5 +160,32 @@ const saveBenefit = (Json, values, money) => {
   }
 }
 
+//Function that charges needs and number of payments
+const payments = (req, res, next) => {
+  const id = req.query.idWorker;
+  let payments = [];
+  Promise.all([checkLoan(id), getPayments(id)]).then(values => {
+   payments.push(values[0][0]);
+   payments.push(values[1]);
+   res.send(payments);
+  }).catch(err => {
+      console.error(err);
+      res.status(500).send("Not payments found!");
+    }); 
+}
 
-module.exports = { helloWorld, searchUSer, NewUser, update, newNeed, options, newInvestment, activeLoan, myInvestments, payment  }
+//Function that gets investment details by its id
+const listInvestments = (req, res, next) => {
+  const id = req.query.idInvestment;
+  let investments = [];
+  Promise.all([getInvestments(id), getReturns(id)]).then(values => {
+    investments.push(values[0][0]);
+    investments.push(values[1]);
+    res.send(investments);
+  }).catch(err => {
+      console.error(err);
+      res.status(500).send("Not investments found!");
+    });
+}
+
+module.exports = { helloWorld, searchUSer, NewUser, update, newNeed, options, newInvestment, myInvestments, newPayment, payments, listInvestments  }
