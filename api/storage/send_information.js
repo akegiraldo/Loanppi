@@ -47,6 +47,7 @@ const sendDebt = data => {
 //Function that creates a new Investment with needs' id in DB
 const createInvestment = data => {
   data['status'] = 'active';
+  console.log(data);
   delete data['idNeed'];
   return new Promise((resolve, reject) => {
     const callbackInsertInvestment =  (err, result) => {

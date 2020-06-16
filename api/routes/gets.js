@@ -14,7 +14,6 @@ const helloWorld = (req,res,next) => {
 const searchUSer = (req, res, next) => {
   var data = "";
   const userEmail = req.query.email;
-  console.log(userEmail);
   getUser(userEmail, "investors").then (response => {
     data = response;
     if (data.status === "exists") {
@@ -61,7 +60,6 @@ const update = (req, res, next) => {
   updateUser(allData).then(response => {
     const data = JSON.stringify({"updated": response});
     res.send(data);
-    console.log(data);
   }).catch(err => {
     console.error(err);
     res.status(500).send("DB Error, NOT FOUND!");
@@ -122,7 +120,6 @@ const newInvestment = (req, res, next) => {
 const myInvestments = (req, res, next) => {
   const idInvestor = req.query.idInvestor;
   investments(idInvestor).then(response => {
-   console.log(response)
     res.send(response);
   }).catch(err => {
       console.error(err);

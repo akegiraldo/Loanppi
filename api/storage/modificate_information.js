@@ -61,7 +61,6 @@ const updateInvestment = data => {
 //Function that changes the status of the investment when is closed
 const changeStatusInvestment = data => {
   const id = data.idInvestment;
-   console.log("id", id)
   connection.query("UPDATE investment SET status='closed' WHERE idInvestment = " + id + " AND  returnTotal - totalReturn = 0", (err, rows) => {
     if(err) throw err;
 
