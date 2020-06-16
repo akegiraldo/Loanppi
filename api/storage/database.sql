@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS workers(
 CREATE TABLE IF NOT EXISTS needs (
   idNeed INT(11) NOT NULL UNIQUE AUTO_INCREMENT,
   idWorker INT(11) NOT NULL,
-  loanAmount INT(7) NOT NULL,
+  loanAmount int(7) NOT NULL,
   amountRemaining FLOAT(24) NOT NULL,
   totalToPay FLOAT(24) NOT NULL,
   timeToPay INT(2) NOT NULL,
@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS needs (
 -- INSERT INTO `needs` (id_worker, debt, dues)
 -- VALUES (1, 12, 1);
 
+
 -- TABLE INVESTMENT DEPENT OF INVESTORS
 CREATE TABLE IF NOT EXISTS investment(
   idInvestment INT(11) NOT NULL UNIQUE AUTO_INCREMENT,
@@ -64,6 +65,7 @@ CREATE TABLE IF NOT EXISTS investment(
   valueToReturnWeekly FLOAT(24) NOT NULL,
   interestsWins FLOAT(24) NOT NULL,
   status VARCHAR(255) NOT NULL,
+  totalReturn FLOAT(24),
   PRIMARY KEY (idInvestment),
   KEY idInvestor (idInvestor),
   CONSTRAINT investment_ibfk_1 FOREIGN KEY (idInvestor) REFERENCES investors (idInvestor) ON DELETE NO ACTION
@@ -81,7 +83,7 @@ CREATE TABLE IF NOT EXISTS funding(
   CONSTRAINT funding_ibfk_2 FOREIGN KEY (idInvestment) REFERENCES investment (idInvestment) ON DELETE NO ACTION
 ) ENGINE=InnoDB;
 
--- TABLE WORKERS' PAYMENTS 
+-- TABLE WORKERS' PAYMENTS
 CREATE TABLE IF NOT EXISTS payments(
   idPayment INT(11) NOT NULL UNIQUE AUTO_INCREMENT,
   idWorker INT(11) NOT NULL,
@@ -91,7 +93,7 @@ CREATE TABLE IF NOT EXISTS payments(
   KEY idNeed (idWorker),
   CONSTRAINT payments_ibfk_1 FOREIGN KEY (idWorker) REFERENCES needs (idWorker) ON DELETE NO ACTION
 ) ENGINE=InnoDB;
-  
+
 -- TABLE RELATION PAYMENTS WITH INVESTORS
 CREATE TABLE IF NOT EXISTS benefits(
   idReturn INT(11) NOT NULL NOT NULL UNIQUE AUTO_INCREMENT,
@@ -103,5 +105,3 @@ CREATE TABLE IF NOT EXISTS benefits(
   CONSTRAINT benefits_ibfk_1 FOREIGN KEY (idPayment) REFERENCES payments (idPayment) ON DELETE NO ACTION,
   CONSTRAINT benefits_ibfk_2 FOREIGN KEY (idInvestment) REFERENCES  funding (idInvestment) ON DELETE NO ACTION
 ) ENGINE=InnoDB;
-
-

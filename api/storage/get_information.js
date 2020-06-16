@@ -22,7 +22,6 @@ const findUser = data => {
 
 //Function that gets an user and checks if the user exists
 const  getUser= (email, userType) => {
-  console.log(userType);
   return new Promise((resolve, reject)=> {
   const callbackDB =  (err, result) => {
     if (err) {
@@ -34,7 +33,6 @@ const  getUser= (email, userType) => {
       console.log("User exists");
       result[0]['status'] = 'exists';
       result[0]['userType'] = userType;
-      console.log(result[0]);
       resolve(result[0]);
     } else {
         console.log("User does not exist");
