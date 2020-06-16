@@ -1,3 +1,4 @@
+DROP DATABASE loanppi;
 -- como correr eta monda sudo cat database.sql |sudo  mysql -hlocalhost -uroot -p
 CREATE DATABASE IF NOT EXISTS loanppi;
 USE loanppi;
@@ -41,6 +42,7 @@ CREATE TABLE IF NOT EXISTS needs (
   totalToPay FLOAT(24) NOT NULL,
   timeToPay INT(2) NOT NULL,
   valueToPayWeekly FLOAT(24) NOT NULL,
+  loanReason VARCHAR(255) NOT NULL,
   interests FLOAT(24) NOT NULL,
   status VARCHAR(255) NOT NULL,
   PRIMARY KEY (idNeed),
@@ -58,10 +60,9 @@ CREATE TABLE IF NOT EXISTS investment(
   moneyInvestment INT(7) NOT NULL,
   loanShare FLOAT(24) NOT NULL,
   timeToReturn INT(2) NOT NULL,
-  returnTotal FLOAT(24) NO NULL,
-  valueToREturnWeekly FLOAT(24) NOT NULL,
+  returnTotal FLOAT(24) NOT NULL,
+  valueToReturnWeekly FLOAT(24) NOT NULL,
   interestsWins FLOAT(24) NOT NULL,
-  totalReturn FLOAT(24) DEFAULT 0,
   status VARCHAR(255) NOT NULL,
   PRIMARY KEY (idInvestment),
   KEY idInvestor (idInvestor),
@@ -89,7 +90,7 @@ CREATE TABLE IF NOT EXISTS payments(
   PRIMARY KEY (idPayment),
   KEY idNeed (idWorker),
   CONSTRAINT payments_ibfk_1 FOREIGN KEY (idWorker) REFERENCES needs (idWorker) ON DELETE NO ACTION
-  ) ENGINE=InnoDB;
+) ENGINE=InnoDB;
   
 -- TABLE RELATION PAYMENTS WITH INVESTORS
 CREATE TABLE IF NOT EXISTS benefits(
@@ -100,6 +101,7 @@ CREATE TABLE IF NOT EXISTS benefits(
   dateReturn TIMESTAMP NOT NULL,
   PRIMARY KEY (idReturn),
   CONSTRAINT benefits_ibfk_1 FOREIGN KEY (idPayment) REFERENCES payments (idPayment) ON DELETE NO ACTION,
-  CONSTRAINT benefits_ibfk_2 FOREIGN KEY (idInvestment) REFERENCES  funding (idInvestment) ON DELETE NO ACTION,
-  ) ENGINE=InnoDB;
+  CONSTRAINT benefits_ibfk_2 FOREIGN KEY (idInvestment) REFERENCES  funding (idInvestment) ON DELETE NO ACTION
+) ENGINE=InnoDB;
+
 

@@ -41,7 +41,7 @@ const pay = data => {
 
 //Function that changes status when a need is totally paid
 const needResolved = data => {
-  connection.query("UPDATE needs SET status='paid' WHERE idNeed="+ data.idNeed + " AND amountRemaining - totalToPay = 0", (err, rows) => {
+  connection.query("UPDATE needs SET status='paid' WHERE idNeed="+ data.idNeed + " AND amountRemaining - totalToPay > -1  AND amountRemaining - totalToPay < 1", (err, rows) => {
     if(err) throw err;
 
     console.log("A needs is solved");
@@ -51,7 +51,7 @@ const needResolved = data => {
 
 
 const updateInvestment = data => {
-  connection.query("UPDATE investment SET totalReturn = totalreturn + " + data.investorShare  + " WHERE idInvestment = " + data.idInvestment, (err, rows) => {
+  connection.query("UPDATE investment SET totalReturn = totalReturn + " + data.investorShare  + " WHERE idInvestment = " + data.idInvestment, (err, rows) => {
     if(err) throw err;
 
     console.log("Return made it");
@@ -61,6 +61,7 @@ const updateInvestment = data => {
 //Function that changes the status of the investment when is closed
 const changeStatusInvestment = data => {
   const id = data.idInvestment;
+   console.log("id", id)
   connection.query("UPDATE investment SET status='closed' WHERE idInvestment = " + id + " AND  returnTotal - totalReturn = 0", (err, rows) => {
     if(err) throw err;
 

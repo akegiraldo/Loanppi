@@ -133,14 +133,15 @@ const myInvestments = (req, res, next) => {
 
 //Function that creates a payment
 const newPayment = (req, res, next) => {
-  let allData = req.body;
+  const allData = req.body;
   let jsonTobenefits = {};
-  Promise.all([createPayment(allData), getIdinvestment(allData)]).then((values) => {
-    jsonTobenefits['idPayment'] = values[0];
-    jsonTobenefits['idInvestment'] = values[1][0].idInvestment;
-    saveBenefit(jsonTobenefits, values[1], allData.payment);
+  jsonTobenefits['idNeed'] = allData.idNeed;
+  Promise.all([getIdinvestment(allData), createPayment(allData)]).then((values) => {
+    jsonTobenefits['idPayment'] = values[1];
+    saveBenefit(jsonTobenefits, values[0], allData.payment);
     pay(allData);
-    needResolved(allData);
+    needResolved(jsonTobenefits);
+
     res.send({'status':'paid'});
   })
 }
@@ -149,6 +150,7 @@ const newPayment = (req, res, next) => {
 const saveBenefit = (Json, values, money) => {
   for (let i = 0; i < values.length; i++) {
     share(values[i].idInvestment).then(response => {
+      Json['idInvestment'] = values[i].idInvestment;
       Json['investorShare'] = response[0].loanShare * money;
       sendBenefit(Json);
       changeStatusInvestment(Json);

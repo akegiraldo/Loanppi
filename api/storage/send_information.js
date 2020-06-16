@@ -102,8 +102,8 @@ const updateUser = data => {
 
 //Function that creates a new payment
 const createPayment = data => {
+  delete data['idNeed'];
   data['datePayment'] = new Date()
-  console.log(data);
   return new Promise((resolve, reject) => {
     const callbackCreatePayment = (err, result) => {
       if (err) {
@@ -120,8 +120,8 @@ const createPayment = data => {
 
 //Function that inserts data to the benefit Table
 const sendBenefit = data => {
-  data['dateReturn'] = new Date()
-  console.log(data);
+  delete data['idNeed'];
+  data['dateReturn'] = new Date();
   connection.query("INSERT INTO benefits SET ?", data, (err, rows) => {
     if(err) throw err;
     console.log("Data inserted");
