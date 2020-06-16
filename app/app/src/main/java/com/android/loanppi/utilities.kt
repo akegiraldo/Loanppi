@@ -5,6 +5,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import java.text.NumberFormat
 
 // Function for validate the length, type and content of the fields
 fun fieldsValidator(context: Context?, field: EditText, typeValidation: String, lengthMin: Int, lengthMax: Int, required: Boolean): Boolean {
@@ -75,3 +76,5 @@ fun replaceFragment(fragment: Fragment, parentFragmentManager: FragmentManager) 
     fragmentTransaction.addToBackStack(null)
     fragmentTransaction.commit()
 }
+
+val copFormat: NumberFormat = NumberFormat.getCurrencyInstance()

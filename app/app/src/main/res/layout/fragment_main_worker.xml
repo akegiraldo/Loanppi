@@ -56,12 +56,13 @@
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintHeight_percent="0.06"
-                app:layout_constraintStart_toStartOf="@+id/bar_progress_moto_bar"
+                app:layout_constraintStart_toStartOf="@+id/bar_main_progress_moto_bar"
                 app:layout_constraintTop_toBottomOf="@+id/img_user_photo"
-                app:layout_constraintWidth_percent="0.5" />
+                app:layout_constraintWidth_percent="0.5"
+                tools:visibility="invisible" />
 
             <TextView
-                android:id="@+id/txt_meta_amount"
+                android:id="@+id/txt_main_goal_amount"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginBottom="8dp"
@@ -70,26 +71,28 @@
                 android:textColor="@color/textPrimary"
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toTopOf="@+id/txt_value_meta_amount"
-                app:layout_constraintEnd_toEndOf="@+id/txt_value_meta_amount"
+                app:layout_constraintBottom_toTopOf="@+id/txt_main_value_goal_amount"
+                app:layout_constraintEnd_toEndOf="@+id/txt_main_value_goal_amount"
                 app:layout_constraintHeight_percent="0.04"
-                app:layout_constraintWidth_percent="0.25" />
+                app:layout_constraintWidth_percent="0.25"
+                tools:visibility="invisible" />
 
             <TextView
-                android:id="@+id/txt_value_meta_amount"
+                android:id="@+id/txt_main_value_goal_amount"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:text="0'000.000"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toTopOf="@+id/bar_progress_moto_bar"
-                app:layout_constraintEnd_toEndOf="@+id/bar_progress_moto_bar"
+                app:layout_constraintBottom_toTopOf="@+id/bar_main_progress_moto_bar"
+                app:layout_constraintEnd_toEndOf="@+id/bar_main_progress_moto_bar"
                 app:layout_constraintHeight_percent="0.03"
-                app:layout_constraintWidth_percent="0.2" />
+                app:layout_constraintWidth_percent="0.2"
+                tools:visibility="invisible" />
 
             <SeekBar
-                android:id="@+id/bar_progress_moto_bar"
+                android:id="@+id/bar_main_progress_moto_bar"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="60dp"
@@ -103,46 +106,162 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_my_loan_balance"
                 app:layout_constraintWidth_percent="0.8"
-                app:tickMarkTint="#000000" />
+                app:tickMarkTint="#000000"
+                tools:visibility="invisible" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/container_amount_paid"
+            <TextView
+                android:id="@+id/txt_main_value_amount_paid"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginEnd="20dp"
-                app:layout_constraintEnd_toEndOf="@+id/bar_progress_moto_bar"
+                android:gravity="center"
+                android:text="$0,000,000"
+                android:textColor="@color/textPrimary"
+                app:autoSizeTextType="uniform"
                 app:layout_constraintHeight_percent="0.03"
-                app:layout_constraintStart_toStartOf="@+id/bar_progress_moto_bar"
-                app:layout_constraintTop_toBottomOf="@+id/bar_progress_moto_bar"
-                app:layout_constraintWidth_percent="0.8">
-
-                <TextView
-                    android:id="@+id/txt_value_amount_paid"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:gravity="center"
-                    android:text="0'000.000"
-                    android:textColor="@color/textPrimary"
-                    app:autoSizeTextType="uniform"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHeight_percent="1"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.25" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintStart_toStartOf="@+id/bar_main_progress_moto_bar"
+                app:layout_constraintTop_toBottomOf="@+id/bar_main_progress_moto_bar"
+                app:layout_constraintWidth_percent="0.2"
+                tools:visibility="invisible" />
 
             <Button
                 android:id="@+id/btn_let_pay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:text="Pagar"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="80dp"
+                android:background="@color/btn_white"
+                android:text="@string/btn_let_play"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.07"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/container_amount_paid" />
+                app:layout_constraintTop_toBottomOf="@+id/txt_main_amount_remaining"
+                app:layout_constraintWidth_percent="0.4"
+                tools:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/txt_main_your_weekly_fee"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="50dp"
+                android:text="@string/txt_your_weekly_fee"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/textPrimary"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toStartOf="@+id/txt_main_value_your_weekly_fee"
+                app:layout_constraintHeight_percent="0.04"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_main_value_amount_paid"
+                app:layout_constraintWidth_percent="0.6"
+                tools:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/txt_main_your_fee_number"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/txt_your_fee_number"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/textPrimary"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toEndOf="@+id/txt_main_your_weekly_fee"
+                app:layout_constraintHeight_percent="0.04"
+                app:layout_constraintStart_toStartOf="@+id/txt_main_your_weekly_fee"
+                app:layout_constraintTop_toBottomOf="@+id/txt_main_your_weekly_fee"
+                app:layout_constraintWidth_percent="0.6"
+                tools:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/txt_main_amount_remaining"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/txt_amount_remaining"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/textPrimary"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toEndOf="@+id/txt_main_your_fee_number"
+                app:layout_constraintHeight_percent="0.04"
+                app:layout_constraintStart_toStartOf="@+id/txt_main_your_fee_number"
+                app:layout_constraintTop_toBottomOf="@+id/txt_main_your_fee_number"
+                app:layout_constraintWidth_percent="0.6"
+                tools:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/txt_main_value_your_weekly_fee"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="$00,000"
+                android:textColor="@color/textPrimary"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_main_your_weekly_fee"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.04"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/txt_main_your_weekly_fee"
+                app:layout_constraintTop_toTopOf="@+id/txt_main_your_weekly_fee"
+                app:layout_constraintWidth_percent="0.3"
+                tools:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/txt_main_value_your_fee_number"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="00"
+                android:textColor="@color/textPrimary"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_main_your_fee_number"
+                app:layout_constraintEnd_toEndOf="@+id/txt_main_value_your_weekly_fee"
+                app:layout_constraintHeight_percent="0.04"
+                app:layout_constraintStart_toStartOf="@+id/txt_main_value_your_weekly_fee"
+                app:layout_constraintTop_toTopOf="@+id/txt_main_your_fee_number"
+                app:layout_constraintWidth_percent="0.3"
+                tools:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/txt_main_value_amount_remaining"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="$0,000,000"
+                android:textColor="@color/textPrimary"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_main_amount_remaining"
+                app:layout_constraintEnd_toEndOf="@+id/txt_main_value_your_fee_number"
+                app:layout_constraintHeight_percent="0.04"
+                app:layout_constraintStart_toStartOf="@+id/txt_main_value_your_fee_number"
+                app:layout_constraintTop_toTopOf="@+id/txt_main_amount_remaining"
+                app:layout_constraintWidth_percent="0.3"
+                tools:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/txt_is_empty"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@string/no_loans"
+                android:textAlignment="center"
+                android:visibility="invisible"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.15"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.8" />
+
+            <TextView
+                android:id="@+id/txt_main_getting_money"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="80dp"
+                android:gravity="center"
+                android:text="@string/txt_getting_money"
+                android:visibility="invisible"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.06"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_main_amount_remaining"
+                app:layout_constraintWidth_percent="0.8" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

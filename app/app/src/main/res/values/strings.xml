@@ -31,10 +31,14 @@
     <string name="invest">Invertir</string>
     <string name="my_investments">Mis inversiones</string>
 
-    // Worker
+    // Main worker
+    <string name="no_loans">Esto está muy vacío por acá\nHaz un préstamo</string>
     <string name="txt_goal">Meta</string>
-    <string name="lend">Solicitar préstamo</string>
-    <string name="my_loan">Mi prestamo</string>
+    <string name="txt_your_weekly_fee">Tu cuota semanal es de:</string>
+    <string name="txt_your_fee_number">Esta es tu cuota número:</string>
+    <string name="txt_amount_remaining">Te falta por pagar:</string>
+    <string name="txt_getting_money">Estamos consiguiendo tu dinero</string>
+    <string name="btn_let_play">Pagar</string>
 
     // Menu
     <string name="signout">Cerrar sesión</string>

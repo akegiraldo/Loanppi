@@ -7,9 +7,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -19,7 +17,6 @@ import com.facebook.HttpMethod
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import kotlinx.android.synthetic.main.activity_dashboard.*
 
 class dashboard : AppCompatActivity() {
     private lateinit var userType: String
@@ -88,6 +85,9 @@ class dashboard : AppCompatActivity() {
 
         // Load main
         findViewById<TextView>(R.id.bar_icon_home).setOnClickListener(View.OnClickListener {
+            /*val myFragment: MyFragment =
+                fragmentManager.findFragmentByTag("MY_FRAGMENT") as MyFragment
+            if ()*/
             selectFragment("main")
             toggleColor(findViewById(R.id.bar_icon_home), findViewById(R.id.bar_txt_home))
         })
@@ -170,9 +170,9 @@ class dashboard : AppCompatActivity() {
     }
 
     // Function that replace the current fragment for other fragment
-    fun replaceFragment(fragment: Fragment) {
+    fun replaceFragment(fragment: Fragment, tag: String) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.dashboard_container, fragment)
+        fragmentTransaction.replace(R.id.dashboard_container, fragment, tag)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
@@ -198,18 +198,18 @@ class dashboard : AppCompatActivity() {
     fun selectFragment(fragmentName: String) {
         if (userType == "worker")
             when (fragmentName) {
-                "main" -> replaceFragment(main_worker(bundle))
-                "deal" -> replaceFragment(lend(bundle))
-                "my_business" -> replaceFragment(my_loan(bundle))
-                "profile" -> replaceFragment(profile(bundle))
+                "main" -> replaceFragment(main_worker(bundle), "main_worker")
+                "deal" -> replaceFragment(lend(bundle), "lend")
+                "my_business" -> replaceFragment(my_loan(bundle), "my_loan")
+                "profile" -> replaceFragment(profile(bundle), "profile")
                 else -> {}
             }
         else
             when (fragmentName) {
-                "main" -> replaceFragment(main_investor(bundle))
-                "deal" -> replaceFragment(invest_options(account))
-                "my_business" -> replaceFragment(my_investment_options(bundle))
-                "profile" -> replaceFragment(profile(bundle))
+                "main" -> replaceFragment(main_investor(bundle), "main_investor")
+                "deal" -> replaceFragment(invest_options(account), "invest")
+                "my_business" -> replaceFragment(my_investment_options(bundle), "my_investment")
+                "profile" -> replaceFragment(profile(bundle), "profile")
                 else -> {}
             }
     }

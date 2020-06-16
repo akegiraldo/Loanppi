@@ -54,7 +54,7 @@ class my_investment_details(bundle: Bundle) : Fragment() {
         returnAmount.setText(copFormat.format(myInvestment.get("returnTotal").toString().toInt()))
         interestsMonthlyAmount.setText(copFormat.format(valueTotalInterestsAmount / valueTimeToReturn))
         totalInterestsAmount.setText(copFormat.format(myInvestment.get("interestsWins").toString().toInt()))
-        duesWeeklyAmount.setText(copFormat.format(myInvestment.get("valueToReturnWeekly").toString().toInt()))
+        duesWeeklyAmount.setText(copFormat.format(myInvestment.get("valueToReturnWeekly").toString().toFloat()))
         duesMonthlyAmount.setText(copFormat.format(valueDuesMonthlyAmount))
         amountInvested.setText(copFormat.format(myInvestment.get("moneyInvestment").toString().toInt()))
         investReturnAmount.setText(copFormat.format(myInvestment.get("returnTotal").toString().toInt()))

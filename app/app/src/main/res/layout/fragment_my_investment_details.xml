@@ -44,7 +44,7 @@
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintHeight_percent="0.06"
-                app:layout_constraintStart_toStartOf="@+id/bar_progress_moto_bar"
+                app:layout_constraintStart_toStartOf="@+id/bar_investment_progress_moto_bar"
                 app:layout_constraintTop_toBottomOf="@+id/txt_title_my_invest"
                 app:layout_constraintWidth_percent="0.5" />
 
@@ -71,13 +71,13 @@
                 android:textAlignment="viewEnd"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toTopOf="@+id/bar_progress_moto_bar"
-                app:layout_constraintEnd_toEndOf="@+id/bar_progress_moto_bar"
+                app:layout_constraintBottom_toTopOf="@+id/bar_investment_progress_moto_bar"
+                app:layout_constraintEnd_toEndOf="@+id/bar_investment_progress_moto_bar"
                 app:layout_constraintHeight_percent="0.03"
                 app:layout_constraintWidth_percent="0.2" />
 
             <SeekBar
-                android:id="@+id/bar_progress_moto_bar"
+                android:id="@+id/bar_investment_progress_moto_bar"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="60dp"
@@ -98,10 +98,10 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginEnd="20dp"
-                app:layout_constraintEnd_toEndOf="@+id/bar_progress_moto_bar"
+                app:layout_constraintEnd_toEndOf="@+id/bar_investment_progress_moto_bar"
                 app:layout_constraintHeight_percent="0.03"
-                app:layout_constraintStart_toStartOf="@+id/bar_progress_moto_bar"
-                app:layout_constraintTop_toBottomOf="@+id/bar_progress_moto_bar"
+                app:layout_constraintStart_toStartOf="@+id/bar_investment_progress_moto_bar"
+                app:layout_constraintTop_toBottomOf="@+id/bar_investment_progress_moto_bar"
                 app:layout_constraintWidth_percent="0.8">
 
                 <TextView

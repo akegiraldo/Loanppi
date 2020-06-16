@@ -108,14 +108,14 @@ class lend(bundle: Bundle?) : Fragment() {
 
         btnLend.setOnClickListener(View.OnClickListener {
             if (validateField()) {
-                sendPost()
+                lendPost()
             }
         })
 
         return view
     }
 
-    fun sendPost() {
+    fun lendPost() {
         val url = "http://loanppi.kevingiraldo.tech/app/api/v1/lend/"
         val loan = JSONObject()
 

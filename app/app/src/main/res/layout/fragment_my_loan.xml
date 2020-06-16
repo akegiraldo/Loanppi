@@ -36,7 +36,7 @@
                 app:layout_constraintWidth_percent="0.5" />
 
             <TextView
-                android:id="@+id/txt_my_loan_balance"
+                android:id="@+id/txt_loan_balance"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="32dp"
@@ -44,12 +44,12 @@
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintHeight_percent="0.06"
-                app:layout_constraintStart_toStartOf="@+id/bar_progress_moto_bar"
+                app:layout_constraintStart_toStartOf="@+id/bar_loan_progress_moto_bar"
                 app:layout_constraintTop_toBottomOf="@+id/txt_title_my_loan"
                 app:layout_constraintWidth_percent="0.5" />
 
             <TextView
-                android:id="@+id/txt_meta_amount"
+                android:id="@+id/txt_loan_goal_amount"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginBottom="8dp"
@@ -58,26 +58,26 @@
                 android:textColor="@color/textPrimary"
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toTopOf="@+id/txt_value_meta_amount"
-                app:layout_constraintEnd_toEndOf="@+id/txt_value_meta_amount"
+                app:layout_constraintBottom_toTopOf="@+id/txt_loan_value_goal_amount"
+                app:layout_constraintEnd_toEndOf="@+id/txt_loan_value_goal_amount"
                 app:layout_constraintHeight_percent="0.04"
                 app:layout_constraintWidth_percent="0.25" />
 
             <TextView
-                android:id="@+id/txt_value_meta_amount"
+                android:id="@+id/txt_loan_value_goal_amount"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:text="0'000.000"
+                android:text="$0,000,000"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toTopOf="@+id/bar_progress_moto_bar"
-                app:layout_constraintEnd_toEndOf="@+id/bar_progress_moto_bar"
+                app:layout_constraintBottom_toTopOf="@+id/bar_loan_progress_moto_bar"
+                app:layout_constraintEnd_toEndOf="@+id/bar_loan_progress_moto_bar"
                 app:layout_constraintHeight_percent="0.03"
                 app:layout_constraintWidth_percent="0.2" />
 
             <SeekBar
-                android:id="@+id/bar_progress_moto_bar"
+                android:id="@+id/bar_loan_progress_moto_bar"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="60dp"
@@ -89,38 +89,22 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.09"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_my_loan_balance"
+                app:layout_constraintTop_toBottomOf="@+id/txt_loan_balance"
                 app:layout_constraintWidth_percent="0.8"
                 app:tickMarkTint="#000000" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/container_amount_paid"
+            <TextView
+                android:id="@+id/txt_loan_value_amount_paid"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginEnd="20dp"
-                app:layout_constraintEnd_toEndOf="@+id/bar_progress_moto_bar"
+                android:gravity="center"
+                android:text="$0,000,000"
+                android:textColor="@color/textPrimary"
+                app:autoSizeTextType="uniform"
                 app:layout_constraintHeight_percent="0.03"
-                app:layout_constraintStart_toStartOf="@+id/bar_progress_moto_bar"
-                app:layout_constraintTop_toBottomOf="@+id/bar_progress_moto_bar"
-                app:layout_constraintWidth_percent="0.8">
-
-                <TextView
-                    android:id="@+id/txt_value_amount_paid"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:gravity="center"
-                    android:text="0'000.000"
-                    android:textColor="@color/textPrimary"
-                    app:autoSizeTextType="uniform"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHeight_percent="1"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.25" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintStart_toStartOf="@+id/bar_loan_progress_moto_bar"
+                app:layout_constraintTop_toBottomOf="@+id/bar_loan_progress_moto_bar"
+                app:layout_constraintWidth_percent="0.2" />
 
             <TextView
                 android:id="@+id/txt_loan_details"
@@ -134,7 +118,7 @@
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/container_amount_paid"
+                app:layout_constraintTop_toBottomOf="@+id/txt_loan_value_amount_paid"
                 app:layout_constraintWidth_percent="0.7" />
 
             <TextView
@@ -205,7 +189,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="24dp"
-                android:text="00.000"
+                android:text="$00,000"
                 android:textAlignment="center"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
@@ -236,7 +220,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="24dp"
-                android:text="000.000"
+                android:text="$000,000"
                 android:textAlignment="center"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
@@ -283,7 +267,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="24dp"
-                android:text="00.000"
+                android:text="$00,000"
                 android:textAlignment="center"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
@@ -314,7 +298,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="24dp"
-                android:text="000.000"
+                android:text="$000,000"
                 android:textAlignment="center"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
@@ -325,7 +309,7 @@
                 app:layout_constraintWidth_percent="0.22" />
 
             <TextView
-                android:id="@+id/txt_loan_number_remaining_dues"
+                android:id="@+id/txt_loan_remaining_fee_number"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="24dp"
@@ -341,18 +325,18 @@
                 app:layout_constraintWidth_percent="0.22" />
 
             <TextView
-                android:id="@+id/txt_loan_value_number_remaining_dues"
+                android:id="@+id/txt_loan_value_remaining_fee_number"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="24dp"
-                android:text="00"
+                android:text="0"
                 android:textAlignment="center"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintEnd_toEndOf="@+id/txt_loan_number_remaining_dues"
+                app:layout_constraintEnd_toEndOf="@+id/txt_loan_remaining_fee_number"
                 app:layout_constraintHeight_percent="0.03"
-                app:layout_constraintStart_toStartOf="@+id/txt_loan_number_remaining_dues"
-                app:layout_constraintTop_toBottomOf="@+id/txt_loan_number_remaining_dues"
+                app:layout_constraintStart_toStartOf="@+id/txt_loan_remaining_fee_number"
+                app:layout_constraintTop_toBottomOf="@+id/txt_loan_remaining_fee_number"
                 app:layout_constraintWidth_percent="0.22" />
 
             <TextView
@@ -392,7 +376,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="24dp"
-                android:text="0'000.000"
+                android:text="$0,000,000"
                 android:textAlignment="center"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
@@ -423,7 +407,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="24dp"
-                android:text="0'000.000"
+                android:text="$0,000,000"
                 android:textAlignment="center"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
@@ -443,10 +427,10 @@
                 android:textColor="@color/textPrimary"
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintEnd_toEndOf="@+id/txt_loan_value_number_remaining_dues"
+                app:layout_constraintEnd_toEndOf="@+id/txt_loan_value_remaining_fee_number"
                 app:layout_constraintHeight_percent="0.03"
-                app:layout_constraintStart_toStartOf="@+id/txt_loan_value_number_remaining_dues"
-                app:layout_constraintTop_toBottomOf="@+id/txt_loan_value_number_remaining_dues"
+                app:layout_constraintStart_toStartOf="@+id/txt_loan_value_remaining_fee_number"
+                app:layout_constraintTop_toBottomOf="@+id/txt_loan_value_remaining_fee_number"
                 app:layout_constraintWidth_percent="0.22" />
 
             <TextView
@@ -454,7 +438,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="24dp"
-                android:text="0'000.000"
+                android:text="$0,000,000"
                 android:textAlignment="center"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
@@ -547,63 +531,6 @@
                 app:layout_constraintStart_toStartOf="@+id/txt_loan_value_due_amount"
                 app:layout_constraintTop_toBottomOf="@+id/txt_dues_paid"
                 app:layout_constraintWidth_percent="0.22" />
-
-            <!--<TextView
-                android:id="@+id/txt_number_value"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="24dp"
-                android:text="1"
-                android:textAlignment="center"
-                android:textColor="@color/textPrimary"
-                app:layout_constraintEnd_toEndOf="@+id/txt_number"
-                app:layout_constraintHeight_percent="0.025"
-                app:layout_constraintStart_toStartOf="@+id/txt_number"
-                app:layout_constraintTop_toBottomOf="@+id/txt_number"
-                app:layout_constraintWidth_percent="0.22" />
-
-            <TextView
-                android:id="@+id/txt_amount_value"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="24dp"
-                android:text="276.664"
-                android:textAlignment="center"
-                android:textColor="@color/textPrimary"
-                app:layout_constraintEnd_toEndOf="@+id/txt_amount"
-                app:layout_constraintHeight_percent="0.025"
-                app:layout_constraintStart_toStartOf="@+id/txt_amount"
-                app:layout_constraintTop_toBottomOf="@+id/txt_amount"
-                app:layout_constraintWidth_percent="0.22" />
-
-            <TextView
-                android:id="@+id/txt_date_value"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="24dp"
-                android:text="28/05/2020"
-                android:textAlignment="center"
-                android:textColor="@color/textPrimary"
-                app:layout_constraintEnd_toEndOf="@+id/txt_date"
-                app:layout_constraintHeight_percent="0.025"
-                app:layout_constraintStart_toStartOf="@+id/txt_date"
-                app:layout_constraintTop_toBottomOf="@+id/txt_date"
-                app:layout_constraintWidth_percent="0.22" />
-
-            <TextView
-                android:id="@+id/txt_value_pending"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="24dp"
-                android:text="560.726"
-                android:textAlignment="center"
-                android:textColor="@color/textPrimary"
-                app:layout_constraintEnd_toEndOf="@+id/txt_pending"
-                app:layout_constraintHeight_percent="0.025"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="@+id/txt_pending"
-                app:layout_constraintTop_toBottomOf="@+id/txt_pending"
-                app:layout_constraintWidth_percent="0.22" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
