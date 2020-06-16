@@ -133,25 +133,23 @@ const newPayment = (req, res, next) => {
   const allData = req.body;
   let jsonTobenefits = {};
   jsonTobenefits['idNeed'] = allData.idNeed;
-  Promise.all([getIdinvestment(allData), createPayment(allData)]).then((values) => {
+  Promise.all([getIdinvestment(allData), createPayment(allData), pay(allData), needResolved(jsonTobenefits)]).then((values) => {
     jsonTobenefits['idPayment'] = values[1];
     saveBenefit(jsonTobenefits, values[0], allData.payment);
-    pay(allData);
-    needResolved(jsonTobenefits);
-
     res.send({'status':'paid'});
   })
 }
 
 //Function that sends data to benefits DB
-const saveBenefit = (Json, values, money) => {
+const saveBenefit = (newBenefit, values, money) => {
+  const idNeed = newBenefit['idNeed'];
   for (let i = 0; i < values.length; i++) {
     share(values[i].idInvestment).then(response => {
-      Json['idInvestment'] = values[i].idInvestment;
-      Json['investorShare'] = response[0].loanShare * money;
-      sendBenefit(Json);
-      changeStatusInvestment(Json);
-      updateInvestment(Json);
+      newBenefit['idInvestment'] = values[i].idInvestment;
+      newBenefit['investorShare'] = response[0].loanShare * money;
+      sendBenefit(newBenefit);
+      changeStatusInvestment(newBenefit['idInvestment'], idNeed);
+      updateInvestment(newBenefit);
     }).catch(err => {
       console.error(err);
       res.status(500).send("Not investments found!");
