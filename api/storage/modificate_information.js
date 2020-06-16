@@ -51,6 +51,7 @@ const needResolved = data => {
 
 
 const updateInvestment = data => {
+  console.log("soy la data" + data.investorShare);
   connection.query("UPDATE investment SET totalReturn = totalReturn + " + data.investorShare  + " WHERE idInvestment = " + data.idInvestment, (err, rows) => {
     if(err) throw err;
 
