@@ -110,6 +110,8 @@ class my_investment_details(bundle: Bundle) : Fragment() {
         val valueTimeToReturn = myInvestment.get("timeToReturn").toString().toInt()
         val valueTotalReturned = myInvestment.get("totalReturn").toString().toInt()
         val valueReturnRemaining = myInvestment.get("returnTotal").toString().toInt() - valueTotalReturned
+        val valueRemainingDues = (valueReturnRemaining / myInvestment.get("valueToReturnWeekly")
+            .toString().toFloat()).toInt()
 
         val copFormat: NumberFormat = NumberFormat.getCurrencyInstance()
         copFormat.maximumFractionDigits = 0
@@ -123,8 +125,7 @@ class my_investment_details(bundle: Bundle) : Fragment() {
         duesMonthlyAmount.setText(copFormat.format(valueDuesMonthlyAmount))
         amountInvested.setText(copFormat.format(valueAmountInvested))
         amountReturned.setText(copFormat.format(valueTotalReturned))
-        numberRemainingDues.setText((valueReturnRemaining / myInvestment.get("valueToReturnWeekly")
-            .toString().toInt()).toString())
+        numberRemainingDues.setText(valueRemainingDues.toString())
         progressPercent = (valueTotalReturned / myInvestment.get("returnTotal").toString().toFloat()) * 100
     }
 

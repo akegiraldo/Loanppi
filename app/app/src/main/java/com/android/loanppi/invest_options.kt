@@ -82,10 +82,11 @@ class invest_options(bundle: Bundle?) : Fragment() {
         val request = JsonArrayRequest(Request.Method.GET, url, null,
             Response.Listener { response ->
                 //println("RESPONSE options: " + response.toString() + " " + response[0].toString())
-                var investStack = account?.get("investStack").toString().toInt()
+                var investStack = 0
                 var amountRemaining = 0
                 if (response.length() > 0) {
                     for (i in 0..response.length() - 1) {
+                        investStack = account?.get("investStack").toString().toInt()
                         amountRemaining = response.getJSONObject(i).getString("amountRemaining").toInt()
                         if (investStack > amountRemaining) { investStack = amountRemaining }
                         cardLists.get(i).putString("investStack", investStack.toString())
@@ -119,8 +120,7 @@ class invest_options(bundle: Bundle?) : Fragment() {
                 bundle_card_1.getString("investStack")?.toInt()))
             txt_card_1_value_amount_remaining.setText(copFormat.format(
                 bundle_card_1.getString("amountRemaining")?.toInt()))
-            txt_card_1_value_return_time.setText(bundle_card_1
-                .get("timeToPay").toString() + " meses")
+            txt_card_1_value_return_time.setText(bundle_card_1.get("timeToPay").toString() + " meses")
         }
         if (!bundle_card_2.isEmpty) {
             card_2?.isVisible = true
@@ -131,7 +131,7 @@ class invest_options(bundle: Bundle?) : Fragment() {
             txt_card_2_value_return_time.setText(bundle_card_2.get("timeToPay").toString() + " meses")
         }
         if (!bundle_card_3.isEmpty) {
-            card_2?.isVisible = true
+            card_3?.isVisible = true
             txt_card_3_value_money_to_invest.setText(copFormat.format(
                 bundle_card_3.getString("investStack")?.toInt()))
             txt_card_3_value_amount_remaining.setText(copFormat.format(

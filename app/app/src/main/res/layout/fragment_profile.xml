@@ -20,17 +20,6 @@
             android:paddingBottom="16dp"
             tools:context=".profile">
 
-            <!--<ImageView
-                android:id="@+id/img_user_photo"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_marginTop="16dp"
-                android:contentDescription="@string/user_photo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/user" />-->
-
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_user_photo"
                 android:layout_width="140dp"
@@ -75,9 +64,13 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="32dp"
+
+                android:backgroundTint="@color/loanppi"
                 android:ems="10"
                 android:hint="@string/first_name"
                 android:inputType="textPersonName"
+                android:textColorHighlight="#FF7054"
+                android:textColorLink="@color/loanppi"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toStartOf="@+id/edit_second_name"
                 app:layout_constraintHeight_percent="0.06"

@@ -11,7 +11,7 @@ import java.text.NumberFormat
 fun fieldsValidator(context: Context?, field: EditText, typeValidation: String, lengthMin: Int, lengthMax: Int, required: Boolean): Boolean {
     val onlyNumbers = Regex("[0-9]+")
     val onlyLetters = Regex("[a-zA-Z]+")
-    val homeAddress = Regex("[a-zA-Z]+")
+    val homeAddress = Regex("(.+#.+-.+)")
     val sqlQuery = Regex("DROP|DELETE|UPDATE|SELECT", RegexOption.IGNORE_CASE)
     val textToValidate = field.text.toString()
 

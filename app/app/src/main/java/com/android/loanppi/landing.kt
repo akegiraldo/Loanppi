@@ -1,9 +1,11 @@
 package com.android.loanppi
 
+import android.Manifest
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,8 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.android.volley.Request
 import com.android.volley.Response
@@ -48,6 +52,7 @@ class landing : AppCompatActivity() {
     private lateinit var btn_rappi: Button
 
     private var accessWith: String = ""
+    private val INTERNET_REQUEST_CODE = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +60,52 @@ class landing : AppCompatActivity() {
         checkFacebookLogin()
 
         setContentView(R.layout.activity_landing)
+
+        checkInternetPermission()
+    }
+
+    private fun checkInternetPermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.INTERNET)
+            != PackageManager.PERMISSION_GRANTED) {
+            //El permiso no está aceptado.
+            requestInternetPermission()
+        } else {
+            //El permiso está aceptado.
+            Toast.makeText(this, "Permiso aceptado", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun requestInternetPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.INTERNET)) {
+            //El usuario ya ha rechazado el permiso anteriormente, debemos informarle que vaya a ajustes.
+            Toast.makeText(this, "Manual", Toast.LENGTH_SHORT).show()
+        } else {
+            //El usuario nunca ha aceptado ni rechazado, así que le pedimos que acepte el permiso.
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.INTERNET),
+                INTERNET_REQUEST_CODE)
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>, grantResults: IntArray
+    ) {
+        when (requestCode) {
+            INTERNET_REQUEST_CODE -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    //El usuario ha aceptado el permiso, no tiene porqué darle de nuevo al botón, podemos lanzar la funcionalidad desde aquí.
+                } else {
+                    //El usuario ha rechazado el permiso, podemos desactivar la funcionalidad o mostrar una vista/diálogo.
+                }
+                return
+            }
+            else -> {
+                // Este else lo dejamos por si sale un permiso que no teníamos controlado.
+            }
+        }
     }
 
     fun onSignUp(view: View) {
