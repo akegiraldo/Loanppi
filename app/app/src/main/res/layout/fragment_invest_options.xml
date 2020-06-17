@@ -45,7 +45,7 @@
                 android:visibility="invisible"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintHeight_percent="0.22"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_choose_an_invest_for_details"
                 app:layout_constraintWidth_percent="0.8">
@@ -167,10 +167,10 @@
                 android:layout_marginTop="32dp"
                 android:background="@drawable/investment_cards"
                 android:elevation="20dp"
-                app:autoSizeTextType="uniform"
                 android:visibility="invisible"
+                app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintHeight_percent="0.22"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/card_1"
                 app:layout_constraintWidth_percent="0.8">
@@ -295,7 +295,7 @@
                 android:visibility="invisible"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintHeight_percent="0.22"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/card_2"
                 app:layout_constraintWidth_percent="0.8">

@@ -10,8 +10,8 @@ import java.text.NumberFormat
 // Function for validate the length, type and content of the fields
 fun fieldsValidator(context: Context?, field: EditText, typeValidation: String, lengthMin: Int, lengthMax: Int, required: Boolean): Boolean {
     val onlyNumbers = Regex("[0-9]+")
-    val onlyLetters = Regex("[a-zA-Z]+")
-    val homeAddress = Regex("(.+#.+-.+)")
+    val onlyLetters = Regex("[a-zA-ZáéíóúÁÉÍÓÚ]+")
+    val homeAddress = Regex("([\\sa-zA-Z0-9#-.]+)")
     val sqlQuery = Regex("DROP|DELETE|UPDATE|SELECT", RegexOption.IGNORE_CASE)
     val textToValidate = field.text.toString()
 
@@ -58,7 +58,7 @@ fun fieldsValidator(context: Context?, field: EditText, typeValidation: String, 
                 if (!homeAddress.matches(textToValidate) && textToValidate.length > 0) {
                     Toast.makeText(
                         context, "El campo no puede contener caracteres especiales " +
-                                "diferentes a '#' y '-'.", Toast.LENGTH_LONG
+                                "diferentes a '#' y '-' y punto.", Toast.LENGTH_LONG
                     ).show()
                     field.requestFocus()
                     return false
