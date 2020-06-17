@@ -120,7 +120,7 @@ class signup : AppCompatActivity() {
         } else if (accessWith == "facebook") {
             callbackManager.onActivityResult(requestCode, resultCode, data)
         } else {
-            Toast.makeText(this, "Error al ejecutar la orden :(", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Error al ejecutar la orden :(", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -132,7 +132,8 @@ class signup : AppCompatActivity() {
                 updateUIG(account)
             }
         } catch (e: ApiException) {
-            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Error: no pudimos obtener los datos del usuario.",
+                Toast.LENGTH_SHORT).show()
         }
     }
 

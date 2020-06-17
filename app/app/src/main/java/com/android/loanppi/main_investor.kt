@@ -94,7 +94,8 @@ class main_investor(bundle: Bundle?) : Fragment() {
             },
             Response.ErrorListener {
                 println("Error al cargar inversiones: " + it.toString())
-                Toast.makeText(context, "Error al cargar inversiones", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Error al intentar cargar las inversiones.",
+                    Toast.LENGTH_SHORT).show()
             })
 
         // Add the request to the RequestQueue.

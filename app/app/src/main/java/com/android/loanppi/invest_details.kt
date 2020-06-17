@@ -140,7 +140,7 @@ class invest_details(bundle1: Bundle, bundle2: Bundle?) : Fragment() {
             Response.Listener { response ->
                 println("RESPONSE:" + response.toString())
                 if (response.get("status") == "created") {
-                    Toast.makeText(context,"Inversión registrada con éxito.", Toast.LENGTH_LONG)
+                    Toast.makeText(context,"Inversión registrada con éxito.", Toast.LENGTH_SHORT)
                         .show()
                     val myInvestment = Bundle()
                     myInvestment.putString("moneyInvestment", response.get("moneyInvestment").toString())
@@ -151,12 +151,12 @@ class invest_details(bundle1: Bundle, bundle2: Bundle?) : Fragment() {
                     myInvestment.putString("interestsWins", response.get("interestsWins").toString())
                     replaceFragment(my_investment_details(myInvestment), parentFragmentManager)
                 } else {
-                    Toast.makeText(context,"Error, la inversión no fue registrada.",
-                        Toast.LENGTH_LONG).show()
+                    Toast.makeText(context,"La inversión no pudo ser registrada.",
+                        Toast.LENGTH_SHORT).show()
                 }
             },
             Response.ErrorListener { error: VolleyError ->
-                Toast.makeText(context,"Error en la petición.",Toast.LENGTH_LONG
+                Toast.makeText(context,"Error: la inversión no fue registrada",Toast.LENGTH_SHORT
                 ).show()
                 println("Error en la petición: ${error.message}")
             }

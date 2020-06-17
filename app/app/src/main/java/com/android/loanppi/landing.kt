@@ -68,19 +68,17 @@ class landing : AppCompatActivity() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.INTERNET)
             != PackageManager.PERMISSION_GRANTED) {
-            //El permiso no está aceptado.
             requestInternetPermission()
         } else {
-            //El permiso está aceptado.
-            Toast.makeText(this, "Permiso aceptado", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "Permiso aceptado", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun requestInternetPermission() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.INTERNET)) {
-            //El usuario ya ha rechazado el permiso anteriormente, debemos informarle que vaya a ajustes.
-            Toast.makeText(this, "Manual", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Tienes que otorgar el permiso de conexión manualmente.",
+                Toast.LENGTH_LONG).show()
         } else {
             //El usuario nunca ha aceptado ni rechazado, así que le pedimos que acepte el permiso.
             ActivityCompat.requestPermissions(this,
@@ -170,7 +168,7 @@ class landing : AppCompatActivity() {
         } else if (accessWith == "facebook") {
             callbackManager.onActivityResult(requestCode, resultCode, data)
         } else {
-            Toast.makeText(this, "Error al ejecutar la orden :(", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Error al ejecutar la orden :(", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -182,7 +180,8 @@ class landing : AppCompatActivity() {
                 getUser(account, null)
             }
         } catch (e: ApiException) {
-            Toast.makeText(this, "Error: " + e.toString(), Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Error: no pudimos obtener los datos del usuario.",
+                Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -263,7 +262,7 @@ class landing : AppCompatActivity() {
         // Request a JSON response from the provided URL.
         val request = JsonObjectRequest(Request.Method.GET, url, null,
             Response.Listener { response ->
-                Toast.makeText(this, response.get("status").toString(), Toast.LENGTH_LONG).show()
+                //Toast.makeText(this, response.get("status").toString(), Toast.LENGTH_LONG).show()
                 if (response.get("status") == "exists") {
                     val account = Bundle()
                     account.putString("firstName", response.get("firstName").toString())
@@ -310,7 +309,7 @@ class landing : AppCompatActivity() {
                             LoginManager.getInstance().logOut()
                         }).executeAsync()
                 }
-                Toast.makeText(this, "Error al intentar iniciar sesión", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Error al intentar iniciar sesión.", Toast.LENGTH_SHORT).show()
             })
 
         // Add the request to the RequestQueue.

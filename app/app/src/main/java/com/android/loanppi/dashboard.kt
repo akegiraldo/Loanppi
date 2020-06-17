@@ -42,13 +42,13 @@ class dashboard : AppCompatActivity() {
         val iconManager = icon_manager()
 
         findViewById<TextView>(R.id.bar_icon_home).setTypeface(iconManager
-            .get_icons<Typeface>("icomoon.ttf", this))
+            .get_icons<Typeface>("ionicons.ttf", this))
         findViewById<TextView>(R.id.bar_icon_deal).setTypeface(iconManager
-            .get_icons<Typeface>("icomoon.ttf", this))
+            .get_icons<Typeface>("ionicons.ttf", this))
         findViewById<TextView>(R.id.bar_icon_my_business).setTypeface(iconManager
-            .get_icons<Typeface>("icomoon.ttf", this))
+            .get_icons<Typeface>("ionicons.ttf", this))
         findViewById<TextView>(R.id.bar_icon_profile).setTypeface(iconManager
-            .get_icons<Typeface>("icomoon.ttf", this))
+            .get_icons<Typeface>("ionicons.ttf", this))
 
 
         bundle = intent.extras

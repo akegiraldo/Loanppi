@@ -121,8 +121,8 @@ class main_worker(bundle: Bundle?) : Fragment() {
                         loadMainFields("hide")
                     }
                 } else {
-                    Toast.makeText(context, "No se encuentra ningún préstamo asociado al usuario.",
-                        Toast.LENGTH_LONG).show()
+                    /*Toast.makeText(context, "No se encuentra ningún préstamo asociado al usuario.",
+                        Toast.LENGTH_LONG).show()*/
                     myLoan.putString("status", "not_found")
                     loadMainFields("hide")
                 }
@@ -187,14 +187,15 @@ class main_worker(bundle: Bundle?) : Fragment() {
             Response.Listener { response ->
                 println("RESPONSE:" + response.toString())
                 if (response.get("status") == "paid") {
-                    Toast.makeText(context, "Pago realizado con éxito.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Pago realizado con éxito.", Toast.LENGTH_SHORT).show()
                     getLoan()
                 } else {
-                    Toast.makeText(context, "Error, no se pudo procesar el pago.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "No se pudo procesar el pago.", Toast.LENGTH_SHORT).show()
                 }
             },
             Response.ErrorListener { error: VolleyError ->
-                Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Error, en la conexión con el servidor",
+                    Toast.LENGTH_SHORT).show()
                 println("Error: ${error.message}")
             }
         )

@@ -131,7 +131,7 @@ class lend(bundle: Bundle?) : Fragment() {
         val request = JsonObjectRequest(Request.Method.POST, url, loan, Response.Listener {
             response ->
                 if (response.get("status") == "pending") {
-                    Toast.makeText(context, "Préstamo solicitado correctamente.", Toast.LENGTH_LONG)
+                    Toast.makeText(context, "Préstamo solicitado correctamente.", Toast.LENGTH_SHORT)
                         .show()
                     val myLoan = Bundle()
                     myLoan.putString("idNeed", response.get("idNeed").toString())
@@ -148,11 +148,11 @@ class lend(bundle: Bundle?) : Fragment() {
                     replaceFragment(my_loan(bundle), parentFragmentManager)
                 } else {
                     Toast.makeText(context, "El préstamo no pudo ser procesado.",
-                        Toast.LENGTH_LONG).show()
+                        Toast.LENGTH_SHORT).show()
                 }
             },
             Response.ErrorListener { error: VolleyError ->
-                Toast.makeText(context,"Error al procesar el pŕestamo.", Toast.LENGTH_LONG).show()
+                Toast.makeText(context,"Error al procesar el pŕestamo.", Toast.LENGTH_SHORT).show()
                 println("Error al procesar el préstamo: ${error.message}")
             }
         )

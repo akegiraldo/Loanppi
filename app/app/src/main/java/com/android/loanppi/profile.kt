@@ -124,21 +124,15 @@ class profile(bundle: Bundle?) : Fragment() {
                     }
                     requireActivity().finish()
                 } else if (response.get("status") == "exists") {
-                    Toast.makeText(context, "El usuario ya existe.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "El usuario ya existe.", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(
-                        context,
-                        "Error, el usuario no pudo ser registrado",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Toast.makeText(context,"El usuario no pudo ser registrado.",
+                        Toast.LENGTH_SHORT).show()
                 }
             },
             Response.ErrorListener { error: VolleyError ->
-                Toast.makeText(
-                    context,
-                    "Error, el usuario no pudo ser registrado",
-                    Toast.LENGTH_LONG
-                ).show()
+                Toast.makeText(context,"Error en la conexión con el servidor.",
+                    Toast.LENGTH_SHORT).show()
                 println("Error al guardar el usuario ${error.message}")
             }
         )

@@ -117,12 +117,12 @@ class my_loan(bundle: Bundle?) : Fragment() {
                     }
                 } else {
                     Toast.makeText(context, "No se encuentra ningún préstamo asociado al usuario.",
-                        Toast.LENGTH_LONG).show()
+                        Toast.LENGTH_SHORT).show()
                     myLoan.putString("status", "not_found")
                 }
             },
             Response.ErrorListener {
-                Toast.makeText(context, "Error en la consulta", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Error en la conexión con el servidor.", Toast.LENGTH_SHORT).show()
                 println("ERROR CONSULTA: " + it.toString())
                 myLoan.putString("status", "not_found")
             })

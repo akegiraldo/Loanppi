@@ -92,12 +92,12 @@
     
     
     // Icon test
-    <string name="icon_home">&#xe900;</string>
-    <string name="icon_profile">&#xe901;</string>
-    <string name="icon_lend">&#xe904;</string>
-    <string name="icon_my_loan">&#xe905;</string>
-    <string name="icon_invest">&#xe903;</string>
-    <string name="icon_my_investments">&#xe902;</string>
+    <string name="icon_home">&#xf447;</string> //&#xe900;
+    <string name="icon_profile">&#xf47d;</string> //&#xe901;
+    <string name="icon_lend">&#xf352;</string> //&#xe904;
+    <string name="icon_my_loan">&#xf3ed;</string> //&#xe905;
+    <string name="icon_invest">&#xf4a5;</string> //&#xe903; &#xf4a5;
+    <string name="icon_my_investments">&#xf3ed;</string> ////&#xe902;
 
     // Dashboard buttons
     <string name="txt_home">Inicio</string>

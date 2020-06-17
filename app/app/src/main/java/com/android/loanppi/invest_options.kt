@@ -97,13 +97,13 @@ class invest_options(bundle: Bundle?) : Fragment() {
                     }
                 } else {
                     Toast.makeText(context, "No se encuentran inversiones disponibles.",
-                        Toast.LENGTH_LONG).show()
+                        Toast.LENGTH_SHORT).show()
                 }
                 loadInvestOptions()
             },
             Response.ErrorListener {
                 println("Error al cargar las opciones: " + it.toString())
-                Toast.makeText(context, "Error al cargar las opciones", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Error al cargar las inversiones", Toast.LENGTH_SHORT).show()
             })
 
         // Add the request to the RequestQueue.

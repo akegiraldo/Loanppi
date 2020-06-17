@@ -90,12 +90,13 @@ class my_investment_details(bundle: Bundle) : Fragment() {
                     loadMyInvestmentInfo()
                     //loadPays(response.get(1) as JSONArray)
                 } else {
-                    Toast.makeText(context, "No se encuentra ningún préstamo asociado al usuario.",
-                        Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "No se encuentra ninguna inversión asociada al usuario.",
+                        Toast.LENGTH_SHORT).show()
                 }
             },
             Response.ErrorListener {
-                Toast.makeText(context, "Error en la consulta", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Error en la conexión con el servidor.",
+                    Toast.LENGTH_SHORT).show()
                 println("ERROR CONSULTA: " + it.toString())
             })
 

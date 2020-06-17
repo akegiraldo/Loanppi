@@ -92,13 +92,13 @@ class my_investment_options(bundle: Bundle?) : Fragment() {
                         arrayAdapter.notifyDataSetChanged()
                     }
                 } else {
-                    Toast.makeText(context, "No se encuentran inversiones.",
-                        Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "No se encuentran inversiones asociadas al usuario.",
+                        Toast.LENGTH_SHORT).show()
                 }
             },
             Response.ErrorListener {
                 println("Error al cargar inversiones: " + it.toString())
-                Toast.makeText(context, "Error al cargar inversiones", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Error en la conexión con el servidor.", Toast.LENGTH_SHORT).show()
             })
 
         // Add the request to the RequestQueue.
