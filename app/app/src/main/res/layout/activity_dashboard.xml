@@ -5,7 +5,7 @@
     android:id="@+id/dashboard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="right|center_horizontal"
+    android:layout_gravity="bottom|center_horizontal"
     android:gravity="bottom|center_horizontal"
     android:orientation="vertical"
     tools:context=".dashboard"
@@ -22,6 +22,7 @@
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/dash_menu_bar"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="@drawable/dashboard_bar">

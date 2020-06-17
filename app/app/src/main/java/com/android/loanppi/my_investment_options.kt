@@ -56,14 +56,9 @@ class my_investment_options(bundle: Bundle?) : Fragment() {
         listView.setOnItemClickListener(object : OnItemClickListener {
             val investmentSelected = Bundle()
             override fun onItemClick(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
-                Toast.makeText(context, "You selected : ${listView.getItemAtPosition(position)}",
-                    Toast.LENGTH_SHORT).show()
-                investmentSelected.putString("moneyInvestment", investmentsListArray.get(position).get(1))
+                /*Toast.makeText(context, "You selected : ${listView.getItemAtPosition(position)}",
+                    Toast.LENGTH_SHORT).show()*/
                 investmentSelected.putString("idInvestment", investmentsListArray.get(position).get(2))
-                investmentSelected.putString("timeToReturn", investmentsListArray.get(position).get(3))
-                investmentSelected.putString("returnTotal", investmentsListArray.get(position).get(4))
-                investmentSelected.putString("valueToReturnWeekly", investmentsListArray.get(position).get(5))
-                investmentSelected.putString("interestsWins", investmentsListArray.get(position).get(6))
                 replaceFragment(my_investment_details(investmentSelected), parentFragmentManager)
             }
         })
@@ -84,7 +79,7 @@ class my_investment_options(bundle: Bundle?) : Fragment() {
             Response.Listener { response ->
                 if (response.length() > 0) {
                     for (i in 0..(response.length() - 1)) {
-                        investmentData.add(i.toString())
+                        investmentData.add((i + 1).toString())
                         investmentData.add(response.getJSONObject(i).get("moneyInvestment").toString())
                         investmentData.add(response.getJSONObject(i).get("idInvestment").toString())
                         investmentData.add(response.getJSONObject(i).get("timeToReturn").toString())

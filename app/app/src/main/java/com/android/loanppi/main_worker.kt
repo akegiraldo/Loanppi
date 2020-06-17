@@ -147,7 +147,6 @@ class main_worker(bundle: Bundle?) : Fragment() {
 
         copFormat.maximumFractionDigits = 0
 
-        progressBar.progress = progressPercent.toInt()
         valueGoalAmount.setText(copFormat.format(goal))
         valueWeeklyFee.setText(copFormat.format(valueToPayWeekly))
         valueFeeNumber.setText(myLoan.get("feeNumber").toString())
@@ -163,6 +162,7 @@ class main_worker(bundle: Bundle?) : Fragment() {
             gettingMoney.isVisible = true
             btnLetPay.isVisible = false
         }
+        progressBar.progress = progressPercent.toInt()
     }
 
     fun letPay() {
@@ -170,9 +170,9 @@ class main_worker(bundle: Bundle?) : Fragment() {
         val payment = JSONObject()
 
         var fee = myLoan.get("valueToPayWeekly").toString().toFloat()
-        val goal = myLoan.get("totalToPay").toString().toFloat()
+        val totalToPay = myLoan.get("totalToPay").toString().toFloat()
         val amountPaid = myLoan.get("amountRemaining").toString().toFloat()
-        val amountRemaining = goal - amountPaid
+        val amountRemaining = totalToPay - amountPaid
 
         if (fee > amountRemaining && amountRemaining != 0.0f) {
             fee = amountRemaining

@@ -40,6 +40,12 @@
     <string name="txt_getting_money">Estamos consiguiendo tu dinero</string>
     <string name="btn_let_play">Pagar</string>
 
+    // Main investor
+    <string name="no_invests">Ánimate a ayudar a muchas personas\nHaz una inversión</string>
+    <string name="do_investments">Aún puedes ayudar a más personas invirtiendo</string>
+    <string name="full_invested_amount">Cantidad total invertida:</string>
+    <string name="full_earns">Cantidad total retornada:</string>
+
     // Menu
     <string name="signout">Cerrar sesión</string>
     <string name="home">Inicio</string>

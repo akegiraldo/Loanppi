@@ -47,6 +47,101 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.2" />
 
+            <TextView
+                android:id="@+id/txt_main_full_invested_amount"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="100dp"
+                android:text="@string/full_invested_amount"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/textPrimary"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toStartOf="@+id/txt_main_value_full_invested_amount"
+                app:layout_constraintHeight_percent="0.05"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_user_photo"
+                app:layout_constraintWidth_percent="0.6"
+                tools:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/txt_main_value_full_invested_amount"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="$0,000,000"
+                android:textColor="@color/textPrimary"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_main_full_invested_amount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.05"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/txt_main_full_invested_amount"
+                app:layout_constraintTop_toTopOf="@+id/txt_main_full_invested_amount"
+                app:layout_constraintWidth_percent="0.3"
+                tools:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/txt_main_full_earns"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/full_earns"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/textPrimary"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toEndOf="@+id/txt_main_full_invested_amount"
+                app:layout_constraintHeight_percent="0.05"
+                app:layout_constraintStart_toStartOf="@+id/txt_main_full_invested_amount"
+                app:layout_constraintTop_toBottomOf="@+id/txt_main_full_invested_amount"
+                app:layout_constraintWidth_percent="0.6"
+                tools:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/txt_main_value_full_earns"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="$000,000"
+                android:textColor="@color/textPrimary"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_main_full_earns"
+                app:layout_constraintEnd_toEndOf="@+id/txt_main_value_full_invested_amount"
+                app:layout_constraintHeight_percent="0.05"
+                app:layout_constraintStart_toStartOf="@+id/txt_main_value_full_invested_amount"
+                app:layout_constraintTop_toTopOf="@+id/txt_main_full_earns"
+                app:layout_constraintWidth_percent="0.3"
+                tools:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/txt_is_empty"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@string/no_invests"
+                android:textAlignment="center"
+                android:visibility="invisible"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.15"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.8" />
+
+            <TextView
+                android:id="@+id/txt_is_not_empty"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="100dp"
+                android:text="@string/do_investments"
+                android:textAlignment="center"
+                android:visibility="invisible"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.15"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_main_full_earns"
+                app:layout_constraintWidth_percent="0.8" />
+
+
             <!--<TextView
                 android:id="@+id/txt_my_invest_balance"
                 android:layout_width="0dp"

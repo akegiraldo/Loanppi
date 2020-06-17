@@ -93,34 +93,18 @@
                 app:layout_constraintWidth_percent="0.8"
                 app:tickMarkTint="#000000" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/container_amount_returned"
+            <TextView
+                android:id="@+id/txt_value_amount_returned"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginEnd="20dp"
-                app:layout_constraintEnd_toEndOf="@+id/bar_investment_progress_moto_bar"
+                android:gravity="start"
+                android:text="0'000.000"
+                android:textColor="@color/textPrimary"
+                app:autoSizeTextType="uniform"
                 app:layout_constraintHeight_percent="0.03"
                 app:layout_constraintStart_toStartOf="@+id/bar_investment_progress_moto_bar"
                 app:layout_constraintTop_toBottomOf="@+id/bar_investment_progress_moto_bar"
-                app:layout_constraintWidth_percent="0.8">
-
-                <TextView
-                    android:id="@+id/txt_value_amount_returned"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:gravity="center"
-                    android:text="0'000.000"
-                    android:textColor="@color/textPrimary"
-                    app:autoSizeTextType="uniform"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHeight_percent="1"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.25" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintWidth_percent="0.2" />
 
             <TextView
                 android:id="@+id/txt_invest_details"
@@ -134,7 +118,7 @@
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/container_amount_returned"
+                app:layout_constraintTop_toBottomOf="@+id/txt_value_amount_returned"
                 app:layout_constraintWidth_percent="0.7" />
 
             <TextView

@@ -30,7 +30,7 @@
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.08"
+                app:layout_constraintHeight_percent="0.06"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.5" />
@@ -43,7 +43,7 @@
                 android:text="@string/balance"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintHeight_percent="0.06"
+                app:layout_constraintHeight_percent="0.04"
                 app:layout_constraintStart_toStartOf="@+id/bar_loan_progress_moto_bar"
                 app:layout_constraintTop_toBottomOf="@+id/txt_title_my_loan"
                 app:layout_constraintWidth_percent="0.5" />
@@ -60,7 +60,7 @@
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toTopOf="@+id/txt_loan_value_goal_amount"
                 app:layout_constraintEnd_toEndOf="@+id/txt_loan_value_goal_amount"
-                app:layout_constraintHeight_percent="0.04"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintWidth_percent="0.25" />
 
             <TextView
@@ -73,7 +73,7 @@
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toTopOf="@+id/bar_loan_progress_moto_bar"
                 app:layout_constraintEnd_toEndOf="@+id/bar_loan_progress_moto_bar"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintWidth_percent="0.2" />
 
             <SeekBar
@@ -87,7 +87,7 @@
                 android:progressTint="@color/loanppi"
                 android:thumb="@drawable/moto1"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.09"
+                app:layout_constraintHeight_percent="0.06"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_loan_balance"
                 app:layout_constraintWidth_percent="0.8"
@@ -101,7 +101,7 @@
                 android:text="$0,000,000"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="@+id/bar_loan_progress_moto_bar"
                 app:layout_constraintTop_toBottomOf="@+id/bar_loan_progress_moto_bar"
                 app:layout_constraintWidth_percent="0.2" />
@@ -109,7 +109,7 @@
             <TextView
                 android:id="@+id/txt_loan_details"
                 android:layout_width="0dp"
-                android:layout_height="27dp"
+                android:layout_height="0dp"
                 android:layout_marginTop="24dp"
                 android:gravity="center"
                 android:text="Detalle"
@@ -117,6 +117,7 @@
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_loan_value_amount_paid"
                 app:layout_constraintWidth_percent="0.7" />
@@ -132,7 +133,7 @@
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toStartOf="@+id/txt_loan_interests_percentage"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_loan_details"
                 app:layout_constraintWidth_percent="0.22" />
@@ -148,7 +149,7 @@
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toStartOf="@+id/txt_loan_interests_monthly_amount"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toEndOf="@+id/txt_loan_interests"
                 app:layout_constraintTop_toBottomOf="@+id/txt_loan_details"
                 app:layout_constraintWidth_percent="0.22" />
@@ -163,7 +164,7 @@
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="@+id/txt_loan_interests_percentage"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="@+id/txt_loan_interests_percentage"
                 app:layout_constraintTop_toBottomOf="@+id/txt_loan_interests_percentage"
                 app:layout_constraintWidth_percent="0.22" />
@@ -179,7 +180,7 @@
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toStartOf="@+id/txt_loan_total_interests_amount"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toEndOf="@+id/txt_loan_interests_percentage"
                 app:layout_constraintTop_toBottomOf="@+id/txt_loan_details"
                 app:layout_constraintWidth_percent="0.22" />
@@ -194,7 +195,7 @@
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="@+id/txt_loan_interests_monthly_amount"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="@+id/txt_loan_interests_monthly_amount"
                 app:layout_constraintTop_toBottomOf="@+id/txt_loan_interests_monthly_amount"
                 app:layout_constraintWidth_percent="0.22" />
@@ -210,7 +211,7 @@
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toEndOf="@+id/txt_loan_interests_monthly_amount"
                 app:layout_constraintTop_toBottomOf="@+id/txt_loan_details"
                 app:layout_constraintWidth_percent="0.22" />
@@ -225,7 +226,7 @@
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="@+id/txt_loan_total_interests_amount"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="@+id/txt_loan_total_interests_amount"
                 app:layout_constraintTop_toBottomOf="@+id/txt_loan_total_interests_amount"
                 app:layout_constraintWidth_percent="0.22" />
@@ -241,7 +242,7 @@
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="@+id/txt_loan_dues_weekly_amount"
                 app:layout_constraintEnd_toEndOf="@+id/txt_loan_interests"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="@+id/txt_loan_interests"
                 app:layout_constraintTop_toTopOf="@+id/txt_loan_dues_weekly_amount"
                 app:layout_constraintWidth_percent="0.22" />
@@ -257,7 +258,7 @@
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="@+id/txt_loan_value_interests_percentage"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="@+id/txt_loan_value_interests_percentage"
                 app:layout_constraintTop_toBottomOf="@+id/txt_loan_value_interests_percentage"
                 app:layout_constraintWidth_percent="0.22" />
@@ -272,7 +273,7 @@
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="@+id/txt_loan_dues_weekly_amount"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="@+id/txt_loan_dues_weekly_amount"
                 app:layout_constraintTop_toBottomOf="@+id/txt_loan_dues_weekly_amount"
                 app:layout_constraintWidth_percent="0.22" />
@@ -288,7 +289,7 @@
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="@+id/txt_loan_value_interests_monthly_amount"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="@+id/txt_loan_value_interests_monthly_amount"
                 app:layout_constraintTop_toBottomOf="@+id/txt_loan_value_interests_monthly_amount"
                 app:layout_constraintWidth_percent="0.22" />
@@ -303,7 +304,7 @@
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="@+id/txt_loan_dues_monthly_amount"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="@+id/txt_loan_dues_monthly_amount"
                 app:layout_constraintTop_toBottomOf="@+id/txt_loan_dues_monthly_amount"
                 app:layout_constraintWidth_percent="0.22" />
@@ -319,7 +320,7 @@
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="@+id/txt_loan_value_total_interests_amount"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="@+id/txt_loan_value_total_interests_amount"
                 app:layout_constraintTop_toBottomOf="@+id/txt_loan_value_total_interests_amount"
                 app:layout_constraintWidth_percent="0.22" />
@@ -334,7 +335,7 @@
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="@+id/txt_loan_remaining_fee_number"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="@+id/txt_loan_remaining_fee_number"
                 app:layout_constraintTop_toBottomOf="@+id/txt_loan_remaining_fee_number"
                 app:layout_constraintWidth_percent="0.22" />
@@ -350,7 +351,7 @@
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="@+id/txt_loan_amount_lent"
                 app:layout_constraintEnd_toEndOf="@+id/txt_loan_dues"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="@+id/txt_loan_dues"
                 app:layout_constraintTop_toTopOf="@+id/txt_loan_amount_lent"
                 app:layout_constraintWidth_percent="0.22" />
@@ -366,7 +367,7 @@
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="@+id/txt_loan_value_dues_weekly_amount"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="@+id/txt_loan_value_dues_weekly_amount"
                 app:layout_constraintTop_toBottomOf="@+id/txt_loan_value_dues_weekly_amount"
                 app:layout_constraintWidth_percent="0.22" />
@@ -381,7 +382,7 @@
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="@+id/txt_loan_amount_lent"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="@+id/txt_loan_amount_lent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_loan_amount_lent"
                 app:layout_constraintWidth_percent="0.22" />
@@ -397,7 +398,7 @@
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="@+id/txt_loan_value_dues_monthly_amount"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="@+id/txt_loan_value_dues_monthly_amount"
                 app:layout_constraintTop_toBottomOf="@+id/txt_loan_value_dues_monthly_amount"
                 app:layout_constraintWidth_percent="0.22" />
@@ -412,7 +413,7 @@
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="@+id/txt_loan_total_to_pay"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="@+id/txt_loan_total_to_pay"
                 app:layout_constraintTop_toBottomOf="@+id/txt_loan_total_to_pay"
                 app:layout_constraintWidth_percent="0.22" />
@@ -428,7 +429,7 @@
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="@+id/txt_loan_value_remaining_fee_number"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="@+id/txt_loan_value_remaining_fee_number"
                 app:layout_constraintTop_toBottomOf="@+id/txt_loan_value_remaining_fee_number"
                 app:layout_constraintWidth_percent="0.22" />
@@ -443,7 +444,7 @@
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="@+id/txt_loan_due_amount"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="@+id/txt_loan_due_amount"
                 app:layout_constraintTop_toBottomOf="@+id/txt_loan_due_amount"
                 app:layout_constraintWidth_percent="0.22" />
@@ -451,7 +452,7 @@
             <TextView
                 android:id="@+id/txt_dues_paid"
                 android:layout_width="0dp"
-                android:layout_height="26dp"
+                android:layout_height="0dp"
                 android:layout_marginTop="24dp"
                 android:gravity="center"
                 android:text="Cuotas pagadas"
@@ -459,6 +460,7 @@
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="@+id/txt_loan_details"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="@+id/txt_loan_details"
                 app:layout_constraintTop_toBottomOf="@+id/txt_loan_value_amount_lent" />
 
@@ -473,7 +475,7 @@
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="@+id/txt_loan_amount"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="@+id/txt_loan_amount"
                 app:layout_constraintTop_toBottomOf="@+id/txt_dues_paid"
                 app:layout_constraintWidth_percent="0.22" />
@@ -491,7 +493,7 @@
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="@+id/txt_loan_value_amount_lent"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="@+id/txt_loan_value_amount_lent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_dues_paid"
                 app:layout_constraintWidth_percent="0.22" />
@@ -509,7 +511,7 @@
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="@+id/txt_loan_value_total_to_pay"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="@+id/txt_loan_value_total_to_pay"
                 app:layout_constraintTop_toBottomOf="@+id/txt_dues_paid"
                 app:layout_constraintWidth_percent="0.22" />
@@ -527,12 +529,32 @@
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="@+id/txt_loan_value_due_amount"
-                app:layout_constraintHeight_percent="0.03"
+                app:layout_constraintHeight_percent="0.027"
                 app:layout_constraintStart_toStartOf="@+id/txt_loan_value_due_amount"
                 app:layout_constraintTop_toBottomOf="@+id/txt_dues_paid"
                 app:layout_constraintWidth_percent="0.22" />
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/background_inside"
+                android:paddingBottom="16dp"
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintTop_toBottomOf="@+id/txt_due_pending_amount"
+                tools:context=".dashboard">
+
+                <ListView
+                    android:id="@+id/list_my_fees_paid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_percent="0.99"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.95" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
 </FrameLayout>

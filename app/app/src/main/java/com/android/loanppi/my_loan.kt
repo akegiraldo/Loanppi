@@ -5,10 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.SeekBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.view.isVisible
 import com.android.volley.Request
 import com.android.volley.Response
@@ -25,25 +22,33 @@ import java.text.NumberFormat
  * create an instance of this fragment.
  */
 class my_loan(bundle: Bundle?) : Fragment() {
+    private lateinit var account: Bundle
     val bundle = bundle
     var myLoan = Bundle()
-    private lateinit var account: Bundle
+
+
+    // List of fees
+    private lateinit var feesList: ListView
+
+    private lateinit var arrayAdapter: ArrayAdapter<String>
+    private lateinit var feesData: ArrayList<String>
+    private lateinit var feesArrayList: ArrayList<String>
 
     // My loan values
     private var amountRemaining = 0.0f
     private var progressPercent = 0.0f
     private var amountPaid = 0.0f
-    lateinit var totalInterestsAmount: TextView
-    lateinit var interestsMonthlyAmount: TextView
-    lateinit var goalAmount: TextView
-    lateinit var duesWeeklyAmount: TextView
-    lateinit var duesMonthlyAmount: TextView
-    lateinit var amountLent: TextView
-    lateinit var totalToPay: TextView
-    lateinit var valueAmountPaid: TextView
-    lateinit var remainingFeeNumber: TextView
-    lateinit var dueAmount: TextView
-    lateinit var progressBar: SeekBar
+    private lateinit var totalInterestsAmount: TextView
+    private lateinit var interestsMonthlyAmount: TextView
+    private lateinit var goalAmount: TextView
+    private lateinit var duesWeeklyAmount: TextView
+    private lateinit var duesMonthlyAmount: TextView
+    private lateinit var amountLent: TextView
+    private lateinit var totalToPay: TextView
+    private lateinit var valueAmountPaid: TextView
+    private lateinit var remainingFeeNumber: TextView
+    private lateinit var dueAmount: TextView
+    private lateinit var progressBar: SeekBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +62,6 @@ class my_loan(bundle: Bundle?) : Fragment() {
         val view = inflater.inflate(R.layout.fragment_my_loan, container, false)
         myLoan = bundle?.get("myLoan") as Bundle
         account = bundle.getBundle("account") as Bundle
-        getLoan()
 
         goalAmount = view.findViewById(R.id.txt_loan_value_goal_amount)
         interestsMonthlyAmount = view.findViewById(R.id.txt_loan_value_interests_monthly_amount)
@@ -70,6 +74,15 @@ class my_loan(bundle: Bundle?) : Fragment() {
         remainingFeeNumber = view.findViewById(R.id.txt_loan_value_remaining_fee_number)
         dueAmount = view.findViewById(R.id.txt_loan_value_due_amount)
         progressBar = view.findViewById(R.id.bar_loan_progress_moto_bar)
+        feesList = view.findViewById(R.id.list_my_fees_paid)
+
+        feesData = ArrayList()
+        feesArrayList = ArrayList()
+        arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, feesArrayList)
+        feesList.adapter = arrayAdapter
+
+        // Get current loan
+        getLoan()
         
         return view
     }
@@ -100,6 +113,7 @@ class my_loan(bundle: Bundle?) : Fragment() {
                     myLoan.putString("feeNumber", feeNumber.length().toString())
                     if (myLoan.get("status") != "paid") {
                         loadMyLoanInfo()
+                        loadFees(response.get(1) as JSONArray)
                     }
                 } else {
                     Toast.makeText(context, "No se encuentra ningún préstamo asociado al usuario.",
@@ -129,7 +143,6 @@ class my_loan(bundle: Bundle?) : Fragment() {
         val valueTotalInterestsAmount = myLoan.get("interests").toString().toFloat()
         val valueTimeToPay = myLoan.get("timeToPay").toString().toInt()
 
-        progressBar.progress = progressPercent.toInt()
         goalAmount.setText(copFormat.format(goal))
         duesWeeklyAmount.setText(copFormat.format(valueToPayWeekly))
         remainingFeeNumber.setText(myLoan.get("feeNumber").toString())
@@ -148,6 +161,22 @@ class my_loan(bundle: Bundle?) : Fragment() {
             progressPercent = 0.0f
             dueAmount.setText(copFormat.format(goal))
         }
+        progressBar.progress = progressPercent.toInt()
+    }
+
+    fun loadFees(feesList: JSONArray) {
+        println("feesList: " + feesList.toString())
+        for (i in 0..(feesList.length() - 1)) {
+            feesData.add((i + 1).toString())
+            feesData.add(feesList.getJSONObject(i).get("payment").toString())
+            feesArrayList.add(getStringFromArray(feesData))
+            feesData.clear()
+            arrayAdapter.notifyDataSetChanged()
+        }
+    }
+
+    fun getStringFromArray(feesData: ArrayList<String>): String {
+        return (feesData.get(0).toString())
     }
 }
 

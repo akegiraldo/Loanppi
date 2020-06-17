@@ -7,9 +7,13 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.Constraints
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.facebook.AccessToken
 import com.facebook.GraphRequest
@@ -79,6 +83,8 @@ class dashboard : AppCompatActivity() {
 
         if (accessFrom == "signup") {
             loadFragment(profile(bundle))
+            findViewById<ConstraintLayout>(R.id.dash_menu_bar).visibility = View.INVISIBLE
+            findViewById<ConstraintLayout>(R.id.dash_menu_bar).isEnabled = false
         } else {
             selectFragment("main")
         }
@@ -86,7 +92,7 @@ class dashboard : AppCompatActivity() {
         // Load main
         findViewById<TextView>(R.id.bar_icon_home).setOnClickListener(View.OnClickListener {
             /*val myFragment: MyFragment =
-                fragmentManager.findFragmentByTag("MY_FRAGMENT") as MyFragment
+            fragmentManager.findFragmentByTag("MY_FRAGMENT") as MyFragment
             if ()*/
             selectFragment("main")
             toggleColor(findViewById(R.id.bar_icon_home), findViewById(R.id.bar_txt_home))
@@ -107,29 +113,35 @@ class dashboard : AppCompatActivity() {
         })
 
         /*if (myLoan.get("status") != "loading") {
-                if (myLoan.get("status") == "not_found") {
-                    replaceFragment(lend(bundle), parentFragmentManager)
-                } else {
-                    Toast.makeText(context, "Ya tienes un préstamo activo", Toast.LENGTH_LONG)
-                        .show()
-                }
-        }
-        if (myLoan.get("status") != "loading") {
-                if (myLoan.get("status") != "not_found") {
-                    replaceFragment(my_loan(bundle), parentFragmentManager)
-                } else {
-                    Toast.makeText(context, "Debes solicitar un préstamo primero", Toast.LENGTH_LONG).show()
-                }
-        }*/
+            if (myLoan.get("status") == "not_found") {
+                replaceFragment(lend(bundle), parentFragmentManager)
+            } else {
+                Toast.makeText(context, "Ya tienes un préstamo activo", Toast.LENGTH_LONG)
+                    .show()
+            }
+    }
+    if (myLoan.get("status") != "loading") {
+            if (myLoan.get("status") != "not_found") {
+                replaceFragment(my_loan(bundle), parentFragmentManager)
+            } else {
+                Toast.makeText(context, "Debes solicitar un préstamo primero", Toast.LENGTH_LONG).show()
+            }
+    }*/
 
         // Load my business
         findViewById<TextView>(R.id.bar_icon_my_business).setOnClickListener(View.OnClickListener {
             selectFragment("my_business")
-            toggleColor(findViewById(R.id.bar_icon_my_business), findViewById(R.id.bar_txt_my_business))
+            toggleColor(
+                findViewById(R.id.bar_icon_my_business),
+                findViewById(R.id.bar_txt_my_business)
+            )
         })
         findViewById<TextView>(R.id.bar_txt_my_business).setOnClickListener(View.OnClickListener {
             selectFragment("my_business")
-            toggleColor(findViewById(R.id.bar_icon_my_business), findViewById(R.id.bar_txt_my_business))
+            toggleColor(
+                findViewById(R.id.bar_icon_my_business),
+                findViewById(R.id.bar_txt_my_business)
+            )
         })
 
         // Load profile
@@ -141,7 +153,6 @@ class dashboard : AppCompatActivity() {
             selectFragment("profile")
             toggleColor(findViewById(R.id.bar_icon_profile), findViewById(R.id.bar_txt_profile))
         })
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
