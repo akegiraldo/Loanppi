@@ -90,10 +90,8 @@ const options = (req, res, next) => {
   list = [];
   const id = req.query.idInvestor;
   Promise.all([availableNeeds(), getAmountStack(id)]).then(response => {
-    if (list[0].length > 0) {
-      list.push(response[0])
-      list.push(response[1][0])
-    }
+    list.push(response[0])
+    list.push(response[1][0])
     res.send(list);
   }).catch(err => {
       console.error(err);
