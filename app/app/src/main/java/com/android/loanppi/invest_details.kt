@@ -46,6 +46,8 @@ class invest_details(bundle1: Bundle, bundle2: Bundle?) : Fragment() {
     private var valueToReturnMonthly = 0.0F
     private var valueToReturnWeekly = 0.0F
 
+    private var investStack = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -69,7 +71,7 @@ class invest_details(bundle1: Bundle, bundle2: Bundle?) : Fragment() {
 
         val copFormat: NumberFormat = NumberFormat.getCurrencyInstance()
         copFormat.maximumFractionDigits = 0
-        var investStack = loanData.get("investStack").toString().toInt()
+        investStack = loanData.get("investStack").toString().toInt()
         val amountRemaining = loanData.get("amountRemaining").toString().toInt()
         if (investStack > amountRemaining) {
             investStack = amountRemaining
@@ -110,9 +112,9 @@ class invest_details(bundle1: Bundle, bundle2: Bundle?) : Fragment() {
         txtMaxInvestAmount.setText(copFormat.format(investStack))
 
         btnInvest.setOnClickListener(View.OnClickListener {
-            //if (validateFields()) {
-            postNewInvestment()
-            //}
+            if (validateField()) {
+                postNewInvestment()
+            }
         })
 
         return view
@@ -160,5 +162,25 @@ class invest_details(bundle1: Bundle, bundle2: Bundle?) : Fragment() {
             }
         )
         queue.add(request)
+    }
+
+    fun validateField(): Boolean {
+        if (fieldsValidator(context, editInvestAmount, "onlyNumbers", 6,
+                7, true)) {
+            if (investAmount < 50000 || investAmount > investStack) {
+                Toast.makeText(context, "La cantidad a invertir tiene que estar entre $50,000" +
+                            " y " + copFormat.format(investStack), Toast.LENGTH_LONG).show()
+                editInvestAmount.requestFocus()
+                return false
+            } else if (investAmount % 10000 != 0) {Toast.makeText(context, "La cantidad a " +
+                    "invertir tiene que aumentar unicamente de 10000 en 10000.", Toast.LENGTH_LONG
+                ).show()
+                editInvestAmount.requestFocus()
+                return false
+            } else {
+                return true
+            }
+        }
+        return false
     }
 }

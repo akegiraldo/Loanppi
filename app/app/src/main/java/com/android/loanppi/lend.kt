@@ -167,9 +167,9 @@ class lend(bundle: Bundle?) : Fragment() {
                         " y $3,000,000.", Toast.LENGTH_LONG).show()
                 editLendAmount.requestFocus()
                 return false
-            } else if (loanAmount % 1000 != 0) {
-                Toast.makeText(context, "La cantidad a prestar tiene que estar unicamente" +
-                        " en miles.", Toast.LENGTH_LONG).show()
+            } else if (loanAmount % 10000 != 0) {
+                Toast.makeText(context, "La cantidad a prestar debe aumentar de 10,000 en 10,000"
+                    , Toast.LENGTH_LONG).show()
                 editLendAmount.requestFocus()
                 return false
             } else {
