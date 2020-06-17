@@ -15,6 +15,7 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.fragment_invest_options.*
 import org.json.JSONArray
+import org.json.JSONObject
 import java.text.NumberFormat
 
 /**
@@ -75,25 +76,27 @@ class invest_options(bundle: Bundle?) : Fragment() {
     }
 
     fun getInvestOptions() {
-        val url = "http://loanppi.kevingiraldo.tech/app/api/v1/invest_options"
+        val idInvestor = account?.get("userId").toString().toInt()
+        val url = "http://loanppi.kevingiraldo.tech/app/api/v1/invest_options?idInvestor="+idInvestor
         val queue = Volley.newRequestQueue(context)
 
         // Request a JSON response from the provided URL.
         val request = JsonArrayRequest(Request.Method.GET, url, null,
             Response.Listener { response ->
                 //println("RESPONSE options: " + response.toString() + " " + response[0].toString())
+                val optionsList = (response.get(0) as JSONArray)
                 var investStack = 0
                 var amountRemaining = 0
-                if (response.length() > 0) {
-                    for (i in 0..response.length() - 1) {
-                        investStack = account?.get("investStack").toString().toInt()
-                        amountRemaining = response.getJSONObject(i).getString("amountRemaining").toInt()
+                if (optionsList.length() > 0) {
+                    for (i in 0..optionsList.length() - 1) {
+                        investStack = (response.get(1) as JSONObject).get("investStack").toString().toInt()
+                        amountRemaining = optionsList.getJSONObject(i).getString("amountRemaining").toInt()
                         if (investStack > amountRemaining) { investStack = amountRemaining }
                         cardLists.get(i).putString("investStack", investStack.toString())
-                        cardLists.get(i).putString("idNeed", response.getJSONObject(i).getString("idNeed"))
-                        cardLists.get(i).putString("loanAmount", response.getJSONObject(i).getString("loanAmount"))
-                        cardLists.get(i).putString("amountRemaining", response.getJSONObject(i).getString("amountRemaining"))
-                        cardLists.get(i).putString("timeToPay", response.getJSONObject(i).getString("timeToPay"))
+                        cardLists.get(i).putString("idNeed", optionsList.getJSONObject(i).getString("idNeed"))
+                        cardLists.get(i).putString("loanAmount", optionsList.getJSONObject(i).getString("loanAmount"))
+                        cardLists.get(i).putString("amountRemaining", optionsList.getJSONObject(i).getString("amountRemaining"))
+                        cardLists.get(i).putString("timeToPay", optionsList.getJSONObject(i).getString("timeToPay"))
                     }
                 } else {
                     Toast.makeText(context, "No se encuentran inversiones disponibles.",
