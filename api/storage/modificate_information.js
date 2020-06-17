@@ -41,10 +41,10 @@ const pay = data => {
 
 //Function that changes status when a need is totally paid
 const needResolved = data => {
-  connection.query("UPDATE needs SET status='paid' WHERE idNeed="+ data.idNeed + " AND amountRemaining - totalToPay > -1  AND amountRemaining - totalToPay < 1", (err, rows) => {
+  connection.query("UPDATE needs SET status='paid' WHERE idNeed= "+ data.idNeed + " AND amountRemaining - totalToPay > -10  AND amountRemaining - totalToPay < 10", (err, rows) => {
     if(err) throw err;
 
-    console.log("A needs is solved");
+    console.log("A needs is solved  status");
  })
 }
 

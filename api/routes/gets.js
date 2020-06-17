@@ -1,5 +1,5 @@
 #!/usr/bin/node
-const { findUser, getUser, availableNeeds, checkLoan, investments, returnInvestment, getIdinvestment, share, insertBenefits, getPayments, getInvestments, getReturns } = require('../storage/get_information');
+const { findUser, getUser, availableNeeds, checkLoan, investments, returnInvestment, getIdinvestment, share, insertBenefits, getPayments, getInvestments, getReturns, getAmountStack } = require('../storage/get_information');
 const { createNewUSerDB, sendDebt, updateUser, createInvestment, createFunding, createPayment, sendBenefit } = require('../storage/send_information');
 const { newBalanceInvestor, updatemoneyNeed, checkStatusNeed, pay, needResolved, changeStatusInvestment, updateInvestment } = require('../storage/modificate_information');
 const { response } = require('express');
@@ -36,7 +36,9 @@ const searchUSer = (req, res, next) => {
 
 //Function that checks the existence of the user and creates it
 const NewUser = (req, res, next) => {
+  console.log(req.headers);
   const allData = req.body;
+  console.log(req.body);
   findUser(allData).then(response => {
     if (response.status === 'exists') {
       res.send(response);
@@ -85,9 +87,12 @@ const newNeed = (req, res, next) => {
 
 //Function that gets invesments' options
 const options = (req, res, next) => {
-  const allData = req.body;
-  availableNeeds(allData).then(response => {
-    res.send(response);
+  list = [];
+  const id = req.query.idInvestor;
+  Promise.all([availableNeeds(), getAmountStack(id)]).then(response => {
+     list.push(response[0])
+     list.push(response[1][0])
+     res.send(list);
   }).catch(err => {
       console.error(err);
       res.status(500).send("Not options found");
@@ -132,6 +137,7 @@ const myInvestments = (req, res, next) => {
 const newPayment = (req, res, next) => {
   const allData = req.body;
   let jsonTobenefits = {};
+  console.log("pago : " + allData['payment']);
   jsonTobenefits['idNeed'] = allData.idNeed;
   Promise.all([getIdinvestment(allData), createPayment(allData), pay(allData), needResolved(jsonTobenefits)]).then((values) => {
     jsonTobenefits['idPayment'] = values[1];
@@ -164,7 +170,7 @@ const payments = (req, res, next) => {
   Promise.all([checkLoan(id), getPayments(id)]).then(values => {
     if (values[0].length > 0) { 
     payments.push(values[0][0]);
-     payments.push(values[1]);
+    payments.push(values[1]);
    }
    res.send(payments);
   }).catch(err => {

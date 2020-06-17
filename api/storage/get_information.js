@@ -70,7 +70,7 @@ const checkLoan = id => {
         resolve(result);
       }
     }
-    connection.query("SELECT * FROM needs WHERE idWorker=?", id, callbackCheckStatus);
+    connection.query("SELECT * FROM needs WHERE idWorker = " + id + " AND status != 'paid'", callbackCheckStatus);
   });
 }
 
@@ -183,4 +183,18 @@ const getReturns = id => {
   });
 }
 
-module.exports = { findUser, getUser, availableNeeds, checkLoan, investments, returnInvestment, getIdinvestment, share, getPayments, getInvestments, getReturns };
+const getAmountStack = id => {
+  return new Promise((resolve, reject) => {
+    const callbackGetStack = (err, result) => {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve(result);
+      }
+    }
+    connection.query("SELECT investStack FROM investors WHERE idInvestor=?", id, callbackGetStack);
+  });
+}
+
+module.exports = { findUser, getUser, availableNeeds, checkLoan, investments, returnInvestment, getIdinvestment, share, getPayments, getInvestments, getReturns, getAmountStack };

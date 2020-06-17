@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS investment(
   valueToReturnWeekly FLOAT(24) NOT NULL,
   interestsWins FLOAT(24) NOT NULL,
   status VARCHAR(255) NOT NULL,
-  totalReturn FLOAT(24) DEFEAULT 0,
+  totalReturn FLOAT(24) DEFAULT 0,
   PRIMARY KEY (idInvestment),
   KEY idInvestor (idInvestor),
   CONSTRAINT investment_ibfk_1 FOREIGN KEY (idInvestor) REFERENCES investors (idInvestor) ON DELETE NO ACTION
