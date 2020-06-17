@@ -33,7 +33,7 @@ class main_investor(bundle: Bundle?) : Fragment() {
     private lateinit var valueFullInvestedAmount: TextView
     private lateinit var valueFullEarns: TextView
     private var fullInvestedAmount = 0
-    private var fullEarns = 0
+    private var fullEarns = 0.0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,7 +83,7 @@ class main_investor(bundle: Bundle?) : Fragment() {
                 if (response.length() > 0) {
                     for (i in 0..(response.length() - 1)) {
                         fullInvestedAmount += response.getJSONObject(i).get("moneyInvestment").toString().toInt()
-                        fullEarns += response.getJSONObject(i).get("totalReturn").toString().toInt()
+                        fullEarns += response.getJSONObject(i).get("totalReturn").toString().toFloat()
                     }
                     loadMainInfo("show")
                 } else {

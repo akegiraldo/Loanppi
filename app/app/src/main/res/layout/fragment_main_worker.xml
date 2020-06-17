@@ -130,13 +130,13 @@
                 android:layout_marginTop="80dp"
                 android:background="@color/btn_white"
                 android:text="@string/btn_let_play"
-                android:visibility="visible"
+                android:visibility="invisible"
+                android:enabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.07"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_main_amount_remaining"
-                app:layout_constraintWidth_percent="0.4"
-                tools:visibility="invisible" />
+                app:layout_constraintWidth_percent="0.4" />
 
             <TextView
                 android:id="@+id/txt_main_your_weekly_fee"

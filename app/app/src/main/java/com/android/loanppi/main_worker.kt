@@ -144,7 +144,6 @@ class main_worker(bundle: Bundle?) : Fragment() {
         amountPaid = myLoan.get("amountRemaining").toString().toFloat()
         amountRemaining = goal - amountPaid
 
-
         copFormat.maximumFractionDigits = 0
 
         valueGoalAmount.setText(copFormat.format(goal))
@@ -152,6 +151,7 @@ class main_worker(bundle: Bundle?) : Fragment() {
         valueFeeNumber.setText(myLoan.get("feeNumber").toString())
         if (myLoan.get("status") == "resolved") {
             btnLetPay.isVisible = true
+            btnLetPay.isEnabled = true
             gettingMoney.isVisible = false
             progressPercent = (amountPaid / goal) * 100
             valueAmountPaid.setText(copFormat.format(amountPaid))
@@ -161,6 +161,7 @@ class main_worker(bundle: Bundle?) : Fragment() {
             valueAmountRemaining.setText(copFormat.format(goal))
             gettingMoney.isVisible = true
             btnLetPay.isVisible = false
+            btnLetPay.isEnabled = false
         }
         progressBar.progress = progressPercent.toInt()
     }

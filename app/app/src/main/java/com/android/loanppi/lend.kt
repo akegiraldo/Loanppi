@@ -168,9 +168,13 @@ class lend(bundle: Bundle?) : Fragment() {
                 editLendAmount.requestFocus()
                 return false
             } else if (loanAmount % 10000 != 0) {
-                Toast.makeText(context, "La cantidad a prestar debe aumentar de 10,000 en 10,000"
-                    , Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "La cantidad a prestar debe aumentar de 10,000 en 10,000",
+                    Toast.LENGTH_LONG).show()
                 editLendAmount.requestFocus()
+                return false
+            } else if (spinLendReason.selectedItemPosition == 0) {
+                Toast.makeText(context, "Debes seleccionar el motivo del préstamo.",
+                    Toast.LENGTH_LONG).show()
                 return false
             } else {
                 return true
