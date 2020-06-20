@@ -5,10 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.SeekBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.view.isVisible
 import com.android.volley.Request
 import com.android.volley.Response
@@ -210,7 +207,7 @@ class main_worker(bundle: Bundle?) : Fragment() {
             view?.findViewById<TextView>(R.id.txt_main_your_fee_number)?.isVisible = true
             view?.findViewById<TextView>(R.id.txt_main_goal_amount)?.isVisible = true
             view?.findViewById<TextView>(R.id.txt_my_loan_balance)?.isVisible = true
-            view?.findViewById<TextView>(R.id.img_main_goal_flag)?.isVisible = true
+            view?.findViewById<ImageView>(R.id.img_main_goal_flag)?.isVisible = true
             view?.findViewById<TextView>(R.id.txt_is_empty)?.isVisible = false
             valueAmountRemaining.isVisible = true
             valueAmountPaid.isVisible = true
@@ -224,7 +221,7 @@ class main_worker(bundle: Bundle?) : Fragment() {
             view?.findViewById<TextView>(R.id.txt_main_your_fee_number)?.isVisible = false
             view?.findViewById<TextView>(R.id.txt_main_goal_amount)?.isVisible = false
             view?.findViewById<TextView>(R.id.txt_my_loan_balance)?.isVisible = false
-            view?.findViewById<TextView>(R.id.img_main_goal_flag)?.isVisible = false
+            view?.findViewById<ImageView>(R.id.img_main_goal_flag)?.isVisible = false
             view?.findViewById<TextView>(R.id.txt_is_empty)?.isVisible = true
             valueAmountRemaining.isVisible = false
             valueAmountPaid.isVisible = false
