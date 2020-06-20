@@ -67,6 +67,7 @@
                 android:id="@+id/txt_value_return_amount"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_marginBottom="10dp"
                 android:text="0'000.000"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/textPrimary"
@@ -76,18 +77,28 @@
                 app:layout_constraintHeight_percent="0.03"
                 app:layout_constraintWidth_percent="0.2" />
 
+            <ImageView
+                android:id="@+id/img_investment_goal_flag"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@drawable/flag"
+                app:layout_constraintEnd_toEndOf="@+id/bar_investment_progress_moto_bar"
+                app:layout_constraintHeight_percent="0.04"
+                app:layout_constraintTop_toTopOf="@+id/bar_investment_progress_moto_bar"
+                app:layout_constraintWidth_percent="0.07" />
+
             <SeekBar
                 android:id="@+id/bar_investment_progress_moto_bar"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="60dp"
-                android:background="#0D272525"
+                android:background="#00272525"
                 android:progress="0"
                 android:progressBackgroundTint="#000000"
                 android:progressTint="@color/loanppi"
                 android:thumb="@drawable/moto1"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.09"
+                app:layout_constraintHeight_percent="0.11"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_my_invest_balance"
                 app:layout_constraintWidth_percent="0.8"
