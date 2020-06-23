@@ -1,7 +1,7 @@
 #!/usr/bin/node
 const { findUser, getUser, availableNeeds, checkLoan, investments, returnInvestment, getIdinvestment, share, insertBenefits, getPayments, getInvestments, getReturns, getAmountStack } = require('../storage/get_information');
-const { createNewUSerDB, sendDebt, updateUser, createInvestment, createFunding, createPayment, sendBenefit } = require('../storage/send_information');
-const { newBalanceInvestor, updatemoneyNeed, checkStatusNeed, pay, needResolved, changeStatusInvestment, updateInvestment } = require('../storage/modificate_information');
+const { createNewUSerDB, sendDebt, updateUser, createInvestment, createFunding, createPayment, sendBenefit, saveMoney } = require('../storage/send_information');
+const { changeStack, newBalanceInvestor, updatemoneyNeed, checkStatusNeed, pay, needResolved, changeStatusInvestment, updateInvestment } = require('../storage/modificate_information');
 const { response } = require('express');
 
 
@@ -156,6 +156,8 @@ const saveBenefit = (newBenefit, values, money) => {
       sendBenefit(newBenefit);
       changeStatusInvestment(newBenefit['idInvestment'], idNeed);
       updateInvestment(newBenefit);
+      saveMoney(response[0].idInvestor, newBenefit.investorShare);
+      changeStack(response[0].idInvestor, newBenefit.investorShare);
     }).catch(err => {
       console.error(err);
       res.status(500).send("Not investments found!");

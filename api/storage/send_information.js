@@ -102,7 +102,6 @@ const updateUser = data => {
 
 //Function that creates a new payment
 const createPayment = data => {
-  delete data['idNeed'];
   data['datePayment'] = new Date()
   return new Promise((resolve, reject) => {
     const callbackCreatePayment = (err, result) => {
@@ -128,4 +127,15 @@ const sendBenefit = data => {
   })
 }
 
-module.exports = { createNewUSerDB, sendDebt, updateUser, createInvestment, createFunding, createPayment, sendBenefit};
+//Function that that inserst data in the money table
+const saveMoney = (id, amount) => {
+  data = {'idInvestor': id, 'money': amount};
+  console.log("dataaa", data);
+  connection.query("INSERT INTO money_investor SET ?", data, (err, rows) => {
+    if(err) throw err;
+    console.log("Data inserted");
+  })
+
+}
+
+module.exports = { saveMoney, createNewUSerDB, sendDebt, updateUser, createInvestment, createFunding, createPayment, sendBenefit};

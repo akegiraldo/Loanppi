@@ -133,7 +133,7 @@ const share = id => {
         resolve(result)
       }
     }
-    connection.query("SELECT loanShare FROM investment WHERE idInvestment=?", id, callbackShare);
+    connection.query("SELECT loanShare, idInvestor FROM investment WHERE idInvestment=?", id, callbackShare);
   })
 }
 
@@ -145,10 +145,11 @@ const getPayments = id => {
         reject(err);
         return;
       } else {
+        console.log(result);
         resolve(result);
       }
     }
-    connection.query("SELECT * FROM payments WHERE idWorker=?", id, callbackGetPayments);
+    connection.query("SELECT * FROM payments JOIN needs ON payments.idNeed = needs.idNeed WHERE needs.idWorker = " + id + " AND needs.status = 'resolved'", callbackGetPayments);
   });
 }
 
@@ -183,6 +184,7 @@ const getReturns = id => {
   });
 }
 
+//Function that gets the invest STack byInvestors id
 const getAmountStack = id => {
   return new Promise((resolve, reject) => {
     const callbackGetStack = (err, result) => {
@@ -196,5 +198,6 @@ const getAmountStack = id => {
     connection.query("SELECT investStack FROM investors WHERE idInvestor=?", id, callbackGetStack);
   });
 }
+
 
 module.exports = { findUser, getUser, availableNeeds, checkLoan, investments, returnInvestment, getIdinvestment, share, getPayments, getInvestments, getReturns, getAmountStack };

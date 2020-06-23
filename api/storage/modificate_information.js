@@ -68,5 +68,16 @@ const changeStatusInvestment = (idInvestment, idNeed) => {
   })
 }
 
+//Function that upgrades money avilable to invest after a return
+const changeStack = (idInvestor, amount) => {
+  amount = amount - amount * 0.05;
+  connection.query("UPDATE investors SET investStack = investStack + "+ amount +" WHERE idInvestor = " + idInvestor, (err, rows) => {
+    if(err) throw err;
 
-module.exports = { newBalanceInvestor, updatemoneyNeed, checkStatusNeed, pay, needResolved, changeStatusInvestment, updateInvestment };
+    console.log("The stack has been updated");
+  })
+}
+
+
+
+module.exports = { changeStack, newBalanceInvestor, updatemoneyNeed, checkStatusNeed, pay, needResolved, changeStatusInvestment, updateInvestment };
