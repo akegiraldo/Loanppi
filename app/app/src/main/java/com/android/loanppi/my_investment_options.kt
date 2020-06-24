@@ -86,6 +86,7 @@ class my_investment_options(bundle: Bundle?) : Fragment() {
                         investmentData.add(response.getJSONObject(i).get("returnTotal").toString())
                         investmentData.add(response.getJSONObject(i).get("valueToReturnWeekly").toString())
                         investmentData.add(response.getJSONObject(i).get("interestsWins").toString())
+                        investmentData.add(response.getJSONObject(i).get("totalReturn").toString())
                         investmentsListString.add(getStringFromArray(investmentData))
                         investmentsListArray.add(investmentData.clone() as ArrayList<String>)
                         investmentData.clear()
@@ -109,8 +110,10 @@ class my_investment_options(bundle: Bundle?) : Fragment() {
         val copFormat: NumberFormat = NumberFormat.getCurrencyInstance()
         copFormat.maximumFractionDigits = 0
         var string = array.get(0)
-        for (i in array.get(0).length..10) { string += " " }
+        for (i in array.get(0).length..15) { string += " " }
         string += copFormat.format(array.get(1).toInt())
+        for (i in array.get(7).length..30) { string += " " }
+        string += copFormat.format(array.get(7).toInt())
         return string
     }
 }

@@ -48,7 +48,7 @@
 
             <TextView
                 android:id="@+id/txt_sub_id"
-                android:layout_width="0dp"
+                android:layout_width="41dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="32dp"
                 android:text="#"
@@ -57,6 +57,7 @@
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toStartOf="@+id/txt_sub_money_investment"
                 app:layout_constraintHeight_percent="0.04"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_title_my_invest_options"
                 app:layout_constraintWidth_percent="0.1" />
@@ -65,15 +66,31 @@
                 android:id="@+id/txt_sub_money_investment"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="32dp"
                 android:text="Monto invertido"
                 android:textColor="@color/textPrimary"
                 app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_sub_id"
+                app:layout_constraintEnd_toStartOf="@+id/txt_sub_money_returned"
+                app:layout_constraintHeight_percent="0.04"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/txt_sub_id"
+                app:layout_constraintTop_toTopOf="@+id/txt_sub_id"
+                app:layout_constraintWidth_percent="0.4" />
+
+            <TextView
+                android:id="@+id/txt_sub_money_returned"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="Monto retornado"
+                android:textColor="@color/textPrimary"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_sub_money_investment"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.04"
-                app:layout_constraintStart_toEndOf="@+id/txt_sub_id"
-                app:layout_constraintTop_toBottomOf="@+id/txt_title_my_invest_options"
-                app:layout_constraintWidth_percent="0.8" />
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/txt_sub_money_investment"
+                app:layout_constraintTop_toTopOf="@+id/txt_sub_money_investment"
+                app:layout_constraintWidth_percent="0.4" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
