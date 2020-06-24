@@ -1,6 +1,6 @@
 #!/usr/bin/node
-const { findUser, getUser, availableNeeds, checkLoan, investments, returnInvestment, getIdinvestment, share, insertBenefits, getPayments, getInvestments, getReturns, getAmountStack } = require('../storage/get_information');
-const { createNewUSerDB, sendDebt, updateUser, createInvestment, createFunding, createPayment, sendBenefit, saveMoney } = require('../storage/send_information');
+const { availableNeeds, checkLoan, investments, returnInvestment, getIdinvestment, share, insertBenefits, getPayments, getInvestments, getReturns, getAmountStack } = require('../storage/get_information');
+const { sendDebt, updateUser, createInvestment, createFunding, createPayment, sendBenefit, saveMoney } = require('../storage/send_information');
 const { changeStack, newBalanceInvestor, updatemoneyNeed, checkStatusNeed, pay, needResolved, changeStatusInvestment, updateInvestment } = require('../storage/modificate_information');
 const { response } = require('express');
 
@@ -68,6 +68,8 @@ const update = (req, res, next) => {
   });
 }
 
+//........
+
 //Function that creates a new Need in the DB
 const newNeed = (req, res, next) => {
   const allData = req.body;
@@ -84,6 +86,9 @@ const newNeed = (req, res, next) => {
     res.status(500).send("DB Error, NOT FOUND!");
   });
 }
+
+//--------------
+
 
 //Function that gets invesments' options
 const options = (req, res, next) => {
@@ -132,6 +137,7 @@ const myInvestments = (req, res, next) => {
     });
 }
 
+//--------
 
 //Function that creates a payment
 const newPayment = (req, res, next) => {

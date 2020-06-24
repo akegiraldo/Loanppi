@@ -85,7 +85,7 @@ const investments = id => {
         resolve(result);
       }
     }
-    connection.query("SELECT * FROM investment WHERE idInvestor=?", id, callbackInvestments);
+    connection.query("SELECT * FROM investment WHERE idInvestor = " + id + " AND status != 'closed'", callbackInvestments);
   });
 }
 
@@ -149,7 +149,7 @@ const getPayments = id => {
         resolve(result);
       }
     }
-    connection.query("SELECT * FROM payments JOIN needs ON payments.idNeed = needs.idNeed WHERE needs.idWorker = " + id + " AND needs.status = 'resolved'", callbackGetPayments);
+    connection.query("SELECT payments.payment, payments.datePayment FROM payments JOIN needs ON payments.idNeed = needs.idNeed WHERE needs.idWorker = " + id + " AND needs.status = 'resolved'", callbackGetPayments);
   });
 }
 
