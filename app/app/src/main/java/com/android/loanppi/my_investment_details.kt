@@ -1,13 +1,12 @@
 package com.android.loanppi
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SeekBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
@@ -38,11 +37,20 @@ class my_investment_details(bundle: Bundle) : Fragment() {
     private lateinit var progressBar: SeekBar
     private var progressPercent = 0.0f
 
+    // List of fees
+    private lateinit var feesList: ListView
+    private lateinit var arrayAdapter: ArrayAdapter<String>
+    private lateinit var feesData: ArrayList<String>
+    private lateinit var feesArrayList: ArrayList<String>
+
+    // Others
+    private lateinit var scrollView: ScrollView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,8 +69,27 @@ class my_investment_details(bundle: Bundle) : Fragment() {
         returnRemaining = view.findViewById(R.id.txt_invest_value_return_remaining)
         amountReturned = view.findViewById(R.id.txt_value_amount_returned)
         progressBar = view.findViewById(R.id.bar_investment_progress_moto_bar)
+        feesList = view.findViewById(R.id.list_fees_returned)
+        scrollView = view.findViewById(R.id.investment_scroll)
 
+        feesData = ArrayList()
+        feesArrayList = ArrayList()
+        arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, feesArrayList)
+        feesList.adapter = arrayAdapter
+
+        // Get selected investment
         getInvestment()
+
+        scrollView.setOnTouchListener(View.OnTouchListener { v, event ->
+            feesList.getParent()
+                .requestDisallowInterceptTouchEvent(false)
+            false
+        })
+
+        feesList.setOnTouchListener(View.OnTouchListener { v, event ->
+            v.parent.requestDisallowInterceptTouchEvent(true)
+            false
+        })
 
         return view
     }
@@ -88,7 +115,7 @@ class my_investment_details(bundle: Bundle) : Fragment() {
                     myInvestment.putString("moneyInvestment", investment.get("moneyInvestment").toString())
                     myInvestment.putString("totalReturn", investment.get("totalReturn").toString())
                     loadMyInvestmentInfo()
-                    //loadPays(response.get(1) as JSONArray)
+                    loadPays(paysList)
                 } else {
                     Toast.makeText(context, "No se encuentra ninguna inversión asociada al usuario.",
                         Toast.LENGTH_SHORT).show()
@@ -114,7 +141,6 @@ class my_investment_details(bundle: Bundle) : Fragment() {
         val valueRemainingDues = (valueReturnRemaining / myInvestment.get("valueToReturnWeekly")
             .toString().toFloat()).toInt()
 
-        val copFormat: NumberFormat = NumberFormat.getCurrencyInstance()
         copFormat.maximumFractionDigits = 0
 
         returnAmount.setText(copFormat.format(myInvestment.get("returnTotal").toString().toInt()))
@@ -131,17 +157,29 @@ class my_investment_details(bundle: Bundle) : Fragment() {
     }
 
     fun loadPays(feesList: JSONArray) {
-        /*println("feesList: " + feesList.toString())
+        println("feesList: " + feesList.toString())
         for (i in 0..(feesList.length() - 1)) {
             feesData.add((i + 1).toString())
-            feesData.add(feesList.getJSONObject(i).get("payment").toString())
+            feesData.add(feesList.getJSONObject(i).get("investorShare").toString())
+            feesData.add(feesList.getJSONObject(i).get("dateReturn").toString())
             feesArrayList.add(getStringFromArray(feesData))
             feesData.clear()
             arrayAdapter.notifyDataSetChanged()
-        }*/
+        }
     }
 
     fun getStringFromArray(feesData: ArrayList<String>): String {
-        return (feesData.get(0).toString())
+        copFormat.maximumFractionDigits = 0
+        var string = ""
+        var date = feesData.get(2).replace("T", " ")
+        date = date.replace(".000Z", "")
+
+        for (i in 0..7) { string += " " }
+        string += feesData.get(0)
+        for (i in feesData.get(0).length..15) { string += " " }
+        string += copFormat.format(feesData.get(1).toInt())
+        for (i in feesData.get(1).length..16) { string += " " }
+        string += date.toDate().formatTo("dd MMM yyyy HH:mm:ss")
+        return string
     }
 }

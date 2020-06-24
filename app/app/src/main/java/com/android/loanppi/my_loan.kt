@@ -30,7 +30,6 @@ class my_loan(bundle: Bundle?) : Fragment() {
 
     // List of fees
     private lateinit var feesList: ListView
-
     private lateinit var arrayAdapter: ArrayAdapter<String>
     private lateinit var feesData: ArrayList<String>
     private lateinit var feesArrayList: ArrayList<String>
