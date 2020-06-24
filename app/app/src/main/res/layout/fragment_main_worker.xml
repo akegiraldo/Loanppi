@@ -135,12 +135,12 @@
                 tools:visibility="invisible" />
 
             <Button
-                android:id="@+id/btn_let_pay"
+                android:id="@+id/btn_open_payment"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="80dp"
                 android:background="@color/btn_white"
-                android:text="@string/btn_let_play"
+                android:text="@string/btn_let_pay"
                 android:visibility="invisible"
                 android:enabled="false"
                 app:layout_constraintEnd_toEndOf="parent"

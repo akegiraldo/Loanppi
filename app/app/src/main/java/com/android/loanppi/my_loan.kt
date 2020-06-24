@@ -96,7 +96,6 @@ class my_loan(bundle: Bundle?) : Fragment() {
         val request = JsonArrayRequest(
             Request.Method.GET, url, null,
             Response.Listener { response ->
-                println("MYLOAN: " + response.toString())
                 if (response.length() > 0) {
                     val loan = response.get(0) as JSONObject
                     val feeNumber = response.get(1) as JSONArray
