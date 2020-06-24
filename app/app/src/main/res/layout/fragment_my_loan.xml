@@ -326,7 +326,7 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="24dp"
                 android:gravity="center"
-                android:text="Restantes"
+                android:text="Pagadas"
                 android:textColor="@color/textPrimary"
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
