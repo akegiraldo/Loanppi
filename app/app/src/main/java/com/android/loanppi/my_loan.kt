@@ -1,20 +1,21 @@
 package com.android.loanppi
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
-import kotlinx.android.synthetic.main.fragment_my_loan.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.text.NumberFormat
+
 
 /**
  * A simple [Fragment] subclass.
@@ -50,10 +51,14 @@ class my_loan(bundle: Bundle?) : Fragment() {
     private lateinit var dueAmount: TextView
     private lateinit var progressBar: SeekBar
 
+    // Others
+    private lateinit var scrollView: ScrollView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -75,6 +80,8 @@ class my_loan(bundle: Bundle?) : Fragment() {
         dueAmount = view.findViewById(R.id.txt_loan_value_due_amount)
         progressBar = view.findViewById(R.id.bar_loan_progress_moto_bar)
         feesList = view.findViewById(R.id.list_my_fees_paid)
+        scrollView = view.findViewById(R.id.loan_scroll)
+
 
         feesData = ArrayList()
         feesArrayList = ArrayList()
@@ -83,7 +90,18 @@ class my_loan(bundle: Bundle?) : Fragment() {
 
         // Get current loan
         getLoan()
-        
+
+        scrollView.setOnTouchListener(OnTouchListener { v, event ->
+            feesList.getParent()
+                .requestDisallowInterceptTouchEvent(false)
+            false
+        })
+
+        feesList.setOnTouchListener(OnTouchListener { v, event ->
+            v.parent.requestDisallowInterceptTouchEvent(true)
+            false
+        })
+
         return view
     }
 
@@ -168,6 +186,7 @@ class my_loan(bundle: Bundle?) : Fragment() {
         for (i in 0..(feesList.length() - 1)) {
             feesData.add((i + 1).toString())
             feesData.add(feesList.getJSONObject(i).get("payment").toString())
+            feesData.add(feesList.getJSONObject(i).get("datePayment").toString())
             feesArrayList.add(getStringFromArray(feesData))
             feesData.clear()
             arrayAdapter.notifyDataSetChanged()
@@ -175,7 +194,18 @@ class my_loan(bundle: Bundle?) : Fragment() {
     }
 
     fun getStringFromArray(feesData: ArrayList<String>): String {
-        return (feesData.get(0).toString())
+        copFormat.maximumFractionDigits = 0
+        var string = ""
+        var date = feesData.get(2).replace("T", " ")
+        date = date.replace(".000Z", "")
+
+        for (i in 0..7) { string += " " }
+        string += feesData.get(0)
+        for (i in feesData.get(0).length..15) { string += " " }
+        string += copFormat.format(feesData.get(1).toInt())
+        for (i in feesData.get(1).length..16) { string += " " }
+        string += date.toDate().formatTo("dd MMM yyyy HH:mm:ss")
+        return string
     }
 }
 

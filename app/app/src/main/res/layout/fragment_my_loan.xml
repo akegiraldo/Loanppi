@@ -7,6 +7,7 @@
     tools:context=".main_worker">
 
     <ScrollView
+        android:id="@+id/loan_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -484,87 +485,54 @@
                 android:textColor="@color/textPrimary"
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintEnd_toEndOf="@+id/txt_loan_amount"
+                app:layout_constraintEnd_toStartOf="@+id/txt_due_amount_paid"
                 app:layout_constraintHeight_percent="0.027"
-                app:layout_constraintStart_toStartOf="@+id/txt_loan_amount"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_dues_paid"
-                app:layout_constraintWidth_percent="0.22" />
+                app:layout_constraintWidth_percent="0.2" />
 
             <TextView
                 android:id="@+id/txt_due_amount_paid"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="8dp"
                 android:gravity="center"
                 android:text="Monto"
                 android:textColor="@color/textPrimary"
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintEnd_toEndOf="@+id/txt_loan_value_amount_lent"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_due_number"
+                app:layout_constraintEnd_toStartOf="@+id/txt_due_payment_date"
                 app:layout_constraintHeight_percent="0.027"
-                app:layout_constraintStart_toStartOf="@+id/txt_loan_value_amount_lent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_dues_paid"
-                app:layout_constraintWidth_percent="0.22" />
+                app:layout_constraintStart_toEndOf="@+id/txt_due_number"
+                app:layout_constraintTop_toTopOf="@+id/txt_due_number"
+                app:layout_constraintWidth_percent="0.2" />
 
             <TextView
                 android:id="@+id/txt_due_payment_date"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="8dp"
                 android:gravity="center"
                 android:text="Fecha"
                 android:textColor="@color/textPrimary"
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintEnd_toEndOf="@+id/txt_loan_value_total_to_pay"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_due_amount_paid"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.027"
-                app:layout_constraintStart_toStartOf="@+id/txt_loan_value_total_to_pay"
-                app:layout_constraintTop_toBottomOf="@+id/txt_dues_paid"
-                app:layout_constraintWidth_percent="0.22" />
+                app:layout_constraintStart_toEndOf="@+id/txt_due_amount_paid"
+                app:layout_constraintTop_toTopOf="@+id/txt_due_amount_paid"
+                app:layout_constraintWidth_percent="0.45" />
 
-            <TextView
-                android:id="@+id/txt_due_pending_amount"
-                android:layout_width="0dp"
+            <ListView
+                android:id="@+id/list_my_fees_paid"
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="8dp"
-                android:gravity="center"
-                android:text="Pendiente"
-                android:textColor="@color/textPrimary"
-                android:textStyle="bold"
-                app:autoSizeTextType="uniform"
-                app:layout_constraintEnd_toEndOf="@+id/txt_loan_value_due_amount"
-                app:layout_constraintHeight_percent="0.027"
-                app:layout_constraintStart_toStartOf="@+id/txt_loan_value_due_amount"
-                app:layout_constraintTop_toBottomOf="@+id/txt_dues_paid"
-                app:layout_constraintWidth_percent="0.22" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@color/background_inside"
-                android:paddingBottom="16dp"
-                app:layout_constraintHeight_percent="0.2"
-                app:layout_constraintTop_toBottomOf="@+id/txt_due_pending_amount"
-                tools:context=".dashboard">
-
-                <ListView
-                    android:id="@+id/list_my_fees_paid"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHeight_percent="0.99"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.95" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.15"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_due_number"
+                app:layout_constraintWidth_percent="1" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </FrameLayout>
