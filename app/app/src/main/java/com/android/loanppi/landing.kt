@@ -37,7 +37,6 @@ import java.util.*
 
 
 class landing : AppCompatActivity() {
-
     // Variables for signup with google
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var gso: GoogleSignInOptions
@@ -80,7 +79,7 @@ class landing : AppCompatActivity() {
             Toast.makeText(this, "Tienes que otorgar el permiso de conexión manualmente.",
                 Toast.LENGTH_LONG).show()
         } else {
-            //El usuario nunca ha aceptado ni rechazado, así que le pedimos que acepte el permiso.
+            // The user has never accepted or rejected, so we ask you to accept the permission.
             ActivityCompat.requestPermissions(this,
                 arrayOf(Manifest.permission.INTERNET),
                 INTERNET_REQUEST_CODE)
@@ -94,23 +93,25 @@ class landing : AppCompatActivity() {
         when (requestCode) {
             INTERNET_REQUEST_CODE -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    //El usuario ha aceptado el permiso, no tiene porqué darle de nuevo al botón, podemos lanzar la funcionalidad desde aquí.
+                    // The user has accepted the permission, there is no need to hit the button again
                 } else {
-                    //El usuario ha rechazado el permiso, podemos desactivar la funcionalidad o mostrar una vista/diálogo.
+                    // The user has refused permission
                 }
                 return
             }
             else -> {
-                // Este else lo dejamos por si sale un permiso que no teníamos controlado.
+                // Else in case a permit goes out that we didn't control.
             }
         }
     }
 
+    // Function that when called executes the registration window
     fun onSignUp(view: View) {
         val intent = Intent(this, signup::class.java)
         startActivity(intent)
     }
 
+    // Function that when called executes the login window
     @SuppressLint("ResourceType")
     fun onLogin(view: View) {
         val builder = AlertDialog.Builder(this, R.style.AlertDialogTheme)
@@ -123,7 +124,7 @@ class landing : AppCompatActivity() {
         builder.setView(dialogLayout).setNegativeButton(R.string.cancel) { dialog, which -> }
         builder.show()
 
-        // Login with Google
+        // Listen when the Google button is clicked and the login to Google begins
         btn_google.setOnClickListener {
             accessWith = "google"
 
@@ -138,7 +139,7 @@ class landing : AppCompatActivity() {
             startActivityForResult(signInIntent, RC_SIGN_IN)
         }
 
-        // Login with Facebook
+        // Listen when the Facebook button is clicked and the login to Facebook begins
         btn_facebook.setOnClickListener(View.OnClickListener {
             accessWith = "facebook"
 
@@ -160,6 +161,8 @@ class landing : AppCompatActivity() {
         })
     }
 
+    // Check the result of your Google and Facebook login request
+    // If accepted, a function is called to ask for account information
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (accessWith == "google" && requestCode == RC_SIGN_IN) {
@@ -172,7 +175,8 @@ class landing : AppCompatActivity() {
         }
     }
 
-    // Login with Google
+    // Asks for the user's Google account information and sends it to a function that verifies
+    // the existence of the account in our databases
     private fun getGoogleAccount (completedTask: Task<GoogleSignInAccount>) {
         try {
             val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
@@ -185,6 +189,7 @@ class landing : AppCompatActivity() {
         }
     }
 
+    // Start the dashboard activity and pass the account and access method information
     private fun updateUIG (googleAccount: GoogleSignInAccount, account: Bundle) {
         val intent = Intent(this, dashboard::class.java)
         val accessInfo = Bundle()
@@ -197,7 +202,8 @@ class landing : AppCompatActivity() {
         startActivity(intent)
     }
 
-    // Login with Facebook
+    // Asks for the user's Facebook account information and sends it to a function that verifies
+    // the existence of the account in our databases
     private fun getFacebokAccount () {
         if (AccessToken.getCurrentAccessToken() != null) {
             val request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken()) { `object`, response ->
@@ -227,6 +233,7 @@ class landing : AppCompatActivity() {
         }
     }
 
+    // Start the dashboard activity and pass the account and access method information
     private fun updateUIF (facebookAccount: Bundle, account: Bundle) {
         val intent = Intent(this, dashboard::class.java)
         val accessInfo = Bundle()
@@ -248,7 +255,8 @@ class landing : AppCompatActivity() {
         }
     }
 
-    // Get user from database
+    // Verifies that a user exists in our database, if so, it returns all the account information
+    // and calls the function in charge of executing the new activity
     private fun getUser(googleAccount: GoogleSignInAccount?, facebookAccount: Bundle?) {
         var email = ""
         if (accessWith == "google") {
@@ -262,7 +270,6 @@ class landing : AppCompatActivity() {
         // Request a JSON response from the provided URL.
         val request = JsonObjectRequest(Request.Method.GET, url, null,
             Response.Listener { response ->
-                //Toast.makeText(this, response.get("status").toString(), Toast.LENGTH_LONG).show()
                 if (response.get("status") == "exists") {
                     val account = Bundle()
                     account.putString("firstName", response.get("firstName").toString())
@@ -299,6 +306,8 @@ class landing : AppCompatActivity() {
                         Toast.LENGTH_LONG).show()
                 }
             },
+            // In case there is an error in the connection with our server, the session with Google
+            // or Facebook is closed and the user is shown the error
             Response.ErrorListener {
                 if (accessWith == "google") {
                     mGoogleSignInClient.signOut()

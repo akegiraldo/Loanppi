@@ -25,6 +25,7 @@ import org.json.JSONObject
  * create an instance of this fragment.
  */
 class main_investor(bundle: Bundle?) : Fragment() {
+    // Account info
     private lateinit var accessInfo: Bundle
     private lateinit var account: Bundle
     private var bundle: Bundle? = bundle
@@ -49,9 +50,11 @@ class main_investor(bundle: Bundle?) : Fragment() {
         accessInfo = bundle?.getBundle("accessInfo") as Bundle
         account = bundle?.getBundle("account") as Bundle
 
+        // Get textviews and edittext from fragment
         valueFullInvestedAmount = view.findViewById(R.id.txt_main_value_full_invested_amount)
         valueFullEarns = view.findViewById(R.id.txt_main_value_full_earns)
 
+        // Upload the photo and the first name of the user
         val firstName: String? = account.getString("firstName")
 
         var urlPhoto: String? = ""
@@ -66,19 +69,24 @@ class main_investor(bundle: Bundle?) : Fragment() {
         view.findViewById<TextView>(R.id.txt_grettings).setText("Hola, "+ firstName)
         Glide.with(this).load(urlPhoto).into(view.findViewById(R.id.img_user_photo))
 
+        // Calls the function responsible for checking whether the user has currently
+        // active investments
         getInvestments()
 
         return view
     }
 
+    // Function that makes the request to the server to get user investments
     fun getInvestments() {
         val id = account.get("userId")
         val url = "http://loanppi.kevingiraldo.tech/app/api/v1/my_investments?idInvestor=" + id
         val queue = Volley.newRequestQueue(context)
 
         // Request a JSON response from the provided URL.
-        val request = JsonArrayRequest(
-            Request.Method.GET, url, null,
+        // Create the request. If you have any active investments, it calculates information on
+        // all investments and calls the function responsible for displaying this data. Otherwise,
+        // it calls the function in charge of showing a message encouraging to invest
+        val request = JsonArrayRequest(Request.Method.GET, url, null,
             Response.Listener { response ->
                 if (response.length() > 0) {
                     for (i in 0..(response.length() - 1)) {
@@ -87,8 +95,6 @@ class main_investor(bundle: Bundle?) : Fragment() {
                     }
                     loadMainInfo("show")
                 } else {
-                    /*Toast.makeText(context, "No se encuentran inversiones.",
-                        Toast.LENGTH_LONG).show()*/
                     loadMainInfo("hide")
                 }
             },
@@ -102,6 +108,8 @@ class main_investor(bundle: Bundle?) : Fragment() {
         queue.add(request)
     }
 
+    // Loads the information obtained to the user's main fragment depending on whether or not he
+    // has at least one active investment
     fun loadMainInfo(status: String) {
         if (status == "hide") {
             view?.findViewById<TextView>(R.id.txt_is_empty)?.isVisible = true

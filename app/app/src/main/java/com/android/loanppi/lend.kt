@@ -22,6 +22,7 @@ import java.text.NumberFormat
  * create an instance of this fragment.
  */
 class lend(bundle: Bundle?) : Fragment() {
+    // Account info
     private var account: Bundle? = Bundle()
     private var bundle: Bundle? = bundle
 
@@ -35,7 +36,7 @@ class lend(bundle: Bundle?) : Fragment() {
     private lateinit var valTotalToPay: TextView
     private lateinit var btnLend: Button
 
-    // Lend values
+    // Loan values
     private var loanAmount = 0
     private var interests = 0.0F
     private var totalToPay = 0.0F
@@ -56,6 +57,7 @@ class lend(bundle: Bundle?) : Fragment() {
 
         account = bundle?.get("account") as Bundle
 
+        // Get textviews and edittext from fragment
         editLendAmount = view.findViewById(R.id.edit_lend_amount)
         spinLendReason = view.findViewById(R.id.spin_lend_reason)
         valTimeToPay = view.findViewById(R.id.txt_value_time_to_pay)
@@ -63,12 +65,11 @@ class lend(bundle: Bundle?) : Fragment() {
         valToPayMonthly = view.findViewById(R.id.txt_value_to_pay_monthly)
         valInterests = view.findViewById(R.id.txt_value_interests)
         valTotalToPay = view.findViewById(R.id.txt_value_total_to_pay)
-
         btnLend = view.findViewById(R.id.btn_let_lend)
 
-        val copFormat: NumberFormat = NumberFormat.getCurrencyInstance()
         copFormat.maximumFractionDigits = 0
 
+        // Listen changes on edit lend amount and calculates loan values
         editLendAmount.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 val loanAmountTxt = editLendAmount.text.toString()
@@ -106,6 +107,8 @@ class lend(bundle: Bundle?) : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
+        // Listen when lend button is clicked, Validate that the fields are correct and call the
+        // function in charge of making the request
         btnLend.setOnClickListener(View.OnClickListener {
             if (validateField()) {
                 lendPost()
@@ -115,6 +118,7 @@ class lend(bundle: Bundle?) : Fragment() {
         return view
     }
 
+    // Function that makes the request to the server to register a new loan
     fun lendPost() {
         val url = "http://loanppi.kevingiraldo.tech/app/api/v1/lend/"
         val loan = JSONObject()
@@ -127,6 +131,8 @@ class lend(bundle: Bundle?) : Fragment() {
         loan.put("interests", interests)
         loan.put("idWorker", account?.get("userId"))
 
+        // Create the request. In case of success save the values in a variable and call the
+        // fragment in charge. On the contrary, Report the error.
         val queue = Volley.newRequestQueue(context)
         val request = JsonObjectRequest(Request.Method.POST, url, loan, Response.Listener {
             response ->
@@ -156,9 +162,12 @@ class lend(bundle: Bundle?) : Fragment() {
                 println("Error al procesar el préstamo: ${error.message}")
             }
         )
+
+        // Add request to queue
         queue.add(request)
     }
 
+    // Function that allows us to validate the amount to be lend, the content and length of the field.
     fun validateField(): Boolean {
         if (fieldsValidator(context, editLendAmount, "onlyNumbers", 6,
             7, true)) {

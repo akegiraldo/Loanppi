@@ -79,7 +79,7 @@ class invest_details(bundle1: Bundle, bundle2: Bundle?) : Fragment() {
             investStack = amountRemaining
         }
 
-        // Listen changes on edit invest amount and calculates loan values
+        // Listen changes on edit invest amount and calculates investment values
         editInvestAmount.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 val investAmountStr = editInvestAmount.text.toString()
