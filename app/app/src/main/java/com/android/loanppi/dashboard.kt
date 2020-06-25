@@ -23,6 +23,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
 class dashboard : AppCompatActivity() {
+    // Data from login
     private lateinit var userType: String
     private lateinit var accessWith: String
     private lateinit var accessFrom: String
@@ -30,7 +31,7 @@ class dashboard : AppCompatActivity() {
     private var account: Bundle? = Bundle()
     private var bundle: Bundle? = Bundle()
 
-    // Toggle color on selected fragment
+    // Selected fragment button
     private lateinit var currentIcon: TextView
     private lateinit var currentText: TextView
 
@@ -41,6 +42,7 @@ class dashboard : AppCompatActivity() {
 
         val iconManager = icon_manager()
 
+        // Get textview from dashboard bar to set typeface
         findViewById<TextView>(R.id.bar_icon_home).setTypeface(iconManager
             .get_icons<Typeface>("ionicons.ttf", this))
         findViewById<TextView>(R.id.bar_icon_deal).setTypeface(iconManager
@@ -51,12 +53,14 @@ class dashboard : AppCompatActivity() {
             .get_icons<Typeface>("ionicons.ttf", this))
 
 
+        // Get info from login
         bundle = intent.extras
         accessInfo = bundle?.getBundle("accessInfo") as Bundle
 
         accessWith = accessInfo?.get("accessWith") as String
         accessFrom = accessInfo?.get("accessFrom") as String
 
+        // Update info depending of access method
         if (accessFrom == "login") {
             account = bundle?.getBundle("account") as Bundle
             userType = account?.get("userType").toString()
@@ -65,6 +69,7 @@ class dashboard : AppCompatActivity() {
             userType = accessInfo?.get("userType") as String
         }
 
+        // Asign the respective icon depending of user role
         if (userType == "worker") {
             findViewById<TextView>(R.id.bar_icon_deal).setText(getString(R.string.icon_lend))
             findViewById<TextView>(R.id.bar_txt_deal).setText(getString(R.string.txt_lend))
@@ -77,10 +82,12 @@ class dashboard : AppCompatActivity() {
             findViewById<TextView>(R.id.bar_txt_my_business).setText(getString(R.string.txt_my_investments))
         }
 
+        // Set the main fragment as current
         currentIcon = findViewById(R.id.bar_icon_home)
         currentText = findViewById(R.id.bar_txt_home)
         toggleColor(currentIcon, currentText)
 
+        // Decide fragment to load depending of access from
         if (accessFrom == "signup") {
             loadFragment(profile(bundle))
             findViewById<ConstraintLayout>(R.id.dash_menu_bar).visibility = View.INVISIBLE
@@ -89,7 +96,7 @@ class dashboard : AppCompatActivity() {
             selectFragment("main")
         }
 
-        // Load main
+        // Functions that listening when home icon or text is clicked
         findViewById<TextView>(R.id.bar_icon_home).setOnClickListener(View.OnClickListener {
             /*val myFragment: MyFragment =
             fragmentManager.findFragmentByTag("MY_FRAGMENT") as MyFragment
@@ -102,7 +109,7 @@ class dashboard : AppCompatActivity() {
             toggleColor(findViewById(R.id.bar_icon_home), findViewById(R.id.bar_txt_home))
         })
 
-        // Load deal
+        // Function that listening when deal icon or text is clicked
         findViewById<TextView>(R.id.bar_icon_deal).setOnClickListener(View.OnClickListener {
             selectFragment("deal")
             toggleColor(findViewById(R.id.bar_icon_deal), findViewById(R.id.bar_txt_deal))
@@ -112,39 +119,17 @@ class dashboard : AppCompatActivity() {
             toggleColor(findViewById(R.id.bar_icon_deal), findViewById(R.id.bar_txt_deal))
         })
 
-        /*if (myLoan.get("status") != "loading") {
-            if (myLoan.get("status") == "not_found") {
-                replaceFragment(lend(bundle), parentFragmentManager)
-            } else {
-                Toast.makeText(context, "Ya tienes un préstamo activo", Toast.LENGTH_LONG)
-                    .show()
-            }
-    }
-    if (myLoan.get("status") != "loading") {
-            if (myLoan.get("status") != "not_found") {
-                replaceFragment(my_loan(bundle), parentFragmentManager)
-            } else {
-                Toast.makeText(context, "Debes solicitar un préstamo primero", Toast.LENGTH_LONG).show()
-            }
-    }*/
-
-        // Load my business
+        // Function that listening when my business icon or text is clicked
         findViewById<TextView>(R.id.bar_icon_my_business).setOnClickListener(View.OnClickListener {
             selectFragment("my_business")
-            toggleColor(
-                findViewById(R.id.bar_icon_my_business),
-                findViewById(R.id.bar_txt_my_business)
-            )
+            toggleColor(findViewById(R.id.bar_icon_my_business), findViewById(R.id.bar_txt_my_business))
         })
         findViewById<TextView>(R.id.bar_txt_my_business).setOnClickListener(View.OnClickListener {
             selectFragment("my_business")
-            toggleColor(
-                findViewById(R.id.bar_icon_my_business),
-                findViewById(R.id.bar_txt_my_business)
-            )
+            toggleColor(findViewById(R.id.bar_icon_my_business), findViewById(R.id.bar_txt_my_business))
         })
 
-        // Load profile
+        // Function that listening when profile icon or text is clicked
         findViewById<TextView>(R.id.bar_icon_profile).setOnClickListener(View.OnClickListener {
             selectFragment("profile")
             toggleColor(findViewById(R.id.bar_icon_profile), findViewById(R.id.bar_txt_profile))
@@ -155,6 +140,7 @@ class dashboard : AppCompatActivity() {
         })
     }
 
+    // Function that create a menu depending of access from
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
         if (accessFrom == "signup") {
@@ -165,6 +151,7 @@ class dashboard : AppCompatActivity() {
         return true
     }
 
+    // Function that allows know menu item selected
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle item selection
         return when (item.itemId) {
@@ -188,7 +175,7 @@ class dashboard : AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
-    // Function to finish the current session
+    // Function to finish the current session access method
     private fun signOut() {
         if (accessWith == "google") {
             val gso = accessInfo?.get("gso") as GoogleSignInOptions
@@ -205,7 +192,7 @@ class dashboard : AppCompatActivity() {
         finish()
     }
 
-    // Load main segment
+    // Load fragment from dashboard bar depending of user role
     fun selectFragment(fragmentName: String) {
         if (userType == "worker")
             when (fragmentName) {
@@ -225,6 +212,7 @@ class dashboard : AppCompatActivity() {
             }
     }
 
+    // Function that change the color of clicked button
     fun toggleColor(icon: TextView, text: TextView) {
         currentIcon.setTextColor(getColor(R.color.textPrimary))
         currentText.setTextColor(getColor(R.color.textPrimary))

@@ -46,6 +46,7 @@ class invest_details(bundle1: Bundle, bundle2: Bundle?) : Fragment() {
     private var valueToReturnMonthly = 0.0F
     private var valueToReturnWeekly = 0.0F
 
+    // User invest stack
     private var investStack = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +60,7 @@ class invest_details(bundle1: Bundle, bundle2: Bundle?) : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_invest_details, container, false)
 
+        // Get textviews and edittext from invest details fragment
         editInvestAmount = view.findViewById(R.id.edit_invest_amount)
         txtMaxInvestAmount = view.findViewById(R.id.txt_value_max_invest_amount)
         valTimeToReturn = view.findViewById(R.id.txt_value_time_to_return)
@@ -66,17 +68,18 @@ class invest_details(bundle1: Bundle, bundle2: Bundle?) : Fragment() {
         valReturnMonthly = view.findViewById(R.id.txt_value_return_monthly)
         valInterestsWins = view.findViewById(R.id.txt_value_interests_wins)
         valReturnTotal = view.findViewById(R.id.txt_value_return_total)
-
         btnInvest = view.findViewById(R.id.btn_let_invest)
 
-        val copFormat: NumberFormat = NumberFormat.getCurrencyInstance()
         copFormat.maximumFractionDigits = 0
+
+        // Check the value of the investstack to limit it to the remaining amount
         investStack = loanData.get("investStack").toString().toInt()
         val amountRemaining = loanData.get("amountRemaining").toString().toInt()
         if (investStack > amountRemaining) {
             investStack = amountRemaining
         }
 
+        // Function that listening changes on edit invest amount and calculates
         editInvestAmount.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 val investAmountStr = editInvestAmount.text.toString()
