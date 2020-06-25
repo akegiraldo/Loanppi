@@ -60,7 +60,7 @@ class invest_details(bundle1: Bundle, bundle2: Bundle?) : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_invest_details, container, false)
 
-        // Get textviews and edittext from invest details fragment
+        // Get textviews and edittext from fragment
         editInvestAmount = view.findViewById(R.id.edit_invest_amount)
         txtMaxInvestAmount = view.findViewById(R.id.txt_value_max_invest_amount)
         valTimeToReturn = view.findViewById(R.id.txt_value_time_to_return)
@@ -79,7 +79,7 @@ class invest_details(bundle1: Bundle, bundle2: Bundle?) : Fragment() {
             investStack = amountRemaining
         }
 
-        // Function that listening changes on edit invest amount and calculates
+        // Listen changes on edit invest amount and calculates loan values
         editInvestAmount.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 val investAmountStr = editInvestAmount.text.toString()
@@ -114,6 +114,8 @@ class invest_details(bundle1: Bundle, bundle2: Bundle?) : Fragment() {
         editInvestAmount.setText(investStack.toString())
         txtMaxInvestAmount.setText(copFormat.format(investStack))
 
+        // Listen when the new inversion button is clicked, validate the values and call the
+        // function that makes the request,
         btnInvest.setOnClickListener(View.OnClickListener {
             if (validateField()) {
                 postNewInvestment()
@@ -123,12 +125,14 @@ class invest_details(bundle1: Bundle, bundle2: Bundle?) : Fragment() {
         return view
     }
 
+    // Function that makes the request to the server to register a new investment
     fun postNewInvestment() {
         val url = "http://loanppi.kevingiraldo.tech/app/api/v1/new_investment/"
         val investment = JSONObject()
 
         val loanShare = investAmount.toFloat() / loanData.get("loanAmount").toString().toFloat()
 
+        // Save the values to be sent to the server
         investment.put("moneyInvestment", investAmount)
         investment.put("idInvestor", account?.get("userId"))
         investment.put("idNeed", loanData.get("idNeed"))
@@ -138,10 +142,11 @@ class invest_details(bundle1: Bundle, bundle2: Bundle?) : Fragment() {
         investment.put("valueToReturnWeekly", valueToReturnWeekly)
         investment.put("interestsWins", interestsWins)
 
+        // I create the request. In case of success I save the values in a variable and call
+        // the fragment in charge. On the contrary, I report the error.
         val queue = Volley.newRequestQueue(context)
         val request = JsonObjectRequest(Request.Method.POST, url, investment,
             Response.Listener { response ->
-                println("RESPONSE:" + response.toString())
                 if (response.get("status") == "created") {
                     Toast.makeText(context,"Inversión registrada con éxito.", Toast.LENGTH_SHORT)
                         .show()
@@ -164,9 +169,13 @@ class invest_details(bundle1: Bundle, bundle2: Bundle?) : Fragment() {
                 println("Error en la petición: ${error.message}")
             }
         )
+
+        // Add the request to the RequestQueue.
         queue.add(request)
     }
 
+    // Function that allows us to validate the amount to be invested, the content and length
+    // of the field.
     fun validateField(): Boolean {
         if (fieldsValidator(context, editInvestAmount, "onlyNumbers", 6,
                 7, true)) {

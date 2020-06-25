@@ -24,7 +24,7 @@ import java.text.NumberFormat
  * create an instance of this fragment.
  */
 class invest_options(bundle: Bundle?) : Fragment() {
-    // Account
+    // User account information
     private var account = bundle
 
     // Cards views
@@ -37,6 +37,7 @@ class invest_options(bundle: Bundle?) : Fragment() {
     private val bundle_card_2 = Bundle()
     private val bundle_card_3 = Bundle()
 
+    // Cards list
     private lateinit var cardLists: ArrayList<Bundle>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,18 +51,21 @@ class invest_options(bundle: Bundle?) : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_invest_options, container, false)
 
+        // Get cards from fragment
         card_1 = view.findViewById(R.id.card_1)
         card_2 = view.findViewById(R.id.card_2)
         card_3 = view.findViewById(R.id.card_3)
 
+        // Create and add to a list the information packages of the three cards
         cardLists = ArrayList()
-
         cardLists.add(bundle_card_1)
         cardLists.add(bundle_card_2)
         cardLists.add(bundle_card_3)
 
+        // Call the function in charge of bringing the available needs
         getInvestOptions()
 
+        // Listen when a card is clicked and replace the fragment
         card_1?.setOnClickListener(View.OnClickListener {
             replaceFragment(invest_details(bundle_card_1, account), parentFragmentManager)
         })
@@ -75,15 +79,16 @@ class invest_options(bundle: Bundle?) : Fragment() {
         return view
     }
 
+    // I create the request. In case of success I save the values in a variable.
+    // On the contrary, I report the error.
     fun getInvestOptions() {
         val idInvestor = account?.get("userId").toString().toInt()
         val url = "http://loanppi.kevingiraldo.tech/app/api/v1/invest_options?idInvestor="+idInvestor
         val queue = Volley.newRequestQueue(context)
 
-        // Request a JSON response from the provided URL.
+        // Request a JSON Array response from the provided URL.
         val request = JsonArrayRequest(Request.Method.GET, url, null,
             Response.Listener { response ->
-                //println("RESPONSE options: " + response.toString() + " " + response[0].toString())
                 val optionsList = (response.get(0) as JSONArray)
                 var investStack = 0
                 var amountRemaining = 0
@@ -113,6 +118,8 @@ class invest_options(bundle: Bundle?) : Fragment() {
         queue.add(request)
     }
 
+    // Load in the cards the information that you have of the necessities verifying that those
+    // packages are not empty
     @SuppressLint("SetTextI18n")
     fun loadInvestOptions() {
         val copFormat: NumberFormat = NumberFormat.getCurrencyInstance()
