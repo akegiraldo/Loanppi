@@ -13,7 +13,6 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONArray
 import org.json.JSONObject
-import java.text.NumberFormat
 
 /**
  * A simple [Fragment] subclass.
@@ -21,6 +20,7 @@ import java.text.NumberFormat
  * create an instance of this fragment.
  */
 class my_investment_details(bundle: Bundle) : Fragment() {
+    // My investment package
     private val myInvestment = bundle
 
     // My investment values
@@ -43,7 +43,7 @@ class my_investment_details(bundle: Bundle) : Fragment() {
     private lateinit var feesData: ArrayList<String>
     private lateinit var feesArrayList: ArrayList<String>
 
-    // Others
+    // Scroll view
     private lateinit var scrollView: ScrollView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +58,7 @@ class my_investment_details(bundle: Bundle) : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_my_investment_details, container, false)
 
+        // Get textviews and edittext from fragment
         returnAmount = view.findViewById(R.id.txt_value_return_amount)
         interestsMonthlyAmount = view.findViewById(R.id.txt_invest_value_interests_monthly_amount)
         totalInterestsAmount = view.findViewById(R.id.txt_invest_value_total_interests_amount)
@@ -94,16 +95,18 @@ class my_investment_details(bundle: Bundle) : Fragment() {
         return view
     }
 
+    // Function that makes the request to the server to get an investment
     fun getInvestment() {
         val id = myInvestment.get("idInvestment").toString()
         val url = "http://loanppi.kevingiraldo.tech/app/api/v1/my_investment?idInvestment=" + id
         val queue = Volley.newRequestQueue(context)
 
         // Request a JSON response from the provided URL.
+        // Create the request. In case of success save the values in a variable and call the
+        // function that load the information in fragment fields. On the contrary, report the error.
         val request = JsonArrayRequest(
             Request.Method.GET, url, null,
             Response.Listener { response ->
-                println("MYINVESTMENT: " + response.toString())
                 if (response.length() > 0) {
                     val investment = response.get(0) as JSONObject
                     val paysList = response.get(1) as JSONArray
@@ -117,7 +120,7 @@ class my_investment_details(bundle: Bundle) : Fragment() {
                     loadMyInvestmentInfo()
                     loadPays(paysList)
                 } else {
-                    Toast.makeText(context, "No se encuentra ninguna inversión asociada al usuario.",
+                    Toast.makeText(context, "No se encuentra la inversión especificada.",
                         Toast.LENGTH_SHORT).show()
                 }
             },
@@ -127,10 +130,13 @@ class my_investment_details(bundle: Bundle) : Fragment() {
                 println("ERROR CONSULTA: " + it.toString())
             })
 
-// Add the request to the RequestQueue.
+        // Add the request to the RequestQueue.
         queue.add(request)
     }
 
+
+    // It takes the information of the package inversion obtained in the request to the server and
+    // adds it in the fields of the fragment
     fun loadMyInvestmentInfo() {
         val valueDuesMonthlyAmount = myInvestment.get("valueToReturnWeekly").toString().toFloat() * 4
         val valueTotalInterestsAmount = myInvestment.get("interestsWins").toString().toFloat()
@@ -156,8 +162,9 @@ class my_investment_details(bundle: Bundle) : Fragment() {
         progressPercent = (valueTotalReturned / myInvestment.get("returnTotal").toString().toFloat()) * 100
     }
 
+    // Runs through a JSONArray, gets the necessary information and enters it into a new array
+    // list as it notifies the view adapter to show the user each change
     fun loadPays(feesList: JSONArray) {
-        println("feesList: " + feesList.toString())
         for (i in 0..(feesList.length() - 1)) {
             feesData.add((i + 1).toString())
             feesData.add(feesList.getJSONObject(i).get("investorShare").toString())
@@ -168,6 +175,7 @@ class my_investment_details(bundle: Bundle) : Fragment() {
         }
     }
 
+    // It obtains a list of quotas and returns this information in a string
     fun getStringFromArray(feesData: ArrayList<String>): String {
         copFormat.maximumFractionDigits = 0
         var string = ""

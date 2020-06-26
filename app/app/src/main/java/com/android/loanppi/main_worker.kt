@@ -27,10 +27,12 @@ import org.json.JSONObject
  * create an instance of this fragment.
  */
 class main_worker(bundle: Bundle?) : Fragment() {
+    // User account info
     private lateinit var accessInfo: Bundle
     private lateinit var account: Bundle
-    private var myLoan = Bundle()
     private var bundle = bundle
+
+    private var myLoan = Bundle()
 
     // Main worker values
     private var valueToPayWeekly = 0.0f
@@ -47,10 +49,12 @@ class main_worker(bundle: Bundle?) : Fragment() {
     private lateinit var gettingMoney: TextView
 
     // Payment fields
+    private lateinit var editPaymentAmount: EditText
     private lateinit var paymentBtnLetPay: Button
     private lateinit var paymentValueWeeklyFee: TextView
     private lateinit var paymentValueAmountRemaining: TextView
     private lateinit var paymentValueAmountPaid: TextView
+
     private var paymentValueAmount: Float = 0.0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,9 +72,12 @@ class main_worker(bundle: Bundle?) : Fragment() {
         account = bundle?.getBundle("account") as Bundle
         myLoan.putString("status", "loading")
         bundle?.putBundle("myLoan", myLoan)
+
+        // Calls the function responsible for checking whether the user has currently
+        // active loans
         getLoan("main")
 
-        val firstName: String? = account.getString("firstName")
+        // Get textviews and edittext from fragment
         btnOpenPayment = view.findViewById(R.id.btn_open_payment)
         valueAmountRemaining = view.findViewById(R.id.txt_main_value_amount_remaining)
         valueFeeNumber = view.findViewById(R.id.txt_main_value_your_fee_number)
@@ -80,7 +87,10 @@ class main_worker(bundle: Bundle?) : Fragment() {
         progressBar = view.findViewById(R.id.bar_main_progress_moto_bar)
         gettingMoney = view.findViewById(R.id.txt_main_getting_money)
 
+        // Loads the photo and the first name of the user
+        val firstName: String? = account.getString("firstName")
         var urlPhoto: String? = ""
+
         if (accessInfo.get("accessWith") == "facebook") {
             val facebookAccount = accessInfo.get("facebookAccount") as Bundle
             urlPhoto = facebookAccount.get("urlUserPhoto") as String
@@ -92,6 +102,7 @@ class main_worker(bundle: Bundle?) : Fragment() {
         view.findViewById<TextView>(R.id.txt_grettings).setText("Hola, " + firstName)
         Glide.with(this).load(urlPhoto).into(view.findViewById(R.id.img_user_photo))
 
+        // Listen when pay button is clicked and call function that show payment window
         btnOpenPayment.setOnClickListener(View.OnClickListener {
             showPaymentWindow()
         })
@@ -99,12 +110,16 @@ class main_worker(bundle: Bundle?) : Fragment() {
         return view
     }
 
+    // Function that makes the request to the server to get user loan
     fun getLoan(from: String) {
         val id = account.get("userId")
         val url = "http://loanppi.kevingiraldo.tech/app/api/v1/my_loan?idWorker="+id
         val queue = Volley.newRequestQueue(context)
 
         // Request a JSON response from the provided URL.
+        // Create the request. If you have any active loans calculates information about it and calls
+        // the function responsible for displaying this data. Otherwise, it calls the function in
+        // charge of showing a message encouraging to lend
         val request = JsonArrayRequest(Request.Method.GET, url, null,
             Response.Listener { response ->
                 if (response.length() > 0) {
@@ -131,8 +146,6 @@ class main_worker(bundle: Bundle?) : Fragment() {
                         loadPaymentInfo()
                     }
                 } else {
-                    /*Toast.makeText(context, "No se encuentra ningún préstamo asociado al usuario.",
-                        Toast.LENGTH_LONG).show()*/
                     myLoan.putString("status", "not_found")
                     loadMainFields("hide")
                 }
@@ -147,6 +160,8 @@ class main_worker(bundle: Bundle?) : Fragment() {
         queue.add(request)
     }
 
+    // Loads the information obtained to the user's main fragment depending on whether or not he
+    // has an active loan
     fun loadMainInfo() {
         valueToPayWeekly = myLoan.get("valueToPayWeekly").toString().toFloat()
         val goal = myLoan.get("totalToPay").toString().toFloat()
@@ -180,7 +195,7 @@ class main_worker(bundle: Bundle?) : Fragment() {
         val builder = AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.dialog_payment, null)
-        val editPaymentAmount: EditText = dialogLayout.findViewById(R.id.edit_pay_amount)
+        editPaymentAmount  = dialogLayout.findViewById(R.id.edit_pay_amount)
 
         paymentBtnLetPay = dialogLayout.findViewById(R.id.btn_let_pay)
         paymentValueWeeklyFee = dialogLayout.findViewById(R.id.txt_payment_value_your_weekly_fee)
@@ -198,35 +213,47 @@ class main_worker(bundle: Bundle?) : Fragment() {
         builder.setView(dialogLayout).setNegativeButton(R.string.cancel) { dialog, which -> }
         builder.show()
 
+        // Listen when the pay button is clicked, ask to validate the content of the field and
+        // call the function in charge of making the payment
         paymentBtnLetPay.setOnClickListener(View.OnClickListener {
-            paymentValueAmount = editPaymentAmount.text.toString().toFloat()
-            if (fieldsValidator(context, editPaymentAmount, "onlyNumbers", 4,
-                    7, true)) {
-                val diference = amountRemaining - paymentValueAmount
-                println("valueToPay: " + paymentValueAmount + " diference: " + diference)
-                if (diference > -1 && diference < 1) {
-                    paymentValueAmount = amountRemaining
-                    letPay()
-                } else if (diference < -1) {
-                    Toast.makeText(context, "El valor a pagar no puede ser superior a la cantidad" +
-                            " restante.", Toast.LENGTH_LONG).show()
-                } else if (diference > 1 && diference < 5000) {
-                    Toast.makeText(context, "No puedes dejar una deuda inferior a 5000.",
-                        Toast.LENGTH_LONG).show()
-                    editPaymentAmount.setText(amountRemaining.toInt().toString())
-                } else {
-                    letPay()
-                }
+            if (validateFields()) {
+                letPay()
             }
         })
     }
 
+    // Function that validate the content of the field and return true ir all its okay or false
+    // in other case
+    fun validateFields(): Boolean {
+        paymentValueAmount = editPaymentAmount.text.toString().toFloat()
+        if (fieldsValidator(context, editPaymentAmount, "onlyNumbers", 4,
+                7, true)) {
+            val diference = amountRemaining - paymentValueAmount
+            if (diference > -1 && diference < 1) {
+                paymentValueAmount = amountRemaining
+                return true
+            } else if (diference < -1) {
+                Toast.makeText(context, "El valor a pagar no puede ser superior a la cantidad" +
+                        " restante.", Toast.LENGTH_LONG).show()
+            } else if (diference > 1 && diference < 5000) {
+                Toast.makeText(context, "No puedes dejar una deuda inferior a 5000.",
+                    Toast.LENGTH_LONG).show()
+                editPaymentAmount.setText(amountRemaining.toInt().toString())
+            } else {
+                return true
+            }
+        }
+        return false
+    }
+
+    // Loads the loan information into the payment window
     fun loadPaymentInfo() {
         paymentValueAmountPaid.setText(copFormat.format(amountPaid))
         paymentValueAmountRemaining.setText(copFormat.format(amountRemaining))
         paymentValueWeeklyFee.setText(copFormat.format(valueToPayWeekly))
     }
 
+    // Function that makes the request to the server to register a new pay
     fun letPay() {
         val url = "http://loanppi.kevingiraldo.tech/app/api/v1/payment/"
         val payment = JSONObject()
@@ -235,6 +262,8 @@ class main_worker(bundle: Bundle?) : Fragment() {
         payment.put("idNeed", myLoan.get("idNeed"))
         payment.put("payment", paymentValueAmount)
 
+        // Create the request. In case of success call the function that gets the current loan.
+        // On the contrary, report the error.
         val queue = Volley.newRequestQueue(context)
         val request = JsonObjectRequest(Request.Method.POST, url, payment,
             Response.Listener { response ->
@@ -254,6 +283,8 @@ class main_worker(bundle: Bundle?) : Fragment() {
         queue.add(request)
     }
 
+    // Loads the fields to the user's main fragment depending on whether or not he
+    // has at least one active loan
     fun loadMainFields(visibility: String) {
         if (visibility == "show") {
             view?.findViewById<TextView>(R.id.txt_main_amount_remaining)?.isVisible = true

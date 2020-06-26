@@ -25,7 +25,7 @@ import org.json.JSONObject
  * create an instance of this fragment.
  */
 class main_investor(bundle: Bundle?) : Fragment() {
-    // Account info
+    // User account info
     private lateinit var accessInfo: Bundle
     private lateinit var account: Bundle
     private var bundle: Bundle? = bundle
@@ -54,10 +54,10 @@ class main_investor(bundle: Bundle?) : Fragment() {
         valueFullInvestedAmount = view.findViewById(R.id.txt_main_value_full_invested_amount)
         valueFullEarns = view.findViewById(R.id.txt_main_value_full_earns)
 
-        // Upload the photo and the first name of the user
+        // Loads the photo and the first name of the user
         val firstName: String? = account.getString("firstName")
-
         var urlPhoto: String? = ""
+
         if (accessInfo.get("accessWith") == "facebook") {
             val facebookAccount = accessInfo.get("facebookAccount") as Bundle
             urlPhoto = facebookAccount.get("urlUserPhoto") as String
