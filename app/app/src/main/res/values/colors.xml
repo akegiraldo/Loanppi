@@ -14,10 +14,10 @@
     <color name="transparent">#00FFFFFF</color>
     <color name="facebook">#3B5998</color>
     <color name="google">#DB4437</color>
+    <color name="gray">#B5BCBCBC</color>
 
     // Buttons
     <color name="btn_white">#BCFFFFFF</color>
     <color name="btn_orange">#FFFF441F</color>
-    <color name="btn_dashboard">#B5BCBCBC</color>
 
 </resources>

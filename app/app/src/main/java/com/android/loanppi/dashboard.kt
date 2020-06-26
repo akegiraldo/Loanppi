@@ -1,19 +1,14 @@
 package com.android.loanppi
 
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.Constraints
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.facebook.AccessToken
 import com.facebook.GraphRequest
@@ -21,6 +16,8 @@ import com.facebook.HttpMethod
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.material.bottomnavigation.BottomNavigationView
+
 
 class dashboard : AppCompatActivity() {
     // Data from login
@@ -31,27 +28,12 @@ class dashboard : AppCompatActivity() {
     private var account: Bundle? = Bundle()
     private var bundle: Bundle? = Bundle()
 
-    // Selected fragment button
-    private lateinit var currentIcon: TextView
-    private lateinit var currentText: TextView
+    private lateinit var dashMenuBarContainer: BottomNavigationView
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
-
-        val iconManager = icon_manager()
-
-        // Get textview from dashboard bar to set typeface
-        findViewById<TextView>(R.id.bar_icon_home).setTypeface(iconManager
-            .get_icons<Typeface>("ionicons.ttf", this))
-        findViewById<TextView>(R.id.bar_icon_deal).setTypeface(iconManager
-            .get_icons<Typeface>("ionicons.ttf", this))
-        findViewById<TextView>(R.id.bar_icon_my_business).setTypeface(iconManager
-            .get_icons<Typeface>("ionicons.ttf", this))
-        findViewById<TextView>(R.id.bar_icon_profile).setTypeface(iconManager
-            .get_icons<Typeface>("ionicons.ttf", this))
-
 
         // Get info from login
         bundle = intent.extras
@@ -69,76 +51,41 @@ class dashboard : AppCompatActivity() {
             userType = accessInfo?.get("userType") as String
         }
 
-        // Asign the respective icon depending of user role
-        if (userType == "worker") {
-            findViewById<TextView>(R.id.bar_icon_deal).setText(getString(R.string.icon_lend))
-            findViewById<TextView>(R.id.bar_txt_deal).setText(getString(R.string.txt_lend))
-            findViewById<TextView>(R.id.bar_icon_my_business).setText(getString(R.string.icon_my_loan))
-            findViewById<TextView>(R.id.bar_txt_my_business).setText(getString(R.string.txt_my_loan))
-        } else {
-            findViewById<TextView>(R.id.bar_icon_deal).setText(getString(R.string.icon_invest))
-            findViewById<TextView>(R.id.bar_txt_deal).setText(getString(R.string.txt_invest))
-            findViewById<TextView>(R.id.bar_icon_my_business).setText(getString(R.string.icon_my_investments))
-            findViewById<TextView>(R.id.bar_txt_my_business).setText(getString(R.string.txt_my_investments))
-        }
-
-        // Set the main fragment as current
-        currentIcon = findViewById(R.id.bar_icon_home)
-        currentText = findViewById(R.id.bar_txt_home)
-        toggleColor(currentIcon, currentText)
+        dashMenuBarContainer = findViewById(R.id.dash_menu_bar_container)
 
         // Decide fragment to load depending of access from
         if (accessFrom == "signup") {
             loadFragment(profile(bundle))
-            findViewById<ConstraintLayout>(R.id.dash_menu_bar).visibility = View.INVISIBLE
-            findViewById<ConstraintLayout>(R.id.dash_menu_bar).isEnabled = false
+            findViewById<ConstraintLayout>(R.id.dash_menu_bar_container).visibility = View.INVISIBLE
+            findViewById<ConstraintLayout>(R.id.dash_menu_bar_container).isEnabled = false
         } else {
-            selectFragment("main")
+            if (userType == "worker") {
+                replaceFragment(main_worker(bundle), "main_worker")
+                dashMenuBarContainer.inflateMenu(R.menu.worker_dash_bar)
+            } else {
+                replaceFragment(main_investor(bundle), "main_investor")
+                dashMenuBarContainer.inflateMenu(R.menu.investor_dash_bar)
+            }
         }
 
-        // Functions that listening when home icon or text is clicked
-        findViewById<TextView>(R.id.bar_icon_home).setOnClickListener(View.OnClickListener {
-            /*val myFragment: MyFragment =
-            fragmentManager.findFragmentByTag("MY_FRAGMENT") as MyFragment
-            if ()*/
-            selectFragment("main")
-            toggleColor(findViewById(R.id.bar_icon_home), findViewById(R.id.bar_txt_home))
-        })
-        findViewById<TextView>(R.id.bar_txt_home).setOnClickListener(View.OnClickListener {
-            selectFragment("main")
-            toggleColor(findViewById(R.id.bar_icon_home), findViewById(R.id.bar_txt_home))
-        })
-
-        // Function that listening when deal icon or text is clicked
-        findViewById<TextView>(R.id.bar_icon_deal).setOnClickListener(View.OnClickListener {
-            selectFragment("deal")
-            toggleColor(findViewById(R.id.bar_icon_deal), findViewById(R.id.bar_txt_deal))
-        })
-        findViewById<TextView>(R.id.bar_txt_deal).setOnClickListener(View.OnClickListener {
-            selectFragment("deal")
-            toggleColor(findViewById(R.id.bar_icon_deal), findViewById(R.id.bar_txt_deal))
-        })
-
-        // Function that listening when my business icon or text is clicked
-        findViewById<TextView>(R.id.bar_icon_my_business).setOnClickListener(View.OnClickListener {
-            selectFragment("my_business")
-            toggleColor(findViewById(R.id.bar_icon_my_business), findViewById(R.id.bar_txt_my_business))
-        })
-        findViewById<TextView>(R.id.bar_txt_my_business).setOnClickListener(View.OnClickListener {
-            selectFragment("my_business")
-            toggleColor(findViewById(R.id.bar_icon_my_business), findViewById(R.id.bar_txt_my_business))
-        })
-
-        // Function that listening when profile icon or text is clicked
-        findViewById<TextView>(R.id.bar_icon_profile).setOnClickListener(View.OnClickListener {
-            selectFragment("profile")
-            toggleColor(findViewById(R.id.bar_icon_profile), findViewById(R.id.bar_txt_profile))
-        })
-        findViewById<TextView>(R.id.bar_txt_profile).setOnClickListener(View.OnClickListener {
-            selectFragment("profile")
-            toggleColor(findViewById(R.id.bar_icon_profile), findViewById(R.id.bar_txt_profile))
-        })
+        //dashMenuBarContainer.setOnNavigationItemSelectedListener(barListener)
     }
+
+    /*// Load fragment from dashboard bar depending of user role
+    private val barListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId) {
+            R.id.nav_i_home -> replaceFragment(main_investor(bundle), "main_investor")
+            R.id.nav_i_invest -> replaceFragment(invest_options(account), "invest")
+            R.id.nav_i_my_investments -> replaceFragment(my_investment_options(bundle), "my_investment")
+            R.id.nav_i_profile -> replaceFragment(profile(bundle), "profile")
+
+            R.id.nav_w_home -> replaceFragment(main_worker(bundle), "main_worker")
+            R.id.nav_w_lend -> replaceFragment(lend(bundle), "lend")
+            R.id.nav_w_my_loan -> replaceFragment(my_loan(bundle), "my_loan")
+            R.id.nav_w_profile -> replaceFragment(profile(bundle), "profile")
+        }
+        true
+    }*/
 
     // Function that create a menu depending of access from
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -190,35 +137,5 @@ class dashboard : AppCompatActivity() {
         }
 
         finish()
-    }
-
-    // Load fragment from dashboard bar depending of user role
-    fun selectFragment(fragmentName: String) {
-        if (userType == "worker")
-            when (fragmentName) {
-                "main" -> replaceFragment(main_worker(bundle), "main_worker")
-                "deal" -> replaceFragment(lend(bundle), "lend")
-                "my_business" -> replaceFragment(my_loan(bundle), "my_loan")
-                "profile" -> replaceFragment(profile(bundle), "profile")
-                else -> {}
-            }
-        else
-            when (fragmentName) {
-                "main" -> replaceFragment(main_investor(bundle), "main_investor")
-                "deal" -> replaceFragment(invest_options(account), "invest")
-                "my_business" -> replaceFragment(my_investment_options(bundle), "my_investment")
-                "profile" -> replaceFragment(profile(bundle), "profile")
-                else -> {}
-            }
-    }
-
-    // Function that change the color of clicked button
-    fun toggleColor(icon: TextView, text: TextView) {
-        currentIcon.setTextColor(getColor(R.color.textPrimary))
-        currentText.setTextColor(getColor(R.color.textPrimary))
-        currentIcon = icon
-        currentText = text
-        currentIcon.setTextColor(getColor(R.color.loanppi))
-        currentText.setTextColor(getColor(R.color.loanppi))
     }
 }

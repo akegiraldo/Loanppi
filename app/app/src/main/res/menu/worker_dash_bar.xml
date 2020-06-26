@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_w_home"
+        android:title="Inicio"
+        android:icon="@drawable/ic_outline_home_24">
+    </item>
+    <item android:id="@+id/nav_w_lend"
+        android:title="Invertir"
+        android:icon="@drawable/ic_outline_attach_money_24">
+    </item>
+    <item android:id="@+id/nav_w_my_loan"
+        android:title="Inversiones"
+        android:icon="@drawable/ic_outline_business_center_24">
+    </item>
+    <item android:id="@+id/nav_w_profile"
+        android:title="Perfil"
+        android:icon="@drawable/ic_outline_person_outline_24">
+    </item>
+</menu>
