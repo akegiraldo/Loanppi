@@ -32,28 +32,11 @@ class NotificationService : FirebaseMessagingService() {
         }
     }
 
-    /*override fun onNewToken(token: String) {
-        Log.d(TAG, "Refreshed token: $token")
-
-        // If you want to send messages to this application instance or
-        // manage this apps subscriptions on the server side, send the
-        // Instance ID token to your app server.
-        sendRegistrationToServer(token)
-    }*/
-    // [END on_new_token]
-
-    /*private fun scheduleJob() {
-        // [START dispatch_job]
-        val work = OneTimeWorkRequest.Builder(landing::class.java).build()
-        WorkManager.getInstance().beginWith(work).enqueue()
-        // [END dispatch_job]
-    }*/
-
     private fun handleNow() {
         Log.d(TAG, "Short lived task is done.")
     }
 
-
+    // Show a notification to user
     private fun sendNotification(messageBody: String) {
         val intent = Intent(this, landing::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

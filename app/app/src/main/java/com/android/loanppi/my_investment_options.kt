@@ -45,6 +45,7 @@ class my_investment_options(bundle: Bundle?) : Fragment() {
 
         listView = view.findViewById(R.id.listview)
 
+        // Initializes all array lists and the listview adapter
         investmentData = ArrayList()
         investmentsListString = ArrayList()
         investmentsListArray = ArrayList()
@@ -53,27 +54,32 @@ class my_investment_options(bundle: Bundle?) : Fragment() {
 
         account = bundle?.getBundle("account") as Bundle
 
+        // Listen when a specific investment is selected from the list and call the function in
+        // charge of loading that investment in detail
         listView.setOnItemClickListener(object : OnItemClickListener {
             val investmentSelected = Bundle()
             override fun onItemClick(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
-                /*Toast.makeText(context, "You selected : ${listView.getItemAtPosition(position)}",
-                    Toast.LENGTH_SHORT).show()*/
                 investmentSelected.putString("idInvestment", investmentsListArray.get(position).get(2))
                 replaceFragment(my_investment_details(investmentSelected), parentFragmentManager)
             }
         })
 
+        // Call function that get list of user investments
         getInvestments()
 
         return view
     }
 
+    // Function that makes the request to the server to get a list of my investments
     fun getInvestments() {
         val id = account.get("userId")
         val url = "http://loanppi.kevingiraldo.tech/app/api/v1/my_investments?idInvestor=" + id
         val queue = Volley.newRequestQueue(context)
 
         // Request a JSON response from the provided URL.
+        // Create the request. In case of success save the values in a variable, then in the list of
+        // investments and notifies the view adapter to show the user each change. On the contrary,
+        // report that don't have active investments.
         val request = JsonArrayRequest(
             Request.Method.GET, url, null,
             Response.Listener { response ->
@@ -106,6 +112,7 @@ class my_investment_options(bundle: Bundle?) : Fragment() {
         queue.add(request)
     }
 
+    // It obtains a list of investments and returns this information in a string
     fun getStringFromArray(array: ArrayList<String>): String {
         val copFormat: NumberFormat = NumberFormat.getCurrencyInstance()
         copFormat.maximumFractionDigits = 0

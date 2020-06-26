@@ -23,10 +23,10 @@ import java.text.NumberFormat
  * create an instance of this fragment.
  */
 class my_loan(bundle: Bundle?) : Fragment() {
+    // User account information
     private lateinit var account: Bundle
     val bundle = bundle
     var myLoan = Bundle()
-
 
     // List of fees
     private lateinit var feesList: ListView
@@ -50,7 +50,7 @@ class my_loan(bundle: Bundle?) : Fragment() {
     private lateinit var dueAmount: TextView
     private lateinit var progressBar: SeekBar
 
-    // Others
+    // Scrollview
     private lateinit var scrollView: ScrollView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,6 +67,7 @@ class my_loan(bundle: Bundle?) : Fragment() {
         myLoan = bundle?.get("myLoan") as Bundle
         account = bundle.getBundle("account") as Bundle
 
+        // // Get textviews from fragment
         goalAmount = view.findViewById(R.id.txt_loan_value_goal_amount)
         interestsMonthlyAmount = view.findViewById(R.id.txt_loan_value_interests_monthly_amount)
         totalInterestsAmount = view.findViewById(R.id.txt_loan_value_total_interests_amount) as TextView
@@ -81,7 +82,7 @@ class my_loan(bundle: Bundle?) : Fragment() {
         feesList = view.findViewById(R.id.list_my_fees_paid)
         scrollView = view.findViewById(R.id.loan_scroll)
 
-
+        // Initializes all array lists and the listview adapter
         feesData = ArrayList()
         feesArrayList = ArrayList()
         arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, feesArrayList)
@@ -90,12 +91,13 @@ class my_loan(bundle: Bundle?) : Fragment() {
         // Get current loan
         getLoan()
 
+        // Listen to which part of the fragment is being touched, depending on this make a toggle
+        // to enable scrolling either in the layout or in the listview.
         scrollView.setOnTouchListener(OnTouchListener { v, event ->
             feesList.getParent()
                 .requestDisallowInterceptTouchEvent(false)
             false
         })
-
         feesList.setOnTouchListener(OnTouchListener { v, event ->
             v.parent.requestDisallowInterceptTouchEvent(true)
             false
@@ -104,12 +106,15 @@ class my_loan(bundle: Bundle?) : Fragment() {
         return view
     }
 
+    // Function that makes the request to the server to get user loan
     fun getLoan() {
         val id = account.get("userId")
         val url = "http://loanppi.kevingiraldo.tech/app/api/v1/my_loan?idWorker="+id
         val queue = Volley.newRequestQueue(context)
 
         // Request a JSON response from the provided URL.
+        // Create the request. If you have any active loans calculates information about it and calls
+        // the function responsible for displaying this data. Otherwise, show a message.
         val request = JsonArrayRequest(
             Request.Method.GET, url, null,
             Response.Listener { response ->
@@ -147,6 +152,8 @@ class my_loan(bundle: Bundle?) : Fragment() {
         queue.add(request)
     }
 
+    // It takes the information of the package loan obtained in the request to the server and
+    // adds it in the fields of the fragment
     fun loadMyLoanInfo() {
         val valueToPayWeekly = myLoan.get("valueToPayWeekly").toString().toFloat()
         val goal = myLoan.get("totalToPay").toString().toFloat()
@@ -180,8 +187,9 @@ class my_loan(bundle: Bundle?) : Fragment() {
         progressBar.progress = progressPercent.toInt()
     }
 
+    // Runs through a JSONArray, gets the necessary information and enters it into a new array
+    // list as it notifies the view adapter to show the user each change
     fun loadFees(feesList: JSONArray) {
-        println("feesList: " + feesList.toString())
         for (i in 0..(feesList.length() - 1)) {
             feesData.add((i + 1).toString())
             feesData.add(feesList.getJSONObject(i).get("payment").toString())
@@ -192,6 +200,7 @@ class my_loan(bundle: Bundle?) : Fragment() {
         }
     }
 
+    // It obtains a list of fees and returns this information in a string
     fun getStringFromArray(feesData: ArrayList<String>): String {
         copFormat.maximumFractionDigits = 0
         var string = ""

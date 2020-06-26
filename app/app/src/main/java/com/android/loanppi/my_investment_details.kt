@@ -73,6 +73,7 @@ class my_investment_details(bundle: Bundle) : Fragment() {
         feesList = view.findViewById(R.id.list_fees_returned)
         scrollView = view.findViewById(R.id.investment_scroll)
 
+        // Initializes all array lists and the listview adapter
         feesData = ArrayList()
         feesArrayList = ArrayList()
         arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, feesArrayList)
@@ -81,12 +82,13 @@ class my_investment_details(bundle: Bundle) : Fragment() {
         // Get selected investment
         getInvestment()
 
+        // Listen to which part of the fragment is being touched, depending on this make a toggle
+        // to enable scrolling either in the layout or in the listview.
         scrollView.setOnTouchListener(View.OnTouchListener { v, event ->
             feesList.getParent()
                 .requestDisallowInterceptTouchEvent(false)
             false
         })
-
         feesList.setOnTouchListener(View.OnTouchListener { v, event ->
             v.parent.requestDisallowInterceptTouchEvent(true)
             false
@@ -135,7 +137,7 @@ class my_investment_details(bundle: Bundle) : Fragment() {
     }
 
 
-    // It takes the information of the package inversion obtained in the request to the server and
+    // It takes the information of the package investment obtained in the request to the server and
     // adds it in the fields of the fragment
     fun loadMyInvestmentInfo() {
         val valueDuesMonthlyAmount = myInvestment.get("valueToReturnWeekly").toString().toFloat() * 4

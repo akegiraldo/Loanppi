@@ -31,6 +31,7 @@ import com.android.loanppi.fieldsValidator as fieldsValidator
  * create an instance of this fragment.
  */
 class profile(bundle: Bundle?) : Fragment() {
+    // User account information
     private var accessInfo: Bundle? = Bundle()
     private var bundle: Bundle? = bundle
 
@@ -58,6 +59,7 @@ class profile(bundle: Bundle?) : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
+        // Get edittexts from fragment
         editFirstName = view.findViewById(R.id.edit_first_name)
         editSecondName = view.findViewById(R.id.edit_second_name)
         editFirstLastName = view.findViewById(R.id.edit_first_last_name)
@@ -72,6 +74,8 @@ class profile(bundle: Bundle?) : Fragment() {
 
         accessInfo = bundle?.getBundle("accessInfo") as Bundle
 
+        // Depending on whether the user is registering or logging in, it calls up the
+        // respective functions.
         if (accessInfo?.get("accessFrom") == "signup") {
             if (accessInfo?.get("accessWith") == "google") {
                 loadGoogleInfo()
@@ -82,6 +86,8 @@ class profile(bundle: Bundle?) : Fragment() {
             loadAccountInfo()
         }
 
+        // Listen when you press the button to create a new user, check the fields and then call
+        // the function in charge of registering the new user
         btnSave.setOnClickListener(View.OnClickListener {
             if (validateFields() && accessInfo?.get("accessFrom") == "signup") {
                 createUser()
@@ -91,6 +97,7 @@ class profile(bundle: Bundle?) : Fragment() {
         return view
     }
 
+    // Function that makes the request to the server to register a new user
     fun createUser() {
         val url = "http://loanppi.kevingiraldo.tech/app/api/v1/new_user/"
         val user = JSONObject()
@@ -105,6 +112,9 @@ class profile(bundle: Bundle?) : Fragment() {
         user.put("homeAddress", editHomeAddress.text.toString())
         user.put("userType", accessInfo?.get("userType"))
 
+        // Create the request. In case of success close the current session and takes the
+        // user to the login. In case the user exists or cannot be registered, it shows the
+        // respective messages.
         val queue = Volley.newRequestQueue(context)
         val request = JsonObjectRequest(Request.Method.POST, url, user,
             Response.Listener { response ->
@@ -139,6 +149,8 @@ class profile(bundle: Bundle?) : Fragment() {
         queue.add(request)
     }
 
+    // Gets the user information from the Google account package and adds it to the fields
+    // in the fragment
     fun loadGoogleInfo() {
         val account = accessInfo?.get("googleAccount") as GoogleSignInAccount
         val email = account.email
@@ -167,6 +179,8 @@ class profile(bundle: Bundle?) : Fragment() {
         Glide.with(this).load(urlUserPhoto).into(imgUserPhoto)
     }
 
+    // Gets the user information from the Facebook account package and adds it to the fields
+    // in the fragment
     fun loadFacebookInfo() {
         val account = accessInfo?.get("facebookAccount") as Bundle
         val emailAddress = account.getString("emailAddress")
@@ -179,6 +193,7 @@ class profile(bundle: Bundle?) : Fragment() {
         Glide.with(this).load(urlUserPhoto).into(imgUserPhoto)
     }
 
+    // Gets the user information from the account package and adds it to the fields in the snippet
     fun loadAccountInfo() {
         val account = bundle?.getBundle("account") as Bundle
         editFirstName.setText(account.get("firstName").toString())
