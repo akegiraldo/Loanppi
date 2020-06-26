@@ -94,17 +94,8 @@
     // Login with Facebook
     <string name="facebook_app_id">245844573146164</string>
     <string name="fb_login_protocol_scheme">fb245844573146164</string>
-    
-    
-    // Icon test
-    <string name="icon_home">&#xf447;</string>
-    <string name="icon_profile">&#xf47d;</string>
-    <string name="icon_lend">&#xf352;</string>
-    <string name="icon_my_loan">&#xf3ed;</string>
-    <string name="icon_invest">&#xf4a5;</string>
-    <string name="icon_my_investments">&#xf3ed;</string>
 
-    // Dashboard buttons
+    // Dashboard bar texts
     <string name="txt_home">Inicio</string>
     <string name="txt_profile">Perfil</string>
     <string name="txt_lend">Prestar</string>

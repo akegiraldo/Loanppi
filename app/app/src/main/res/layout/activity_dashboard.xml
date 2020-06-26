@@ -15,6 +15,7 @@
         android:layout_marginBottom="60dp"
         android:background="@drawable/pattern_background"
         android:orientation="vertical">
+
     </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".dashboard">
+    tools:context=".main_investor">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:background="@color/background_inside"
             android:paddingBottom="16dp"
-            tools:context=".dashboard">
+            tools:context=".main_investor">
 
             <TextView
                 android:id="@+id/txt_grettings"

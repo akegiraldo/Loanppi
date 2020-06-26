@@ -8,7 +8,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.facebook.AccessToken
 import com.facebook.GraphRequest
@@ -56,8 +55,8 @@ class dashboard : AppCompatActivity() {
         // Decide fragment to load depending of access from
         if (accessFrom == "signup") {
             loadFragment(profile(bundle))
-            findViewById<ConstraintLayout>(R.id.dash_menu_bar_container).visibility = View.INVISIBLE
-            findViewById<ConstraintLayout>(R.id.dash_menu_bar_container).isEnabled = false
+            findViewById<BottomNavigationView>(R.id.dash_menu_bar_container).visibility = View.INVISIBLE
+            findViewById<BottomNavigationView>(R.id.dash_menu_bar_container).isEnabled = false
         } else {
             if (userType == "worker") {
                 replaceFragment(main_worker(bundle), "main_worker")
@@ -68,10 +67,10 @@ class dashboard : AppCompatActivity() {
             }
         }
 
-        //dashMenuBarContainer.setOnNavigationItemSelectedListener(barListener)
+        dashMenuBarContainer.setOnNavigationItemSelectedListener(barListener)
     }
 
-    /*// Load fragment from dashboard bar depending of user role
+    // Load fragment from dashboard bar depending of user role
     private val barListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.nav_i_home -> replaceFragment(main_investor(bundle), "main_investor")
@@ -85,7 +84,7 @@ class dashboard : AppCompatActivity() {
             R.id.nav_w_profile -> replaceFragment(profile(bundle), "profile")
         }
         true
-    }*/
+    }
 
     // Function that create a menu depending of access from
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

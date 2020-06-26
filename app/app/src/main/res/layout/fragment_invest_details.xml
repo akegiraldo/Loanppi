@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:background="@color/background_inside"
             android:paddingBottom="16dp"
-            tools:context=".dashboard">
+            tools:context=".invest_details">
 
             <TextView
                 android:id="@+id/txt_title_invest_f2"
