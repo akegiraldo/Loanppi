@@ -25,7 +25,8 @@ import java.text.NumberFormat
  */
 class invest_options(bundle: Bundle?) : Fragment() {
     // User account information
-    private var account = bundle
+    private var bundle = bundle
+    private lateinit var account: Bundle
 
     // Cards views
     private var card_1: View? = null
@@ -50,6 +51,8 @@ class invest_options(bundle: Bundle?) : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_invest_options, container, false)
+
+        account = bundle?.getBundle("account") as Bundle
 
         // Get cards from fragment
         card_1 = view.findViewById(R.id.card_1)

@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -68,21 +69,56 @@ class dashboard : AppCompatActivity() {
         }
 
         dashMenuBarContainer.setOnNavigationItemSelectedListener(barListener)
+
+        // Handle back button pressed
+        onBackPressedDispatcher.addCallback(this) {
+            val currentFragment = supportFragmentManager.findFragmentById(R.id.dashboard_container)
+                ?.javaClass?.name.toString().replace("com.android.loanppi.", "")
+
+            if (userType == "investor") {
+                if (currentFragment == "invest_options" || currentFragment == "my_investment_options"
+                    || currentFragment == "profile") {
+                    replaceFragment(main_investor(bundle), "main_investor")
+                    dashMenuBarContainer.selectedItemId = R.id.nav_i_home
+                } else {
+                    if (currentFragment == "invest_details") {
+                        replaceFragment(invest_options(bundle), "invest_options")
+                        dashMenuBarContainer.selectedItemId = R.id.nav_i_invest
+                    } else if (currentFragment == "my_investment_details") {
+                        replaceFragment(my_investment_options(bundle), "my_investment_options")
+                        dashMenuBarContainer.selectedItemId = R.id.nav_i_my_investments
+                    }
+                }
+            } else {
+                if (currentFragment == "lend" || currentFragment == "my_loan"
+                    || currentFragment == "profile") {
+                    replaceFragment(main_worker(bundle), "main_worker")
+                    dashMenuBarContainer.selectedItemId = R.id.nav_w_home
+                }
+            }
+        }
     }
 
     // Load fragment from dashboard bar depending of user role
     private val barListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        var newFragment: Fragment? = null
+        var tag = ""
         when (item.itemId) {
-            R.id.nav_i_home -> replaceFragment(main_investor(bundle), "main_investor")
-            R.id.nav_i_invest -> replaceFragment(invest_options(account), "invest")
-            R.id.nav_i_my_investments -> replaceFragment(my_investment_options(bundle), "my_investment")
-            R.id.nav_i_profile -> replaceFragment(profile(bundle), "profile")
+            R.id.nav_i_home -> { newFragment = main_investor(bundle); tag = "main_investor" }
+            R.id.nav_i_invest -> { newFragment = invest_options(bundle); tag = "invest_options" }
+            R.id.nav_i_my_investments -> { newFragment = my_investment_options(bundle); tag = "my_investment" }
+            R.id.nav_i_profile -> { newFragment = profile(bundle); tag = "profile" }
 
-            R.id.nav_w_home -> replaceFragment(main_worker(bundle), "main_worker")
-            R.id.nav_w_lend -> replaceFragment(lend(bundle), "lend")
-            R.id.nav_w_my_loan -> replaceFragment(my_loan(bundle), "my_loan")
-            R.id.nav_w_profile -> replaceFragment(profile(bundle), "profile")
+            R.id.nav_w_home -> { newFragment = main_worker(bundle); tag = "main_worker" }
+            R.id.nav_w_lend -> { newFragment = lend(bundle); tag = "lend" }
+            R.id.nav_w_my_loan -> { newFragment = my_loan(bundle); tag = "my_loan" }
+            R.id.nav_w_profile -> { newFragment = profile(bundle); tag = "profile" }
         }
+
+        if (newFragment != null) {
+            replaceFragment(newFragment, tag)
+        }
+
         true
     }
 
