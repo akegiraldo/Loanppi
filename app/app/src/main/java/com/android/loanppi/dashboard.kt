@@ -106,7 +106,7 @@ class dashboard : AppCompatActivity() {
         when (item.itemId) {
             R.id.nav_i_home -> { newFragment = main_investor(bundle); tag = "main_investor" }
             R.id.nav_i_invest -> { newFragment = invest_options(bundle); tag = "invest_options" }
-            R.id.nav_i_my_investments -> { newFragment = my_investment_options(bundle); tag = "my_investment" }
+            R.id.nav_i_my_investments -> { newFragment = my_investment_options(bundle); tag = "my_investment_options" }
             R.id.nav_i_profile -> { newFragment = profile(bundle); tag = "profile" }
 
             R.id.nav_w_home -> { newFragment = main_worker(bundle); tag = "main_worker" }
