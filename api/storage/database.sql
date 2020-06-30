@@ -1,4 +1,4 @@
-DROP DATABASE loanppi;
+-- DROP DATABASE loanppi;
 -- como correr eta monda sudo cat database.sql |sudo  mysql -hlocalhost -uroot -p
 CREATE DATABASE IF NOT EXISTS loanppi;
 USE loanppi;
