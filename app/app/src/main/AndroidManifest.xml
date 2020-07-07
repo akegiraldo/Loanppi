@@ -39,7 +39,8 @@
             android:label="Dashboard"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".signup"
             android:configChanges="orientation"

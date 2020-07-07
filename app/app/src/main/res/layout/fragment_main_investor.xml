@@ -47,11 +47,37 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.2" />
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/bar_chart_container"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.25"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_main_sub_earns"
+                app:layout_constraintWidth_percent="0.9">
+
+                <com.github.mikephil.charting.charts.HorizontalBarChart
+                    android:id="@+id/bar_chart"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_percent="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="1">
+
+                </com.github.mikephil.charting.charts.HorizontalBarChart>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <TextView
                 android:id="@+id/txt_main_full_invested_amount"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="30dp"
                 android:text="@string/full_invested_amount"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/textPrimary"
@@ -59,6 +85,22 @@
                 app:layout_constraintEnd_toStartOf="@+id/txt_main_value_full_invested_amount"
                 app:layout_constraintHeight_percent="0.05"
                 app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bar_chart_container"
+                app:layout_constraintWidth_percent="0.6"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/txt_main_sub_earns"
+                android:layout_width="247dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/sub_earns"
+                android:textAlignment="center"
+                android:textColor="@color/textPrimary"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.05"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/img_user_photo"
                 app:layout_constraintWidth_percent="0.6"
@@ -78,13 +120,13 @@
                 app:layout_constraintStart_toEndOf="@+id/txt_main_full_invested_amount"
                 app:layout_constraintTop_toTopOf="@+id/txt_main_full_invested_amount"
                 app:layout_constraintWidth_percent="0.3"
-                tools:visibility="invisible" />
+                tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/txt_main_full_earns"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/full_earns"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/textPrimary"
@@ -94,7 +136,7 @@
                 app:layout_constraintStart_toStartOf="@+id/txt_main_full_invested_amount"
                 app:layout_constraintTop_toBottomOf="@+id/txt_main_full_invested_amount"
                 app:layout_constraintWidth_percent="0.6"
-                tools:visibility="invisible" />
+                tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/txt_main_value_full_earns"
@@ -109,7 +151,7 @@
                 app:layout_constraintStart_toStartOf="@+id/txt_main_value_full_invested_amount"
                 app:layout_constraintTop_toTopOf="@+id/txt_main_full_earns"
                 app:layout_constraintWidth_percent="0.3"
-                tools:visibility="invisible" />
+                tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/txt_is_empty"
@@ -130,109 +172,16 @@
                 android:id="@+id/txt_is_not_empty"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="60dp"
                 android:text="@string/do_investments"
                 android:textAlignment="center"
-                android:visibility="invisible"
+                android:visibility="visible"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.15"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_main_full_earns"
                 app:layout_constraintWidth_percent="0.8" />
-
-
-            <!--<TextView
-                android:id="@+id/txt_my_invest_balance"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="32dp"
-                android:text="@string/balance"
-                android:textColor="@color/textPrimary"
-                android:visibility="invisible"
-                app:autoSizeTextType="uniform"
-                app:layout_constraintHeight_percent="0.06"
-                app:layout_constraintStart_toStartOf="@+id/bar_progress_moto_bar"
-                app:layout_constraintTop_toBottomOf="@+id/img_user_photo"
-                app:layout_constraintWidth_percent="0.5" />
-
-            <TextView
-                android:id="@+id/txt_return_amount"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginBottom="8dp"
-                android:text="Retorno"
-                android:textAlignment="viewEnd"
-                android:textColor="@color/textPrimary"
-                android:textStyle="bold"
-                android:visibility="invisible"
-                app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toTopOf="@+id/txt_value_return_amount"
-                app:layout_constraintEnd_toEndOf="@+id/txt_value_return_amount"
-                app:layout_constraintHeight_percent="0.04"
-                app:layout_constraintWidth_percent="0.25" />
-
-            <TextView
-                android:id="@+id/txt_value_return_amount"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:text="0'000.000"
-                android:textAlignment="viewEnd"
-                android:textColor="@color/textPrimary"
-                app:autoSizeTextType="uniform"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toTopOf="@+id/bar_progress_moto_bar"
-                app:layout_constraintEnd_toEndOf="@+id/bar_progress_moto_bar"
-                app:layout_constraintHeight_percent="0.03"
-                app:layout_constraintWidth_percent="0.2" />
-
-            <SeekBar
-                android:id="@+id/bar_progress_moto_bar"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="60dp"
-                android:background="#0D272525"
-                android:progress="0"
-                android:progressBackgroundTint="#000000"
-                android:progressTint="@color/loanppi"
-                android:thumb="@drawable/moto1"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.09"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_my_invest_balance"
-                app:layout_constraintWidth_percent="0.8"
-                app:tickMarkTint="#000000" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/container_amount_returned"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginEnd="20dp"
-                app:layout_constraintEnd_toEndOf="@+id/bar_progress_moto_bar"
-                app:layout_constraintHeight_percent="0.03"
-                app:layout_constraintStart_toStartOf="@+id/bar_progress_moto_bar"
-                app:layout_constraintTop_toBottomOf="@+id/bar_progress_moto_bar"
-                app:layout_constraintWidth_percent="0.8">
-
-                <TextView
-                    android:id="@+id/txt_value_amount_returned"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:gravity="center"
-                    android:text="0'000.000"
-                    android:textColor="@color/textPrimary"
-                    app:autoSizeTextType="uniform"
-                    android:visibility="invisible"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHeight_percent="1"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.25" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

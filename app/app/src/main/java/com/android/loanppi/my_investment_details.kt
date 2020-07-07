@@ -162,6 +162,7 @@ class my_investment_details(bundle: Bundle) : Fragment() {
         amountReturned.setText(copFormat.format(valueTotalReturned))
         numberRemainingDues.setText(valueRemainingDues.toString())
         progressPercent = (valueTotalReturned / myInvestment.get("returnTotal").toString().toFloat()) * 100
+        progressBar.progress = progressPercent.toInt()
     }
 
     // Runs through a JSONArray, gets the necessary information and enters it into a new array

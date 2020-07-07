@@ -46,6 +46,7 @@
     <string name="txt_amount_to_pay">Cantidad a pagar</string>
 
     // Main investor
+    <string name="sub_earns">Balance</string>
     <string name="no_invests">Ánimate a ayudar a muchas personas\nHaz una inversión</string>
     <string name="do_investments">Aún puedes ayudar a más personas invirtiendo</string>
     <string name="full_invested_amount">Cantidad total invertida:</string>
