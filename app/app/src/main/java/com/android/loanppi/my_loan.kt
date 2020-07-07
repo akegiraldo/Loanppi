@@ -64,8 +64,7 @@ class my_loan(bundle: Bundle?) : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_my_loan, container, false)
-        myLoan = bundle?.get("myLoan") as Bundle
-        account = bundle.getBundle("account") as Bundle
+        account = bundle?.getBundle("account") as Bundle
 
         // // Get textviews from fragment
         goalAmount = view.findViewById(R.id.txt_loan_value_goal_amount)

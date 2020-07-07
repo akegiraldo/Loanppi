@@ -137,27 +137,20 @@ class lend(bundle: Bundle?) : Fragment() {
         val request = JsonObjectRequest(Request.Method.POST, url, loan, Response.Listener {
             response ->
                 if (response.get("status") == "pending") {
-                    Toast.makeText(
-                        context,
-                        "Préstamo solicitado correctamente.",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                    val myLoan = Bundle()
+                    Toast.makeText(context, "Préstamo solicitado correctamente.",
+                        Toast.LENGTH_SHORT).show()
+                    /*val myLoan = Bundle()
                     myLoan.putString("idNeed", response.get("idNeed").toString())
                     myLoan.putString("idWorker", response.get("idWorker").toString())
                     myLoan.putString("totalToPay", response.get("totalToPay").toString())
                     myLoan.putString("timeToPay", response.get("timeToPay").toString())
-                    myLoan.putString(
-                        "valueToPayWeekly",
-                        response.get("valueToPayWeekly").toString()
-                    )
+                    myLoan.putString("valueToPayWeekly", response.get("valueToPayWeekly").toString())
                     myLoan.putString("interests", response.get("interests").toString())
                     myLoan.putString("status", response.get("status").toString())
                     myLoan.putString("loanAmount", response.get("loanAmount").toString())
                     myLoan.putString("amountRemaining", response.get("amountRemaining").toString())
                     myLoan.putString("loanReason", response.get("loanReason").toString())
-                    bundle?.putBundle("myLoan", myLoan)
+                    bundle?.putBundle("myLoan", myLoan)*/
                     replaceFragment(my_loan(bundle), parentFragmentManager)
                 } else if (response.get("status") == "already_exists") {
                     Toast.makeText(context, "Debes pagar el préstamo actual antes de solicitar" +
