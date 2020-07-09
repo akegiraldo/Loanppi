@@ -15,6 +15,10 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import android.widget.Toast
 import androidx.core.view.isVisible
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -129,12 +133,44 @@ class signup : AppCompatActivity() {
         try {
             val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
             if (account != null) {
-                updateUIG(account)
+                if (userType == "worker") {
+                    checkStatusG(account)
+                } else {
+                    updateUIG(account)
+                }
             }
         } catch (e: ApiException) {
             Toast.makeText(this, "Error: no pudimos obtener los datos del usuario.",
                 Toast.LENGTH_SHORT).show()
         }
+    }
+
+    // Check if user is or not a rappitendero
+    private fun checkStatusG(account: GoogleSignInAccount){
+        val url = "http://microservices.dev.rappi.com/api/rt-auth-helper/user/type?email=" + account.email
+        val queue = Volley.newRequestQueue(this)
+
+        // Request a JSON response from the provided URL.
+        val request = JsonObjectRequest(Request.Method.GET, url, null,
+            Response.Listener { response ->
+            if (response.get("user_type") != "none") {
+                updateUIG(account)
+            } else {
+                mGoogleSignInClient.signOut()
+                Toast.makeText(this, "El usuario no se encuentra asociado a Rappi",
+                    Toast.LENGTH_LONG).show()
+            }
+        },
+        // In case there is an error in the connection with Rappi server, the session with Google
+        // is closed and the user is shown the error
+        Response.ErrorListener {
+            mGoogleSignInClient.signOut()
+            Toast.makeText(this, "Error en la conexión con el servidor de Rappi.",
+                Toast.LENGTH_SHORT).show()
+        })
+
+        // Add the request to the RequestQueue.
+        queue.add(request)
     }
 
     private fun updateUIG (googleAccount: GoogleSignInAccount) {
@@ -166,7 +202,11 @@ class signup : AppCompatActivity() {
                     account.putString("fullName", fullName)
                     account.putString("urlUserPhoto", urlUserPhoto)
 
-                    updateUIF(account)
+                    if (userType == "worker") {
+                        checkStatusF(account)
+                    } else {
+                        updateUIF(account)
+                    }
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -177,6 +217,43 @@ class signup : AppCompatActivity() {
             request.parameters = parameters
             request.executeAsync()
         }
+    }
+
+    // Check if user is or not a rappitendero
+    private fun checkStatusF(account: Bundle){
+        val email = account.get("emailAddress")
+        val url = "http://microservices.dev.rappi.com/api/rt-auth-helper/user/type?email=" + email
+        val queue = Volley.newRequestQueue(this)
+
+        // Request a JSON response from the provided URL.
+        val request = JsonObjectRequest(Request.Method.GET, url, null,
+            Response.Listener { response ->
+                if (response.get("user_type") != "none") {
+                    updateUIF(account)
+                } else {
+                    GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/",
+                        null, HttpMethod.DELETE, GraphRequest.Callback {
+                            AccessToken.setCurrentAccessToken(null)
+                            LoginManager.getInstance().logOut()
+                        }).executeAsync()
+                    Toast.makeText(this, "El usuario no se encuentra asociado a Rappi",
+                        Toast.LENGTH_LONG).show()
+                }
+            },
+            // In case there is an error in the connection with Rappi server, the session with Google
+            // is closed and the user is shown the error
+            Response.ErrorListener {
+                GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/",
+                    null, HttpMethod.DELETE, GraphRequest.Callback {
+                        AccessToken.setCurrentAccessToken(null)
+                        LoginManager.getInstance().logOut()
+                    }).executeAsync()
+                Toast.makeText(this, "Error en la conexión con el servidor de Rappi.",
+                    Toast.LENGTH_SHORT).show()
+            })
+
+        // Add the request to the RequestQueue.
+        queue.add(request)
     }
 
     private fun updateUIF (facebookAccount: Bundle) {
