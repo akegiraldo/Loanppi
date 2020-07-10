@@ -158,4 +158,18 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_pay_amount"
         app:layout_constraintWidth_percent="0.5" />
 
+    <TextView
+        android:id="@+id/txt_loan_paid"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:text="@string/loan_paid"
+        android:textAlignment="center"
+        android:visibility="invisible"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.8" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

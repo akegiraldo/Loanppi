@@ -18,6 +18,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import kotlinx.android.synthetic.main.dialog_payment.*
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -56,6 +57,7 @@ class main_worker(bundle: Bundle?) : Fragment() {
     private lateinit var paymentValueAmountPaid: TextView
 
     private var paymentValueAmount: Float = 0.0f
+    private lateinit var dialogLayout: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -143,11 +145,14 @@ class main_worker(bundle: Bundle?) : Fragment() {
                         loadMainFields("hide")
                     }
                     if (from == "payment") {
-                        loadPaymentInfo()
+                        loadPaymentInfo("unpaid")
                     }
                 } else {
                     myLoan.putString("status", "not_found")
                     loadMainFields("hide")
+                    if (from == "payment") {
+                        loadPaymentInfo("paid")
+                    }
                 }
             },
             Response.ErrorListener {
@@ -194,7 +199,7 @@ class main_worker(bundle: Bundle?) : Fragment() {
     fun showPaymentWindow() {
         val builder = AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
         val inflater = layoutInflater
-        val dialogLayout = inflater.inflate(R.layout.dialog_payment, null)
+        dialogLayout = inflater.inflate(R.layout.dialog_payment, null)
         editPaymentAmount  = dialogLayout.findViewById(R.id.edit_pay_amount)
 
         paymentBtnLetPay = dialogLayout.findViewById(R.id.btn_let_pay)
@@ -202,7 +207,7 @@ class main_worker(bundle: Bundle?) : Fragment() {
         paymentValueAmountRemaining = dialogLayout.findViewById(R.id.txt_payment_value_amount_remaining)
         paymentValueAmountPaid = dialogLayout.findViewById(R.id.txt_payment_value_amount_paid)
 
-        loadPaymentInfo()
+        loadPaymentInfo("unpaid")
 
         if (valueToPayWeekly > amountRemaining && amountRemaining > 0.0f) {
             editPaymentAmount.setText(amountRemaining.toInt().toString())
@@ -247,10 +252,24 @@ class main_worker(bundle: Bundle?) : Fragment() {
     }
 
     // Loads the loan information into the payment window
-    fun loadPaymentInfo() {
-        paymentValueAmountPaid.setText(copFormat.format(amountPaid))
-        paymentValueAmountRemaining.setText(copFormat.format(amountRemaining))
-        paymentValueWeeklyFee.setText(copFormat.format(valueToPayWeekly))
+    fun loadPaymentInfo(status: String) {
+        if (status != "paid") {
+            paymentValueAmountPaid.setText(copFormat.format(amountPaid))
+            paymentValueAmountRemaining.setText(copFormat.format(amountRemaining))
+            paymentValueWeeklyFee.setText(copFormat.format(valueToPayWeekly))
+        } else {
+            dialogLayout.findViewById<TextView>(R.id.payment_title)?.isVisible = false
+            dialogLayout.findViewById<TextView>(R.id.txt_payment_amount_paid)?.isVisible = false
+            dialogLayout.findViewById<TextView>(R.id.txt_payment_amount_remaining)?.isVisible = false
+            dialogLayout.findViewById<TextView>(R.id.txt_payment_your_weekly_fee)?.isVisible = false
+            dialogLayout.findViewById<TextView>(R.id.txt_pay_amount)?.isVisible = false
+            dialogLayout.findViewById<TextView>(R.id.txt_loan_paid)?.isVisible = true
+            paymentValueAmountPaid.isVisible = false
+            paymentValueAmountRemaining.isVisible = false
+            paymentValueWeeklyFee.isVisible = false
+            editPaymentAmount.isVisible = false
+            paymentBtnLetPay.isVisible = false
+        }
     }
 
     // Function that makes the request to the server to register a new pay
