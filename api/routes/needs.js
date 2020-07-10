@@ -8,19 +8,23 @@ const { response } = require('express');
 //Function that creates a new Need in the DB
 const newNeed = (req, res, next) => {
   const allData = req.body;
-  const id = allData.idWorker;
-  sendDebt(allData).then(response => {
-    checkLoan(id).then(response => {
-      res.send(response[0]);
-}).catch(err => {
-    console.error(err);
-    res.status(500).send("DB Error, NOT FOUND!");
-  });
+  const id = allData.idWorker; 
+  checkLoan(id).then(response => {
+    if (response.length === 0)
+    {
+      sendDebt(allData).then(response => {
+        res.send({"status" : "pending"});
+      }).catch(err => {
+        console.error(err);
+        res.status(500).send("DB Error, NOT FOUND!");
+    });
+    } else {
+      res.send({"status" : "already_exists"})
+    }
   }).catch(err => {
     console.error(err);
     res.status(500).send("DB Error, NOT FOUND!");
   });
 }
-
 
 module.exports = { newNeed };
